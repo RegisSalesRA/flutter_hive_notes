@@ -3,13 +3,11 @@ import 'package:hive/hive.dart';
 part 'todo_model.g.dart';
 
 @HiveType(typeId: 0)
-class TodoModel {
+class TodoModel extends HiveObject {
   @HiveField(0)
-  final String title;
+  String title;
   @HiveField(1)
-  final String detail;
-  @HiveField(2)
-  final bool isCompleted;
+  String detail;
 
-  TodoModel({this.title, this.detail, this.isCompleted});
+  TodoModel({this.title, this.detail});
 }
