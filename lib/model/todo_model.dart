@@ -6,8 +6,12 @@ part 'todo_model.g.dart';
 class TodoModel extends HiveObject {
   @HiveField(0)
   String title;
-  @HiveField(1)
-  String detail;
 
-  TodoModel({this.title, this.detail});
+  @HiveField(1)
+  bool isCompleted;
+
+  @HiveField(2)
+  String choices;
+
+  TodoModel({this.title, this.isCompleted, this.choices});
 }

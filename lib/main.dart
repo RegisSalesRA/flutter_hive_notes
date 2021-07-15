@@ -13,7 +13,8 @@ Future main() async {
   //Registrar box ( Box is like doc firebase)
   Hive.registerAdapter(TodoModelAdapter());
   // Aqui criamos a box e colocamos o nome onde vai ser inserido os dados
-  await Hive.openBox<TodoModel>('todo');
+  await Hive.openBox<TodoModel>('todo2');
+
   runApp(MyApp());
 }
 

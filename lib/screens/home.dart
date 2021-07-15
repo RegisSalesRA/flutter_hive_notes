@@ -11,8 +11,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  //TodoFilter filter = TodoFilter.ALL;
-
   @override
   void initState() {
     super.initState();
@@ -20,7 +18,7 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    Hive.box('todo');
+    Hive.box('todo2');
     super.dispose();
   }
 
@@ -42,7 +40,7 @@ class _HomeState extends State<Home> {
       ),
       body: Container(
         child: ValueListenableBuilder(
-          valueListenable: Hive.box<TodoModel>('todo').listenable(),
+          valueListenable: Hive.box<TodoModel>('todo2').listenable(),
           builder: (context, Box<TodoModel> box, _) {
             if (box.values.isEmpty) {
               return Center(
@@ -54,17 +52,21 @@ class _HomeState extends State<Home> {
                 itemCount: box.length,
                 itemBuilder: (context, index) {
                   TodoModel todo = box.getAt(index);
+                  print(todo.isCompleted);
                   return ListTile(
                     onLongPress: () async {
                       await box.deleteAt(index);
                     },
+                    trailing: todo.choices == null
+                        ? Text("Unknow")
+                        : Text(todo.choices),
                     title: Text(
                       todo.title,
                       style: TextStyle(fontSize: 20, fontFamily: 'Montserrat'),
                     ),
-                    subtitle: Text(
-                      todo.detail,
-                      style: TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
+                    subtitle: Icon(
+                      todo.isCompleted ? Icons.star : Icons.star_border,
+                      color: Colors.yellow,
                     ),
                   );
                 });
