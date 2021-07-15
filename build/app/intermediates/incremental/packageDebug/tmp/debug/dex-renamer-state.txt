@@ -1,4 +1,4 @@
-#Thu Jul 15 12:03:55 BRT 2021
+#Thu Jul 15 16:53:03 BRT 2021
 base.0=/home/convidado/PycharmProjects/github/Flutter_Hive/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex
