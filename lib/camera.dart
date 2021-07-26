@@ -25,6 +25,7 @@ class _CameraState extends State<Camera> {
 
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String bgPath = appDocDir.uri.resolve("background.jpg").path;
+    // ignore: unused_local_variable
     File bgFile = await imagem.copy(bgPath);
 
     setState(() {
@@ -45,6 +46,7 @@ class _CameraState extends State<Camera> {
   }
 
   @override
+  // ignore: must_call_super
   void initState() {
     loadImage();
   }
@@ -74,6 +76,7 @@ class _CameraState extends State<Camera> {
             ),
             Padding(
               padding: const EdgeInsets.all(8),
+              // ignore: deprecated_member_use
               child: RaisedButton(
                   child: Text("Pick Image"),
                   onPressed: () {
@@ -85,6 +88,7 @@ class _CameraState extends State<Camera> {
             ),
             Padding(
               padding: const EdgeInsets.all(8),
+              // ignore: deprecated_member_use
               child: RaisedButton(
                   child: Text("Tirar foto"),
                   onPressed: () {
@@ -96,6 +100,7 @@ class _CameraState extends State<Camera> {
             ),
             Padding(
                 padding: const EdgeInsets.all(8),
+                // ignore: deprecated_member_use
                 child: RaisedButton(
                     child: Text("Save"),
                     onPressed: () {
