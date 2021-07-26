@@ -12,6 +12,24 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<String> itensMenu = ["Alunos Completos", "Alunos Incompletos"];
+
+  _escolhaMenuItem(String itemEscolhido) {
+    switch (itemEscolhido) {
+      case "Alunos Completos":
+        print("aluns");
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => AlunosMaioresDeIdade()));
+        break;
+
+      case "Alunos Incompletos":
+        print("aluns 2");
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => AlunosMenoresDeIdade()));
+        break;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -37,7 +55,19 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text("Hive Form"),
         centerTitle: true,
-        actions: <Widget>[],
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            onSelected: _escolhaMenuItem,
+            itemBuilder: (context) {
+              return itensMenu.map((String item) {
+                return PopupMenuItem<String>(
+                  value: item,
+                  child: Text(item),
+                );
+              }).toList();
+            },
+          )
+        ],
       ),
       body: Container(
         child: ValueListenableBuilder(
