@@ -83,7 +83,9 @@ class _HomeState extends State<Home> {
                 itemCount: box.length,
                 itemBuilder: (context, index) {
                   FormModel form = box.getAt(index);
-                  print(form.key);
+                  var filterbox = box.values
+                      .where((element) => element.isCompleted == true);
+                  print(filterbox);
                   return ListTile(
                     onTap: () {
                       Navigator.push(
