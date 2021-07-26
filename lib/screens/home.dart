@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/model/todo_model.dart';
+import 'package:flutter_hive/model/form_model.dart';
+import 'package:flutter_hive/screens/update_form.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'add_todo.dart';
+import 'crate_form.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -29,19 +30,19 @@ class _HomeState extends State<Home> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => AddTodo()),
+            MaterialPageRoute(builder: (context) => CreateForm()),
           );
         },
       ),
       appBar: AppBar(
-        title: Text("Hive Todo"),
+        title: Text("Hive Form"),
         centerTitle: true,
         actions: <Widget>[],
       ),
       body: Container(
         child: ValueListenableBuilder(
-          valueListenable: Hive.box<TodoModel>('todo2').listenable(),
-          builder: (context, Box<TodoModel> box, _) {
+          valueListenable: Hive.box<FormModel>('todo2').listenable(),
+          builder: (context, Box<FormModel> box, _) {
             if (box.values.isEmpty) {
               return Center(
                 child: Text("No data available!",
@@ -51,23 +52,34 @@ class _HomeState extends State<Home> {
             return ListView.builder(
                 itemCount: box.length,
                 itemBuilder: (context, index) {
-                  TodoModel todo = box.getAt(index);
-                  print(todo.isCompleted);
+                  FormModel form = box.getAt(index);
+                  print(form.key);
                   return ListTile(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UpdateForm(
+                                    id: index,
+                                    nomeChange: form.nome,
+                                  )));
+                    },
                     onLongPress: () async {
                       await box.deleteAt(index);
                     },
-                    trailing: todo.choices == null
-                        ? Text("Unknow")
-                        : Text(todo.choices),
+                    trailing: Icon(
+                      form.isCompleted
+                          ? Icons.check_box
+                          : Icons.check_box_outline_blank,
+                      color: Colors.blue,
+                    ),
                     title: Text(
-                      todo.title,
+                      form.nome,
                       style: TextStyle(fontSize: 20, fontFamily: 'Montserrat'),
                     ),
-                    subtitle: Icon(
-                      todo.isCompleted ? Icons.star : Icons.star_border,
-                      color: Colors.yellow,
-                    ),
+                    subtitle: form.choices == null
+                        ? Text("Unknow")
+                        : Text(form.choices),
                   );
                 });
           },
