@@ -126,7 +126,8 @@ class _UpdateFormState extends State<UpdateForm> {
                             nome: nome,
                             isCompleted: isCompleted,
                             choices: choices);
-                        Box<FormModel> todoBox = Hive.box<FormModel>('todo2');
+                        Box<FormModel> todoBox =
+                            Hive.box<FormModel>('formData');
                         todoBox.putAt(index, formModel);
 
                         Navigator.of(context).pop();

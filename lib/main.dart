@@ -13,7 +13,7 @@ Future main() async {
   //Registrar box ( Box is like doc firebase)
   Hive.registerAdapter(FormModelAdapter());
   // Aqui criamos a box e colocamos o nome onde vai ser inserido os dados
-  await Hive.openBox<FormModel>('todo2');
+  await Hive.openBox<FormModel>('formData');
 
   runApp(MyApp());
 }

@@ -15,7 +15,7 @@ class _CreateFormState extends State<CreateForm> {
 
   submitData() async {
     if (widget.formkey.currentState.validate()) {
-      Box<FormModel> todoBox = Hive.box<FormModel>('todo2');
+      Box<FormModel> todoBox = Hive.box<FormModel>('formData');
       todoBox.add(
           FormModel(nome: nome, isCompleted: isCompleted, choices: choices));
       Navigator.of(context).pop();

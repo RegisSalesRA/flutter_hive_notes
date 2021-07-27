@@ -34,7 +34,7 @@ class _FormsCompletedState extends State<FormsCompleted> {
       ),
       body: Container(
         child: ValueListenableBuilder(
-          valueListenable: Hive.box<FormModel>('todo2').listenable(),
+          valueListenable: Hive.box<FormModel>('formData').listenable(),
           builder: (context, Box<FormModel> box, _) {
             var filterbox =
                 box.values.where((element) => element.isCompleted == true);
