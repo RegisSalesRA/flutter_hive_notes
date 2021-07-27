@@ -4,43 +4,17 @@ import 'package:flutter_hive/screens/update_form.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'completos.dart';
 import 'crate_form.dart';
-import 'incompletos.dart';
 
-class Home extends StatefulWidget {
+class FormsIncomplete extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _FormsIncompleteState createState() => _FormsIncompleteState();
 }
 
-class _HomeState extends State<Home> {
-  List<String> itensMenu = ["Alunos Completos", "Alunos Incompletos"];
-
-  _escolhaMenuItem(String itemEscolhido) {
-    switch (itemEscolhido) {
-      case "Alunos Completos":
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => FormsCompleted()));
-        break;
-
-      case "Alunos Incompletos":
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => FormsIncomplete()));
-        break;
-    }
-  }
-
-  var boxform = Hive.box<FormModel>('todo2').listenable();
-
+class _FormsIncompleteState extends State<FormsIncomplete> {
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    Hive.box('todo2');
-    super.dispose();
   }
 
   @override
@@ -55,26 +29,16 @@ class _HomeState extends State<Home> {
         },
       ),
       appBar: AppBar(
-        title: Text("Hive Form"),
+        title: Text("Hive Form incomleto"),
         centerTitle: true,
-        actions: <Widget>[
-          PopupMenuButton<String>(
-            onSelected: _escolhaMenuItem,
-            itemBuilder: (context) {
-              return itensMenu.map((String item) {
-                return PopupMenuItem<String>(
-                  value: item,
-                  child: Text(item),
-                );
-              }).toList();
-            },
-          )
-        ],
       ),
       body: Container(
         child: ValueListenableBuilder(
-          valueListenable: boxform,
+          valueListenable: Hive.box<FormModel>('todo2').listenable(),
           builder: (context, Box<FormModel> box, _) {
+            var filterbox =
+                box.values.where((element) => element.isCompleted == false);
+            print(filterbox);
             if (box.values.isEmpty) {
               return Center(
                 child: Text("No data available!",
@@ -82,7 +46,7 @@ class _HomeState extends State<Home> {
               );
             }
             return ListView.builder(
-                itemCount: box.length,
+                itemCount: filterbox.length,
                 itemBuilder: (context, index) {
                   FormModel form = box.getAt(index);
 
