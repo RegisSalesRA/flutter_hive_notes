@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  var boxform = Hive.box<FormModel>('todo2').listenable();
+  var boxform = Hive.box<FormModel>('formData').listenable();
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    Hive.box('todo2');
+    Hive.box('formData');
     super.dispose();
   }
 
