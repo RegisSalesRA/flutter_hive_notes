@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/model/form_model.dart';
+import 'package:flutter_hive/model/developer.dart';
 import 'package:flutter_hive/screens/update_form.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -13,23 +13,23 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<String> itensMenu = ["Alunos Completos", "Alunos Incompletos"];
+  List<String> itensMenu = ["Developers Completos", "Developers Incompletos"];
 
   _escolhaMenuItem(String itemEscolhido) {
     switch (itemEscolhido) {
-      case "Alunos Completos":
+      case "Developers Completos":
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => FormsCompleted()));
         break;
 
-      case "Alunos Incompletos":
+      case "Developers Incompletos":
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => FormsIncomplete()));
         break;
     }
   }
 
-  var boxform = Hive.box<FormModel>('formData').listenable();
+  var boxform = Hive.box<Developer>('developers').listenable();
 
   @override
   void initState() {
@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
       body: Container(
         child: ValueListenableBuilder(
           valueListenable: boxform,
-          builder: (context, Box<FormModel> box, _) {
+          builder: (context, Box<Developer> box, _) {
             if (box.values.isEmpty) {
               return Center(
                 child: Text("No data available!",
@@ -83,7 +83,7 @@ class _HomeState extends State<Home> {
             return ListView.builder(
                 itemCount: box.length,
                 itemBuilder: (context, index) {
-                  FormModel form = box.getAt(index);
+                  Developer form = box.getAt(index);
 
                   return ListTile(
                     onTap: () {
@@ -99,7 +99,7 @@ class _HomeState extends State<Home> {
                       await box.deleteAt(index);
                     },
                     trailing: Icon(
-                      form.isCompleted
+                      form.isGraduated
                           ? Icons.check_box
                           : Icons.check_box_outline_blank,
                       color: Colors.blue,

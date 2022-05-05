@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/model/form_model.dart';
+import 'package:flutter_hive/model/developer.dart';
 import 'package:hive/hive.dart';
 
 class UpdateForm extends StatefulWidget {
@@ -16,7 +16,7 @@ class UpdateForm extends StatefulWidget {
 class _UpdateFormState extends State<UpdateForm> {
   String nome;
   String choices;
-  bool isCompleted = false;
+  bool isGraduated = false;
 
   @override
   Widget build(BuildContext context) {
@@ -99,11 +99,11 @@ class _UpdateFormState extends State<UpdateForm> {
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Checkbox(
-                      value: isCompleted,
+                      value: isGraduated,
                       activeColor: Colors.orange,
                       onChanged: (bool valor) {
                         setState(() {
-                          isCompleted = valor;
+                          isGraduated = valor;
                         });
                         print("Checkbox: " + valor.toString());
                       },
@@ -122,13 +122,13 @@ class _UpdateFormState extends State<UpdateForm> {
                     onPressed: () {
                       if (widget.formkey.currentState.validate()) {
                         final index = widget.id;
-                        FormModel formModel = FormModel(
+                        Developer developer = Developer(
                             nome: nome,
-                            isCompleted: isCompleted,
+                            isGraduated: isGraduated,
                             choices: choices);
-                        Box<FormModel> todoBox =
-                            Hive.box<FormModel>('formData');
-                        todoBox.putAt(index, formModel);
+                        Box<Developer> todoBox =
+                            Hive.box<Developer>('developers');
+                        todoBox.putAt(index, developer);
 
                         Navigator.of(context).pop();
                       }
