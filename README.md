@@ -13,6 +13,10 @@ Second Step:
     flutter run
 
 
+Create new boxed:
+
+flutter packages pub run build_runner build;
+
 
 #  Fast View from Project
  
