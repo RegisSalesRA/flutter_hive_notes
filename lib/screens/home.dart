@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/model/form_model.dart';
 import 'package:flutter_hive/screens/update_form.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'completos.dart';
