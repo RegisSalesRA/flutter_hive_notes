@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/model/developer.dart';
+import 'package:flutter_hive/models/developer.dart';
 import 'package:flutter_hive/screens/update_form.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'crate_form.dart';
 
-class FormsCompleted extends StatefulWidget {
+class FormsIncomplete extends StatefulWidget {
   @override
-  _FormsCompletedState createState() => _FormsCompletedState();
+  _FormsIncompleteState createState() => _FormsIncompleteState();
 }
 
-class _FormsCompletedState extends State<FormsCompleted> {
+class _FormsIncompleteState extends State<FormsIncomplete> {
   @override
   void initState() {
     super.initState();
@@ -28,7 +28,7 @@ class _FormsCompletedState extends State<FormsCompleted> {
         },
       ),
       appBar: AppBar(
-        title: Text("Hive Form Completo"),
+        title: Text("Hive Form incomleto"),
         centerTitle: true,
       ),
       body: Container(
@@ -36,9 +36,8 @@ class _FormsCompletedState extends State<FormsCompleted> {
           valueListenable: Hive.box<Developer>('developers').listenable(),
           builder: (context, Box<Developer> box, _) {
             var filterbox =
-                box.values.where((element) => element.isGraduated == true);
-            print(filterbox);
-
+                box.values.where((element) => element.isGraduated == false);
+//            print(filterbox);
             if (box.values.isEmpty) {
               return Center(
                 child: Text("No data available!",

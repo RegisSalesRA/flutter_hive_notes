@@ -13,6 +13,5 @@ class Developer extends HiveObject {
   @HiveField(2)
   bool isGraduated;
 
-
   Developer({this.nome, this.isGraduated, this.choices});
 }
