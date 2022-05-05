@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/model/developer.dart';
+import 'package:flutter_hive/models/developer.dart';
 import 'package:flutter_hive/screens/update_form.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'crate_form.dart';
 
-class FormsIncomplete extends StatefulWidget {
+class FormsCompleted extends StatefulWidget {
   @override
-  _FormsIncompleteState createState() => _FormsIncompleteState();
+  _FormsCompletedState createState() => _FormsCompletedState();
 }
 
-class _FormsIncompleteState extends State<FormsIncomplete> {
+class _FormsCompletedState extends State<FormsCompleted> {
   @override
   void initState() {
     super.initState();
   }
+
+  var valueBox = Hive.box<Developer>('developers').listenable();
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +30,21 @@ class _FormsIncompleteState extends State<FormsIncomplete> {
         },
       ),
       appBar: AppBar(
-        title: Text("Hive Form incomleto"),
+        title: Text("Hive Graduated"),
         centerTitle: true,
       ),
       body: Container(
         child: ValueListenableBuilder(
-          valueListenable: Hive.box<Developer>('developers').listenable(),
+          valueListenable: valueBox,
           builder: (context, Box<Developer> box, _) {
-            var filterbox =
-                box.values.where((element) => element.isGraduated == false);
+            print(box.keys.cast<int>().toList());
+            // print(valueBox);
+            List<Developer> filterbox = box.values
+                .where((element) => element.isGraduated == true)
+                .toList();
+            print("aqui esta o filtro $filterbox");
             print(filterbox);
+
             if (box.values.isEmpty) {
               return Center(
                 child: Text("No data available!",

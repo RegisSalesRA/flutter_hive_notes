@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hive/screens/home.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'model/developer.dart';
+import 'models/developer.dart';
 
 Future main() async {
+  // Voce precisa adicionar isso para que o flutter aceite voce rodar codigo antes do MyApp
+  // O codigo do hive fica sendo chamado antes do Myapp
   WidgetsFlutterBinding.ensureInitialized();
 
   //Iniciar o banco Hive

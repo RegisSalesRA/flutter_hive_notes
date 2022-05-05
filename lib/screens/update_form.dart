@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/model/developer.dart';
+import 'package:flutter_hive/models/developer.dart';
 import 'package:hive/hive.dart';
 
 class UpdateForm extends StatefulWidget {

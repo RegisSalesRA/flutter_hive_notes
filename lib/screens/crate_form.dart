@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/model/developer.dart';
+import 'package:flutter_hive/models/developer.dart';
 import 'package:hive/hive.dart';
 
 class CreateForm extends StatefulWidget {
-  final formkey = GlobalKey<FormState>();
+  final developerForm = GlobalKey<FormState>();
   @override
   _CreateFormState createState() => _CreateFormState();
 }
@@ -13,8 +13,8 @@ class _CreateFormState extends State<CreateForm> {
   String choices;
   bool isGraduated = false;
 
-  submitData() async {
-    if (widget.formkey.currentState.validate()) {
+  Future submitData() async {
+    if (widget.developerForm.currentState.validate()) {
       Box<Developer> todoBox = Hive.box<Developer>('developers');
       todoBox.add(
           Developer(nome: nome, isGraduated: isGraduated, choices: choices));
@@ -30,7 +30,7 @@ class _CreateFormState extends State<CreateForm> {
         title: Text("Form", style: TextStyle(fontFamily: 'Montserrat')),
       ),
       body: Form(
-          key: widget.formkey,
+          key: widget.developerForm,
           child: Container(
               padding: EdgeInsets.all(15),
               child: ListView(
@@ -73,7 +73,7 @@ class _CreateFormState extends State<CreateForm> {
                           style: TextStyle(
                             color: Colors.blue,
                           ),
-                          items: ['Masculino', 'Feminino'].map(
+                          items: ['Junior', 'Pleno', 'Senior'].map(
                             (val) {
                               return DropdownMenuItem<String>(
                                 value: val,
@@ -105,7 +105,7 @@ class _CreateFormState extends State<CreateForm> {
                       },
                     ),
                     Text(
-                      'is completed?',
+                      'is graduated?',
                       style:
                           TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                     ),

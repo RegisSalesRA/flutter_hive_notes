@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/model/developer.dart';
+import 'package:flutter_hive/models/developer.dart';
 import 'package:flutter_hive/screens/update_form.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'completos.dart';
+import 'graduated.dart';
 import 'crate_form.dart';
-import 'incompletos.dart';
+import 'not_graduated.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,16 +13,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<String> itensMenu = ["Developers Completos", "Developers Incompletos"];
+  List<String> itensMenu = ["Developers graduated", "Developers not graduated"];
 
   _escolhaMenuItem(String itemEscolhido) {
     switch (itemEscolhido) {
-      case "Developers Completos":
+      case "Developers graduated":
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => FormsCompleted()));
         break;
 
-      case "Developers Incompletos":
+      case "Developers not graduated":
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => FormsIncomplete()));
         break;
@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    Hive.box('formData');
+    Hive.box('developers');
     super.dispose();
   }
 
