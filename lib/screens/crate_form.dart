@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/model/form_model.dart';
+import 'package:flutter_hive/model/developer.dart';
 import 'package:hive/hive.dart';
 
 class CreateForm extends StatefulWidget {
@@ -11,13 +11,13 @@ class CreateForm extends StatefulWidget {
 class _CreateFormState extends State<CreateForm> {
   String nome;
   String choices;
-  bool isCompleted = false;
+  bool isGraduated = false;
 
   submitData() async {
     if (widget.formkey.currentState.validate()) {
-      Box<FormModel> todoBox = Hive.box<FormModel>('formData');
+      Box<Developer> todoBox = Hive.box<Developer>('developers');
       todoBox.add(
-          FormModel(nome: nome, isCompleted: isCompleted, choices: choices));
+          Developer(nome: nome, isGraduated: isGraduated, choices: choices));
       Navigator.of(context).pop();
     }
   }
@@ -95,11 +95,11 @@ class _CreateFormState extends State<CreateForm> {
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Checkbox(
-                      value: isCompleted,
+                      value: isGraduated,
                       activeColor: Colors.orange,
                       onChanged: (bool valor) {
                         setState(() {
-                          isCompleted = valor;
+                          isGraduated = valor;
                         });
                         print("Checkbox: " + valor.toString());
                       },

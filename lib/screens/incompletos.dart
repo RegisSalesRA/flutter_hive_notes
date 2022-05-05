@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/model/form_model.dart';
+import 'package:flutter_hive/model/developer.dart';
 import 'package:flutter_hive/screens/update_form.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -33,10 +33,10 @@ class _FormsIncompleteState extends State<FormsIncomplete> {
       ),
       body: Container(
         child: ValueListenableBuilder(
-          valueListenable: Hive.box<FormModel>('formData').listenable(),
-          builder: (context, Box<FormModel> box, _) {
+          valueListenable: Hive.box<Developer>('developers').listenable(),
+          builder: (context, Box<Developer> box, _) {
             var filterbox =
-                box.values.where((element) => element.isCompleted == false);
+                box.values.where((element) => element.isGraduated == false);
             print(filterbox);
             if (box.values.isEmpty) {
               return Center(
@@ -47,7 +47,7 @@ class _FormsIncompleteState extends State<FormsIncomplete> {
             return ListView.builder(
                 itemCount: filterbox.length,
                 itemBuilder: (context, index) {
-                  FormModel form = box.getAt(index);
+                  Developer form = box.getAt(index);
 
                   return ListTile(
                     onTap: () {
@@ -63,7 +63,7 @@ class _FormsIncompleteState extends State<FormsIncomplete> {
                       await box.deleteAt(index);
                     },
                     trailing: Icon(
-                      form.isCompleted
+                      form.isGraduated
                           ? Icons.check_box
                           : Icons.check_box_outline_blank,
                       color: Colors.blue,
