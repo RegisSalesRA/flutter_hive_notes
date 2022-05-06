@@ -20,11 +20,11 @@ class _DeveloperUpdateState extends State<DeveloperUpdate> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.id);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Form Update", style: TextStyle(fontFamily: 'Montserrat')),
+        title: Text("Developer Update",
+            style: TextStyle(fontFamily: 'Montserrat')),
       ),
       body: Form(
           key: widget.formkey,
@@ -36,12 +36,11 @@ class _DeveloperUpdateState extends State<DeveloperUpdate> {
                     height: 15,
                   ),
                   Center(
-                    child: Text('Você esta atualizando ${widget.nomeChange}'),
+                    child: Text('Developer ${widget.nomeChange} update'),
                   ),
                   SizedBox(
                     height: 15,
                   ),
-                  Divider(),
                   TextFormField(
                     validator: (v) {
                       if (v.isEmpty) {
@@ -49,7 +48,10 @@ class _DeveloperUpdateState extends State<DeveloperUpdate> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(hintText: 'Title'),
+                    decoration: InputDecoration(
+                        hintText: 'Name',
+                        labelText: "Name",
+                        border: OutlineInputBorder()),
                     onChanged: (value) {
                       setState(() {
                         nome = value;
@@ -59,25 +61,30 @@ class _DeveloperUpdateState extends State<DeveloperUpdate> {
                   SizedBox(
                     height: 15,
                   ),
-                  Padding(
-                      padding: EdgeInsets.all(8),
+                  Container(
+                      color: Colors.grey,
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
                           hint: choices == null
-                              ? Text(
-                                  'Selecione a opção',
-                                  style: TextStyle(fontSize: 20),
+                              ? Padding(
+                                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                  child: Text(
+                                    'Selecione a opção',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
                                 )
-                              : Text(
-                                  choices,
-                                  style: TextStyle(color: Colors.blue),
+                              : Padding(
+                                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                  child: Text(
+                                    choices,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                 ),
                           isExpanded: true,
-                          iconSize: 30.0,
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Colors.black,
                           ),
-                          items: ['Masculino', 'Feminino'].map(
+                          items: ['Junior', 'Pleno', 'Senior'].map(
                             (val) {
                               return DropdownMenuItem<String>(
                                 value: val,
@@ -97,23 +104,27 @@ class _DeveloperUpdateState extends State<DeveloperUpdate> {
                   SizedBox(
                     height: 15,
                   ),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Checkbox(
-                      value: isGraduated,
-                      activeColor: Colors.orange,
-                      onChanged: (bool valor) {
-                        setState(() {
-                          isGraduated = valor;
-                        });
-                        print("Checkbox: " + valor.toString());
-                      },
-                    ),
-                    Text(
-                      'is completed?',
-                      style:
-                          TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-                    ),
-                  ]),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Press if developer is graduated?',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Checkbox(
+                            value: isGraduated,
+                            activeColor: Colors.orange,
+                            onChanged: (bool valor) {
+                              setState(() {
+                                isGraduated = valor;
+                              });
+                            },
+                          ),
+                        ]),
+                  ),
                   SizedBox(
                     height: 55,
                   ),
