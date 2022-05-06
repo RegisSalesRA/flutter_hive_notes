@@ -2,42 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/developer.dart';
 import 'package:hive/hive.dart';
 
-class CreateForm extends StatefulWidget {
-  final developerForm = GlobalKey<FormState>();
+class DeveloperUpdate extends StatefulWidget {
+  final int id;
+  final String nomeChange;
+
+  DeveloperUpdate({Key key, this.id, this.nomeChange}) : super(key: key);
+
+  final formkey = GlobalKey<FormState>();
   @override
-  _CreateFormState createState() => _CreateFormState();
+  _DeveloperUpdateState createState() => _DeveloperUpdateState();
 }
 
-class _CreateFormState extends State<CreateForm> {
+class _DeveloperUpdateState extends State<DeveloperUpdate> {
   String nome;
   String choices;
   bool isGraduated = false;
 
-  Future submitData() async {
-    if (widget.developerForm.currentState.validate()) {
-      Box<Developer> todoBox = Hive.box<Developer>('developers');
-      todoBox.add(
-          Developer(nome: nome, isGraduated: isGraduated, choices: choices));
-      Navigator.of(context).pop();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    print(widget.id);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Form", style: TextStyle(fontFamily: 'Montserrat')),
+        title: Text("Form Update", style: TextStyle(fontFamily: 'Montserrat')),
       ),
       body: Form(
-          key: widget.developerForm,
+          key: widget.formkey,
           child: Container(
               padding: EdgeInsets.all(15),
               child: ListView(
                 children: [
                   SizedBox(
-                    height: 5,
+                    height: 15,
                   ),
+                  Center(
+                    child: Text('Você esta atualizando ${widget.nomeChange}'),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Divider(),
                   TextFormField(
                     validator: (v) {
                       if (v.isEmpty) {
@@ -73,7 +77,7 @@ class _CreateFormState extends State<CreateForm> {
                           style: TextStyle(
                             color: Colors.blue,
                           ),
-                          items: ['Junior', 'Pleno', 'Senior'].map(
+                          items: ['Masculino', 'Feminino'].map(
                             (val) {
                               return DropdownMenuItem<String>(
                                 value: val,
@@ -105,7 +109,7 @@ class _CreateFormState extends State<CreateForm> {
                       },
                     ),
                     Text(
-                      'is graduated?',
+                      'is completed?',
                       style:
                           TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                     ),
@@ -114,7 +118,22 @@ class _CreateFormState extends State<CreateForm> {
                     height: 55,
                   ),
                   ElevatedButton(
-                      onPressed: submitData, child: Text('Submit Data')),
+                    child: Text('Submit Data'),
+                    onPressed: () {
+                      if (widget.formkey.currentState.validate()) {
+                        final index = widget.id;
+                        Developer developer = Developer(
+                            nome: nome,
+                            isGraduated: isGraduated,
+                            choices: choices);
+                        Box<Developer> todoBox =
+                            Hive.box<Developer>('developers');
+                        todoBox.putAt(index, developer);
+
+                        Navigator.of(context).pop();
+                      }
+                    },
+                  ),
                 ],
               ))),
     );

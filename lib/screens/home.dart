@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/developer.dart';
-import 'package:flutter_hive/screens/update_form.dart';
+import 'package:flutter_hive/screens/forms/update_developer.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'graduated.dart';
-import 'crate_form.dart';
+import 'forms/create_developer.dart';
 import 'not_graduated.dart';
 
 class Home extends StatefulWidget {
@@ -13,18 +13,18 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<String> itensMenu = ["Developers graduated", "Developers not graduated"];
+  List<String> Menu = ["Developers graduated", "Developers not graduated"];
 
-  _escolhaMenuItem(String itemEscolhido) {
-    switch (itemEscolhido) {
+  _menuOptions(String options) {
+    switch (options) {
       case "Developers graduated":
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => FormsCompleted()));
+            context, MaterialPageRoute(builder: (context) => Graduated()));
         break;
 
       case "Developers not graduated":
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => FormsIncomplete()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => NotGraduated()));
         break;
     }
   }
@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => CreateForm()),
+            MaterialPageRoute(builder: (context) => DeveloperCreate()),
           );
         },
       ),
@@ -58,9 +58,9 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         actions: <Widget>[
           PopupMenuButton<String>(
-            onSelected: _escolhaMenuItem,
+            onSelected: _menuOptions,
             itemBuilder: (context) {
-              return itensMenu.map((String item) {
+              return Menu.map((String item) {
                 return PopupMenuItem<String>(
                   value: item,
                   child: Text(item),
@@ -90,7 +90,7 @@ class _HomeState extends State<Home> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => UpdateForm(
+                              builder: (context) => DeveloperUpdate(
                                     id: index,
                                     nomeChange: form.nome,
                                   )));

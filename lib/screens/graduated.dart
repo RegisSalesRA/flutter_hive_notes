@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/developer.dart';
-import 'package:flutter_hive/screens/update_form.dart';
+import 'package:flutter_hive/screens/forms/update_developer.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'crate_form.dart';
+import 'forms/create_developer.dart';
 
-class FormsCompleted extends StatefulWidget {
+class Graduated extends StatefulWidget {
   @override
-  _FormsCompletedState createState() => _FormsCompletedState();
+  _GraduatedState createState() => _GraduatedState();
 }
 
-class _FormsCompletedState extends State<FormsCompleted> {
+class _GraduatedState extends State<Graduated> {
   @override
   void initState() {
     super.initState();
@@ -25,7 +25,7 @@ class _FormsCompletedState extends State<FormsCompleted> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => CreateForm()),
+            MaterialPageRoute(builder: (context) => DeveloperCreate()),
           );
         },
       ),
@@ -37,13 +37,12 @@ class _FormsCompletedState extends State<FormsCompleted> {
         child: ValueListenableBuilder(
           valueListenable: valueBox,
           builder: (context, Box<Developer> box, _) {
-            print(box.keys.cast<int>().toList());
-            // print(valueBox);
-            List<Developer> filterbox = box.values
-                .where((element) => element.isGraduated == true)
+            List<int> keys;
+
+            keys = box.keys
+                .cast<int>()
+                .where((key) => box.get(key).isGraduated)
                 .toList();
-            print("aqui esta o filtro $filterbox");
-            print(filterbox);
 
             if (box.values.isEmpty) {
               return Center(
@@ -52,16 +51,17 @@ class _FormsCompletedState extends State<FormsCompleted> {
               );
             }
             return ListView.builder(
-                itemCount: filterbox.length,
+                itemCount: keys.length,
                 itemBuilder: (context, index) {
-                  Developer form = box.getAt(index);
+                  final int key = keys[index];
+                  final Developer form = box.get(key);
 
                   return ListTile(
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => UpdateForm(
+                              builder: (context) => DeveloperUpdate(
                                     id: index,
                                     nomeChange: form.nome,
                                   )));
