@@ -27,96 +27,110 @@ class _DeveloperCreateState extends State<DeveloperCreate> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Form", style: TextStyle(fontFamily: 'Montserrat')),
+        title: Text("Create Developer",
+            style: TextStyle(fontFamily: 'Montserrat')),
       ),
-      body: Form(
-          key: widget.developerForm,
-          child: Container(
-              padding: EdgeInsets.all(15),
-              child: ListView(
-                children: [
-                  SizedBox(
-                    height: 5,
-                  ),
-                  TextFormField(
-                    validator: (v) {
-                      if (v.isEmpty) {
-                        return "Por favor preencher os dados";
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(hintText: 'Title'),
-                    onChanged: (value) {
-                      setState(() {
-                        nome = value;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Padding(
-                      padding: EdgeInsets.all(8),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          hint: choices == null
-                              ? Text(
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: Form(
+            key: widget.developerForm,
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: 5,
+                ),
+                TextFormField(
+                  validator: (v) {
+                    if (v.isEmpty) {
+                      return "Por favor preencher os dados";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                      hintText: 'Name',
+                      labelText: "Name",
+                      border: OutlineInputBorder()),
+                  onChanged: (value) {
+                    setState(() {
+                      nome = value;
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                    color: Colors.grey,
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        hint: choices == null
+                            ? Padding(
+                                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: Text(
                                   'Selecione a opção',
-                                  style: TextStyle(fontSize: 20),
-                                )
-                              : Text(
-                                  choices,
-                                  style: TextStyle(color: Colors.blue),
+                                  style: TextStyle(fontSize: 18),
                                 ),
-                          isExpanded: true,
-                          iconSize: 30.0,
-                          style: TextStyle(
-                            color: Colors.blue,
-                          ),
-                          items: ['Junior', 'Pleno', 'Senior'].map(
-                            (val) {
-                              return DropdownMenuItem<String>(
-                                value: val,
-                                child: Text(val),
-                              );
-                            },
-                          ).toList(),
-                          onChanged: (val) {
-                            setState(
-                              () {
-                                choices = val;
-                              },
+                              )
+                            : Padding(
+                                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: Text(
+                                  choices,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                        isExpanded: true,
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                        items: ['Junior', 'Pleno', 'Senior'].map(
+                          (val) {
+                            return DropdownMenuItem<String>(
+                              value: val,
+                              child: Text(val),
                             );
                           },
+                        ).toList(),
+                        onChanged: (val) {
+                          setState(
+                            () {
+                              choices = val;
+                            },
+                          );
+                        },
+                      ),
+                    )),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Press if developer is graduated?',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                      )),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Checkbox(
-                      value: isGraduated,
-                      activeColor: Colors.orange,
-                      onChanged: (bool valor) {
-                        setState(() {
-                          isGraduated = valor;
-                        });
-                        print("Checkbox: " + valor.toString());
-                      },
-                    ),
-                    Text(
-                      'is graduated?',
-                      style:
-                          TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-                    ),
-                  ]),
-                  SizedBox(
-                    height: 55,
-                  ),
-                  ElevatedButton(
-                      onPressed: submitData, child: Text('Submit Data')),
-                ],
-              ))),
+                        Checkbox(
+                          value: isGraduated,
+                          activeColor: Colors.orange,
+                          onChanged: (bool valor) {
+                            setState(() {
+                              isGraduated = valor;
+                            });
+                          },
+                        ),
+                      ]),
+                ),
+                SizedBox(
+                  height: 60,
+                ),
+                ElevatedButton(
+                    onPressed: submitData, child: Text('Register Developer')),
+              ],
+            )),
+      ),
     );
   }
 }
