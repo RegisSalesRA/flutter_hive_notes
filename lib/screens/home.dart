@@ -105,7 +105,7 @@ class _HomeState extends State<Home> {
                       color: Colors.blue,
                     ),
                     title: Text(
-                      form.nome,
+                      form.nome??"default",
                       style: TextStyle(fontSize: 20, fontFamily: 'Montserrat'),
                     ),
                     subtitle: form.choices == null

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/developer.dart';
+import 'package:flutter_hive/widgets/checkbox_widget.dart';
 import 'package:hive/hive.dart';
+
+import '../../widgets/dropdown_widget.dart';
+import '../../widgets/input_text.dart';
 
 class DeveloperCreate extends StatefulWidget {
   final developerForm = GlobalKey<FormState>();
@@ -39,17 +43,14 @@ class _DeveloperCreateState extends State<DeveloperCreate> {
                 SizedBox(
                   height: 5,
                 ),
-                TextFormField(
+                InputText(
+                  nome: nome,
                   validator: (v) {
                     if (v.isEmpty) {
                       return "Por favor preencher os dados";
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
-                      hintText: 'Name',
-                      labelText: "Name",
-                      border: OutlineInputBorder()),
                   onChanged: (value) {
                     setState(() {
                       nome = value;
@@ -59,69 +60,51 @@ class _DeveloperCreateState extends State<DeveloperCreate> {
                 SizedBox(
                   height: 15,
                 ),
-                Container(
-                    color: Colors.grey,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        hint: choices == null
-                            ? Padding(
-                                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                child: Text(
-                                  'Selecione a opção',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              )
-                            : Padding(
-                                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                child: Text(
-                                  choices,
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                        isExpanded: true,
-                        style: TextStyle(
-                          color: Colors.black,
+                DropDownWidget(
+                  hint: choices == null
+                      ? Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Text(
+                            'Selecione a opção',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Text(
+                            choices,
+                            style: TextStyle(color: Colors.black),
+                          ),
                         ),
-                        items: ['Junior', 'Pleno', 'Senior'].map(
-                          (val) {
-                            return DropdownMenuItem<String>(
-                              value: val,
-                              child: Text(val),
-                            );
-                          },
-                        ).toList(),
-                        onChanged: (val) {
-                          setState(
-                            () {
-                              choices = val;
-                            },
-                          );
-                        },
-                      ),
-                    )),
+                  dropdownItens: ['Junior', 'Pleno', 'Senior'].map(
+                    (val) {
+                      return DropdownMenuItem<String>(
+                        value: val,
+                        child: Text(val),
+                      );
+                    },
+                  ).toList(),
+                  onChanged: (val) {
+                    setState(
+                      () {
+                        choices = val;
+                      },
+                    );
+                  },
+                ),
                 SizedBox(
                   height: 15,
                 ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Press if developer is graduated?',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        Checkbox(
-                          value: isGraduated,
-                          activeColor: Colors.orange,
-                          onChanged: (bool valor) {
-                            setState(() {
-                              isGraduated = valor;
-                            });
-                          },
-                        ),
-                      ]),
+                CheckBoxWidget(
+                  checkedIten: Checkbox(
+                    value: isGraduated,
+                    activeColor: Colors.orange,
+                    onChanged: (bool valor) {
+                      setState(() {
+                        isGraduated = valor;
+                      });
+                    },
+                  ),
                 ),
                 SizedBox(
                   height: 60,
