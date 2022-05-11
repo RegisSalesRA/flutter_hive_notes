@@ -55,7 +55,7 @@ class _GraduatedState extends State<Graduated> {
                 itemCount: keys.length,
                 itemBuilder: (context, index) {
                   final int key = keys[index];
-                  final Developer form = box.get(key);
+                  final Developer dev = box.get(key);
 
                   return DeveloperWidget(
                     onTap: () {
@@ -64,21 +64,21 @@ class _GraduatedState extends State<Graduated> {
                           MaterialPageRoute(
                               builder: (context) => DeveloperUpdate(
                                     id: index,
-                                    nomeChange: form.nome,
+                                    nomeChange: dev.nome,
                                   )));
                     },
                     onLongPress: () async {
                       await box.deleteAt(index);
                     },
                     icon: Icon(
-                      form.isGraduated
+                      dev.isGraduated
                          ? Icons.school : Icons.person,
                       color: Colors.blue,
                     ),
-                    text: form.nome ?? "default",
-                    subtitle: form.choices == null
+                    text: dev.nome ?? "default",
+                    subtitle: dev.choices == null
                         ? Text("Unknow")
-                        : Text(form.choices),
+                        : Text(dev.choices),
                   );
                 });
           },
