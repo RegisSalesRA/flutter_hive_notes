@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/developer.dart';
 import 'package:flutter_hive/screens/forms/update_developer.dart';
+import 'package:flutter_hive/widgets/developer_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'forms/create_developer.dart';
@@ -56,7 +57,7 @@ class _NotGraduatedState extends State<NotGraduated> {
                   final int key = keys[index];
                   final Developer form = box.get(key);
 
-                  return ListTile(
+                  return DeveloperWidget(
                     onTap: () {
                       Navigator.push(
                           context,
@@ -69,16 +70,11 @@ class _NotGraduatedState extends State<NotGraduated> {
                     onLongPress: () async {
                       await box.deleteAt(index);
                     },
-                    trailing: Icon(
-                      form.isGraduated
-                          ? Icons.check_box
-                          : Icons.check_box_outline_blank,
+                    icon: Icon(
+                      form.isGraduated ? Icons.school : Icons.person,
                       color: Colors.blue,
                     ),
-                    title: Text(
-                      form.nome,
-                      style: TextStyle(fontSize: 20, fontFamily: 'Montserrat'),
-                    ),
+                    text: form.nome ?? "default",
                     subtitle: form.choices == null
                         ? Text("Unknow")
                         : Text(form.choices),
