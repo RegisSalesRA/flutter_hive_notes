@@ -55,7 +55,7 @@ class _HomeState extends State<Home> {
         },
       ),
       appBar: AppBar(
-        title: Text("Hive Form"),
+        title: Text("Hive Developers"),
         centerTitle: true,
         actions: <Widget>[
           PopupMenuButton<String>(
@@ -84,7 +84,7 @@ class _HomeState extends State<Home> {
             return ListView.builder(
                 itemCount: box.length,
                 itemBuilder: (context, index) {
-                  Developer form = box.getAt(index);
+                  Developer dev = box.getAt(index);
 
                   return DeveloperWidget(
                     onTap: () {
@@ -93,20 +93,20 @@ class _HomeState extends State<Home> {
                           MaterialPageRoute(
                               builder: (context) => DeveloperUpdate(
                                     id: index,
-                                    nomeChange: form.nome,
+                                    nomeChange: dev.nome,
                                   )));
                     },
                     onLongPress: () async {
                       await box.deleteAt(index);
                     },
                     icon: Icon(
-                      form.isGraduated ? Icons.school : Icons.person,
+                      dev.isGraduated ? Icons.school : Icons.person,
                       color: Colors.blue,
                     ),
-                    text: form.nome ?? "default",
-                    subtitle: form.choices == null
+                    text: dev.nome ?? "default",
+                    subtitle: dev.choices == null
                         ? Text("Unknow")
-                        : Text(form.choices),
+                        : Text(dev.choices),
                   );
                 });
           },

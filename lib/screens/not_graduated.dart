@@ -42,8 +42,7 @@ class _NotGraduatedState extends State<NotGraduated> {
                 .cast<int>()
                 .where((key) => box.get(key).isGraduated == false)
                 .toList();
-
-            print(keys);
+ 
 
             if (box.values.isEmpty) {
               return Center(
@@ -55,7 +54,7 @@ class _NotGraduatedState extends State<NotGraduated> {
                 itemCount: keys.length,
                 itemBuilder: (context, index) {
                   final int key = keys[index];
-                  final Developer form = box.get(key);
+                  final Developer dev = box.get(key);
 
                   return DeveloperWidget(
                     onTap: () {
@@ -64,20 +63,20 @@ class _NotGraduatedState extends State<NotGraduated> {
                           MaterialPageRoute(
                               builder: (context) => DeveloperUpdate(
                                     id: index,
-                                    nomeChange: form.nome,
+                                    nomeChange: dev.nome,
                                   )));
                     },
                     onLongPress: () async {
                       await box.deleteAt(index);
                     },
                     icon: Icon(
-                      form.isGraduated ? Icons.school : Icons.person,
+                      dev.isGraduated ? Icons.school : Icons.person,
                       color: Colors.blue,
                     ),
-                    text: form.nome ?? "default",
-                    subtitle: form.choices == null
+                    text: dev.nome ?? "default",
+                    subtitle: dev.choices == null
                         ? Text("Unknow")
-                        : Text(form.choices),
+                        : Text(dev.choices),
                   );
                 });
           },
