@@ -26,8 +26,3 @@ flutter packages pub run build_runner build;
 
 # Layout Form
 <img src="readme/form.png" >
- 
-
-
-https://api.flutter.dev/flutter/material/Icons/school-constant.html
-https://api.flutter.dev/flutter/material/Icons/person-constant.html
