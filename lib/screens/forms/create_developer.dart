@@ -26,6 +26,25 @@ class _DeveloperCreateState extends State<DeveloperCreate> {
     }
   }
 
+  List<Map<String, dynamic>> devLevel = [
+    {"nome": "Junior"},
+    {"nome": "Pleno"},
+    {"nome": "Senior"},
+  ];
+
+  List<Map<String, dynamic>> devLevel2 = [
+    {"nome": "Especialista"},
+  ];
+ 
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      devLevel.addAll(devLevel2);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,11 +95,11 @@ class _DeveloperCreateState extends State<DeveloperCreate> {
                             style: TextStyle(color: Colors.black),
                           ),
                         ),
-                  dropdownItens: ['Junior', 'Pleno', 'Senior'].map(
+                  dropdownItens: devLevel.map(
                     (val) {
                       return DropdownMenuItem<String>(
-                        value: val,
-                        child: Text(val),
+                        value: val["nome"],
+                        child: Text(val["nome"]),
                       );
                     },
                   ).toList(),

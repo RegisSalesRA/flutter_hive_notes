@@ -4,7 +4,6 @@ class DropDownWidget extends StatefulWidget {
   Function onChanged;
   List dropdownItens = [];
   Widget hint;
-  
 
   DropDownWidget({Key key, this.onChanged, this.dropdownItens, this.hint})
       : super(key: key);
@@ -20,14 +19,13 @@ class _DropDownWidgetState extends State<DropDownWidget> {
         color: Colors.grey,
         child: DropdownButtonHideUnderline(
           child: DropdownButton(
-            hint: widget.hint,
-            isExpanded: true,
-            style: TextStyle(
-              color: Colors.black,
-            ),
-            items: widget.dropdownItens,
-            onChanged: widget.onChanged
-          ),
+              hint: widget.hint,
+              isExpanded: true,
+              style: TextStyle(
+                color: Colors.black,
+              ),
+              items: widget.dropdownItens,
+              onChanged: widget.onChanged),
         ));
   }
 }
