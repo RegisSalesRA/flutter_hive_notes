@@ -60,7 +60,6 @@ class _HomeState extends State<Home> {
   void dispose() {
     super.dispose();
     _serachController;
-    Hive.box('developers');
   }
 
   @override
@@ -77,137 +76,181 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           title: Text("Hive Developers"),
           centerTitle: true,
-          actions: <Widget>[
-            PopupMenuButton<String>(
-              onSelected: _menuOptions,
-              itemBuilder: (context) {
-                return Menu.map((String item) {
-                  return PopupMenuItem<String>(
-                    value: item,
-                    child: Text(item),
-                  );
-                }).toList();
-              },
+          actions: [
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      dev.clear();
+                    });
+                  },
+                  child: Icon(Icons.refresh),
+                ),
+                PopupMenuButton<String>(
+                  onSelected: _menuOptions,
+                  itemBuilder: (context) {
+                    return Menu.map((String item) {
+                      return PopupMenuItem<String>(
+                        value: item,
+                        child: Text(item),
+                      );
+                    }).toList();
+                  },
+                ),
+              ],
             )
           ],
         ),
-        body: Container(
-            child: Column(
-          children: [
-            Padding(
-                padding: const EdgeInsets.all(10),
-                child: TextField(
-                    style: const TextStyle(color: Colors.black),
-                    onSubmitted: (valorInputSearch) {
-                      searchFunction(valorInputSearch);
-                    },
-                    decoration: InputDecoration(
-                      hintStyle: const TextStyle(color: Colors.black),
-                      contentPadding:
-                          const EdgeInsets.symmetric(vertical: 15.0),
-                      fillColor: Colors.white,
-                      filled: true,
-                      enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue)),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(0.0),
-                          borderSide: const BorderSide(color: Colors.blue)),
-                      hintText: 'Search dev pesquidos',
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        size: 30.0,
-                      ),
-                    ))),
-            Expanded(
-                child: ListView.builder(
-                    itemCount: dev.length,
-                    itemBuilder: (context, index) {
-                      //  Developer dev = dev.getAt(index);
+        body: dev.length != 0
+            ? ValueListenableBuilder(
+                valueListenable: boxform,
+                builder: (context, Box<Developer> box, _) {
+                  if (box.values.isEmpty) {
+                    return Center(
+                      child: Text("No data available!",
+                          style: TextStyle(fontFamily: 'Montserrat')),
+                    );
+                  }
+                  return Column(
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: TextField(
+                              style: const TextStyle(color: Colors.black),
+                              onSubmitted: (valorInputSearch) {
+                                searchFunction(valorInputSearch);
+                              },
+                              decoration: InputDecoration(
+                                hintStyle: const TextStyle(color: Colors.black),
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 15.0),
+                                fillColor: Colors.white,
+                                filled: true,
+                                enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue)),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(0.0),
+                                    borderSide:
+                                        const BorderSide(color: Colors.blue)),
+                                hintText: 'Search dev pesquisados',
+                                prefixIcon: const Icon(
+                                  Icons.search,
+                                  size: 30.0,
+                                ),
+                              ))),
+                      Expanded(
+                          child: ListView.builder(
+                              itemCount: dev.length,
+                              itemBuilder: (context, index) {
+                                return DeveloperWidget(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DeveloperUpdate(
+                                                  id: index,
+                                                  nomeChange: dev[index].nome,
+                                                )));
+                                  },
+                                  onLongPress: () async {
+                                    await box.delete(index);
+                                    final devElement = await box.values
+                                        .firstWhere((element) =>
+                                            element.nome == dev[index].nome);
+                                    await devElement.delete();
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Home()));
+                                  },
+                                  icon: Icon(
+                                    dev[index].isGraduated
+                                        ? Icons.school
+                                        : Icons.person,
+                                    color: Colors.blue,
+                                  ),
+                                  text: dev[index].nome ?? "default",
+                                  subtitle: dev[index].choices == null
+                                      ? Text("Unknow")
+                                      : Text(dev[index].choices),
+                                );
+                              }))
+                    ],
+                  );
+                })
+            : ValueListenableBuilder(
+                valueListenable: boxform,
+                builder: (context, Box<Developer> box, _) {
+                  if (box.values.isEmpty) {
+                    return Center(
+                      child: Text("No data available!",
+                          style: TextStyle(fontFamily: 'Montserrat')),
+                    );
+                  }
+                  return Column(
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: TextField(
+                              style: const TextStyle(color: Colors.black),
+                              onSubmitted: (valorInputSearch) {
+                                searchFunction(valorInputSearch);
+                              },
+                              decoration: InputDecoration(
+                                hintStyle: const TextStyle(color: Colors.black),
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 15.0),
+                                fillColor: Colors.white,
+                                filled: true,
+                                enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue)),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(0.0),
+                                    borderSide:
+                                        const BorderSide(color: Colors.blue)),
+                                hintText: 'Search dev',
+                                prefixIcon: const Icon(
+                                  Icons.search,
+                                  size: 30.0,
+                                ),
+                              ))),
+                      Expanded(
+                          child: ListView.builder(
+                              itemCount: box.length,
+                              itemBuilder: (context, index) {
+                                Developer dev = box.getAt(index);
 
-                      return Text(dev[index].nome);
-                    }))
-          ],
-        )));
+                                return DeveloperWidget(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DeveloperUpdate(
+                                                  id: index,
+                                                  nomeChange: dev.nome,
+                                                )));
+                                  },
+                                  onLongPress: () async {
+                                    await box.deleteAt(index);
+                                  },
+                                  icon: Icon(
+                                    dev.isGraduated
+                                        ? Icons.school
+                                        : Icons.person,
+                                    color: Colors.blue,
+                                  ),
+                                  text: dev.nome ?? "default",
+                                  subtitle: dev.choices == null
+                                      ? Text("Unknow")
+                                      : Text(dev.choices),
+                                );
+                              }))
+                    ],
+                  );
+                },
+              ));
   }
 }
-
-
-/*
-
-ValueListenableBuilder(
-                    valueListenable: boxform,
-                    builder: (context, Box<Developer> box, _) {
-                      if (box.values.isEmpty) {
-                        return Center(
-                          child: Text("No data available!",
-                              style: TextStyle(fontFamily: 'Montserrat')),
-                        );
-                      }
-                      return Column(
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: TextField(
-                                  style: const TextStyle(color: Colors.black),
-                                  onSubmitted: (valorInputSearch) {
-                                    searchFunction(valorInputSearch);
-                                  },
-                                  decoration: InputDecoration(
-                                    hintStyle:
-                                        const TextStyle(color: Colors.black),
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 15.0),
-                                    fillColor: Colors.white,
-                                    filled: true,
-                                    enabledBorder: const OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue)),
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(0.0),
-                                        borderSide: const BorderSide(
-                                            color: Colors.blue)),
-                                    hintText: 'Search dev',
-                                    prefixIcon: const Icon(
-                                      Icons.search,
-                                      size: 30.0,
-                                    ),
-                                  ))),
-                          Expanded(
-                              child: ListView.builder(
-                                  itemCount: box.length,
-                                  itemBuilder: (context, index) {
-                                    Developer dev = box.getAt(index);
-
-                                    return DeveloperWidget(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    DeveloperUpdate(
-                                                      id: index,
-                                                      nomeChange: dev.nome,
-                                                    )));
-                                      },
-                                      onLongPress: () async {
-                                        await box.deleteAt(index);
-                                      },
-                                      icon: Icon(
-                                        dev.isGraduated
-                                            ? Icons.school
-                                            : Icons.person,
-                                        color: Colors.blue,
-                                      ),
-                                      text: dev.nome ?? "default",
-                                      subtitle: dev.choices == null
-                                          ? Text("Unknow")
-                                          : Text(dev.choices),
-                                    );
-                                  }))
-                        ],
-                      );
-                    },
-                  )
-
-*/
