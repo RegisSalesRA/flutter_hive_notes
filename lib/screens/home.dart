@@ -155,8 +155,8 @@ class _HomeState extends State<Home> {
                                                 )));
                                   },
                                   onLongPress: () async {
-                                    await box.delete(index);
-                                    final devElement = await box.values
+                                   
+                                    final devElement = box.values
                                         .firstWhere((element) =>
                                             element.nome == dev[index].nome);
                                     await devElement.delete();
