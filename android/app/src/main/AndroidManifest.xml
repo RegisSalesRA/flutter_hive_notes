@@ -2,7 +2,7 @@
     package="com.example.flutter_hive">
    <application
         android:label="flutter_hive"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

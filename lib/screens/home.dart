@@ -74,6 +74,7 @@ class _HomeState extends State<Home> {
           },
         ),
         appBar: AppBar(
+          backgroundColor: Color(0xFF00BCD4),
           title: Text("Hive Developers"),
           centerTitle: true,
           actions: [
@@ -155,9 +156,8 @@ class _HomeState extends State<Home> {
                                                 )));
                                   },
                                   onLongPress: () async {
-                                   
-                                    final devElement = box.values
-                                        .firstWhere((element) =>
+                                    final devElement = box.values.firstWhere(
+                                        (element) =>
                                             element.nome == dev[index].nome);
                                     await devElement.delete();
                                     Navigator.pushReplacement(
