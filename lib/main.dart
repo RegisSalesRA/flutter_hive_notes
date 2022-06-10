@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Hive',
+      title: 'Dev Hive',
       theme: ThemeData(
         primaryColor: Color(0xFF00BCD4),
       ),
