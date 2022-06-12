@@ -74,5 +74,4 @@ $ flutter run
 </p>
 <p align="center">
  Estudar é fundamental para um bom futuro, estudar e praticar é a chave do SUCESSO!
-
 </p>
