@@ -41,7 +41,7 @@ Desenvolvimento focado em mostrar o funcionamento da ferramenta hive.
 ```
 
 - Clone o repositório:
-$ git clone [https://github.com/DuhAlonso/picpay_clone.git](https://github.com/RegisSalesRA/Flutter_Hive.git)
+$ git clone https://github.com/RegisSalesRA/Flutter_Hive.git
 
 - Entre no diretório:
 $ cd flutter_hive
