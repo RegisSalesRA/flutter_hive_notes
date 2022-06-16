@@ -12,7 +12,7 @@ Dados persistentes nativos
    - [📱 Screenshots](#Screenshots)
    - [👨🏽‍💻 Desenvolvimento](#Sobre-o-desenvolvimento)
    - [📲 Como Utilizar](#Como-Utilizar)
-   - [🛠 Ferramentas](#Ferramentas-utilizadas)
+   - [🛠 Ferramentas](#Packages-utilizados)
 
    </p>
 
@@ -58,7 +58,7 @@ $ flutter run
  
 <p>
 
-<h2>Packages utilizadas</h2>
+<h2>Packages utilizados</h2>
 <p>
 
 - hive
