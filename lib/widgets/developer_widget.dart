@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hive/css/colors.dart';
 
 class DeveloperWidget extends StatelessWidget {
   final Function onTap;
@@ -21,10 +22,19 @@ class DeveloperWidget extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.all(10),
         child: Container(
+            margin: EdgeInsets.all(8),
             decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey,
-              ),
+              
+              borderRadius: BorderRadius.circular(8.0),
+              color: CustomColors.theme,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black,
+                  blurRadius: 2.0,
+                  spreadRadius: 0.0,
+                  offset: Offset(2.0, 2.0),
+                )
+              ],
             ),
             child: ListTile(
                 onTap: onTap,

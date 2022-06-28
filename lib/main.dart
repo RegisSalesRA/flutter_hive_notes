@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hive/css/colors.dart';
 import 'package:flutter_hive/screens/home.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Dev Hive',
       theme: ThemeData(
-        primaryColor: Color(0xFF00BCD4),
+        primaryColor: CustomColors.theme,
       ),
       home: Home(),
     );

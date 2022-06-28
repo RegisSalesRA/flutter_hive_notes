@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hive/css/colors.dart';
 import 'package:flutter_hive/models/developer.dart';
 import 'package:flutter_hive/screens/forms/update_developer.dart';
 import 'package:flutter_hive/widgets/developer_widget.dart';
@@ -126,14 +127,14 @@ class _HomeState extends State<Home> {
                                 hintStyle: const TextStyle(color: Colors.black),
                                 contentPadding:
                                     const EdgeInsets.symmetric(vertical: 15.0),
-                                fillColor: Colors.white,
                                 filled: true,
                                 enabledBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue)),
+                                    borderSide:
+                                        BorderSide(color: CustomColors.theme)),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(0.0),
-                                    borderSide:
-                                        const BorderSide(color: Colors.blue)),
+                                    borderSide: const BorderSide(
+                                        color: CustomColors.theme)),
                                 hintText: 'Search dev pesquisados',
                                 prefixIcon: const Icon(
                                   Icons.search,
@@ -199,17 +200,21 @@ class _HomeState extends State<Home> {
                                 searchFunction(valorInputSearch);
                               },
                               decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: CustomColors.theme)),
                                 hintStyle: const TextStyle(color: Colors.black),
                                 contentPadding:
                                     const EdgeInsets.symmetric(vertical: 15.0),
                                 fillColor: Colors.white,
                                 filled: true,
                                 enabledBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue)),
+                                    borderSide:
+                                        BorderSide(color: CustomColors.theme)),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(0.0),
-                                    borderSide:
-                                        const BorderSide(color: Colors.blue)),
+                                    borderSide: const BorderSide(
+                                        color: CustomColors.theme)),
                                 hintText: 'Search dev',
                                 prefixIcon: const Icon(
                                   Icons.search,
@@ -240,7 +245,7 @@ class _HomeState extends State<Home> {
                                     dev.isGraduated
                                         ? Icons.school
                                         : Icons.person,
-                                    color: Colors.blue,
+                                    color: Colors.red,
                                   ),
                                   text: dev.nome ?? "default",
                                   subtitle: dev.choices == null
