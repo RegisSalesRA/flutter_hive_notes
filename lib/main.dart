@@ -27,8 +27,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Dev Hive',
       theme: ThemeData(
-        primaryColor: CustomColors.theme,
-      ),
+          accentColor: CustomColors.theme,
+          primaryColor: CustomColors.theme,
+          splashColor: CustomColors.theme),
       home: Home(),
     );
   }
