@@ -65,8 +65,10 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
         floatingActionButton: FloatingActionButton(
+          backgroundColor: CustomColors.theme,
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.of(context).push(
@@ -119,12 +121,14 @@ class _HomeState extends State<Home> {
                       Padding(
                           padding: const EdgeInsets.all(10),
                           child: TextField(
-                              style: const TextStyle(color: Colors.black),
+                              style: const TextStyle(
+                                  color: CustomColors.textInput),
                               onSubmitted: (valorInputSearch) {
                                 searchFunction(valorInputSearch);
                               },
                               decoration: InputDecoration(
-                                hintStyle: const TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(
+                                    color: CustomColors.textInput),
                                 contentPadding:
                                     const EdgeInsets.symmetric(vertical: 15.0),
                                 filled: true,
@@ -138,6 +142,7 @@ class _HomeState extends State<Home> {
                                 hintText: 'Search dev pesquisados',
                                 prefixIcon: const Icon(
                                   Icons.search,
+                                  color: CustomColors.theme,
                                   size: 30.0,
                                 ),
                               ))),
@@ -170,7 +175,7 @@ class _HomeState extends State<Home> {
                                     dev[index].isGraduated
                                         ? Icons.school
                                         : Icons.person,
-                                    color: Colors.blue,
+                                    color: CustomColors.textColor,
                                   ),
                                   text: dev[index].nome ?? "default",
                                   subtitle: dev[index].choices == null
@@ -192,10 +197,12 @@ class _HomeState extends State<Home> {
                   }
                   return Column(
                     children: [
-                      Padding(
+                      Container(
+                          width: size.width * 0.95,
                           padding: const EdgeInsets.all(10),
                           child: TextField(
-                              style: const TextStyle(color: Colors.black),
+                              style: const TextStyle(
+                                  color: CustomColors.textInput),
                               onSubmitted: (valorInputSearch) {
                                 searchFunction(valorInputSearch);
                               },
@@ -203,10 +210,11 @@ class _HomeState extends State<Home> {
                                 focusedBorder: OutlineInputBorder(
                                     borderSide:
                                         BorderSide(color: CustomColors.theme)),
-                                hintStyle: const TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(
+                                    color: CustomColors.textInput),
                                 contentPadding:
                                     const EdgeInsets.symmetric(vertical: 15.0),
-                                fillColor: Colors.white,
+                                fillColor: CustomColors.textColor,
                                 filled: true,
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide:
@@ -218,41 +226,55 @@ class _HomeState extends State<Home> {
                                 hintText: 'Search dev',
                                 prefixIcon: const Icon(
                                   Icons.search,
+                                  color: CustomColors.theme,
                                   size: 30.0,
                                 ),
                               ))),
-                      Expanded(
-                          child: ListView.builder(
-                              itemCount: box.length,
-                              itemBuilder: (context, index) {
-                                Developer dev = box.getAt(index);
+                      Container(
+                        width: size.width * 0.99,
+                        child: Expanded(
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: box.length,
+                                itemBuilder: (context, index) {
+                                  Developer dev = box.getAt(index);
 
-                                return DeveloperWidget(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                DeveloperUpdate(
-                                                  id: index,
-                                                  nomeChange: dev.nome,
-                                                )));
-                                  },
-                                  onLongPress: () async {
-                                    await box.deleteAt(index);
-                                  },
-                                  icon: Icon(
-                                    dev.isGraduated
-                                        ? Icons.school
-                                        : Icons.person,
-                                    color: Colors.red,
-                                  ),
-                                  text: dev.nome ?? "default",
-                                  subtitle: dev.choices == null
-                                      ? Text("Unknow")
-                                      : Text(dev.choices),
-                                );
-                              }))
+                                  return DeveloperWidget(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DeveloperUpdate(
+                                                      id: index,
+                                                      nomeChange: dev.nome,
+                                                    )));
+                                      },
+                                      onLongPress: () async {
+                                        await box.deleteAt(index);
+                                      },
+                                      icon: Icon(
+                                        dev.isGraduated
+                                            ? Icons.school
+                                            : Icons.person,
+                                        color: CustomColors.textColor,
+                                      ),
+                                      text: dev.nome ?? "default",
+                                      subtitle: dev.choices == null
+                                          ? Text(
+                                              "Unknow",
+                                              style: TextStyle(
+                                                  color:
+                                                      CustomColors.textColor),
+                                            )
+                                          : Text(
+                                              dev.choices,
+                                              style: TextStyle(
+                                                  color:
+                                                      CustomColors.textColor),
+                                            ));
+                                })),
+                      )
                     ],
                   );
                 },

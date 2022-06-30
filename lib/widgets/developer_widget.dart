@@ -24,7 +24,6 @@ class DeveloperWidget extends StatelessWidget {
         child: Container(
             margin: EdgeInsets.all(8),
             decoration: BoxDecoration(
-              
               borderRadius: BorderRadius.circular(8.0),
               color: CustomColors.theme,
               boxShadow: [
@@ -42,7 +41,10 @@ class DeveloperWidget extends StatelessWidget {
                 trailing: icon,
                 title: Text(
                   text,
-                  style: TextStyle(fontSize: 20, fontFamily: 'Montserrat'),
+                  style: TextStyle(
+                      color: CustomColors.textColor,
+                      fontSize: 20,
+                      fontFamily: 'Montserrat'),
                 ),
                 subtitle: subtitle)));
   }
