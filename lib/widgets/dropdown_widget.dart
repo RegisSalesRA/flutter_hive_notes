@@ -16,16 +16,15 @@ class _DropDownWidgetState extends State<DropDownWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.grey,
+        color: Colors.green,
         child: DropdownButtonHideUnderline(
-          child: DropdownButton(
-              hint: widget.hint,
-              isExpanded: true,
-              style: TextStyle(
-                color: Colors.black,
-              ),
-              items: widget.dropdownItens,
-              onChanged: widget.onChanged),
-        ));
+            child: DropdownButton(
+                hint: widget.hint,
+                isExpanded: true,
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+                items: widget.dropdownItens,
+                onChanged: widget.onChanged)));
   }
 }
