@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hive/css/colors.dart';
 
 class DropDownWidget extends StatefulWidget {
   Function onChanged;
@@ -16,15 +17,23 @@ class _DropDownWidgetState extends State<DropDownWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.green,
+        color: CustomColors.theme,
         child: DropdownButtonHideUnderline(
-            child: DropdownButton(
-                hint: widget.hint,
-                isExpanded: true,
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-                items: widget.dropdownItens,
-                onChanged: widget.onChanged)));
+            child: ButtonTheme(
+          alignedDropdown: true,
+          child: DropdownButton(
+              hint: widget.hint,
+              elevation: 16,
+              isExpanded: true,
+              icon: Icon(
+                Icons.arrow_drop_down,
+                color: CustomColors.textColor,
+              ),
+              style: TextStyle(
+                color: CustomColors.textInput,
+              ),
+              items: widget.dropdownItens,
+              onChanged: widget.onChanged),
+        )));
   }
 }
