@@ -69,7 +69,10 @@ class _HomeState extends State<Home> {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: CustomColors.theme,
-          child: Icon(Icons.add),
+          child: Icon(
+            Icons.add,
+            color: CustomColors.textColor,
+          ),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => DeveloperCreate()),
@@ -146,43 +149,46 @@ class _HomeState extends State<Home> {
                                   size: 30.0,
                                 ),
                               ))),
-                      Expanded(
-                          child: ListView.builder(
-                              itemCount: dev.length,
-                              itemBuilder: (context, index) {
-                                return DeveloperWidget(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                DeveloperUpdate(
-                                                  id: index,
-                                                  nomeChange: dev[index].nome,
-                                                )));
-                                  },
-                                  onLongPress: () async {
-                                    final devElement = box.values.firstWhere(
-                                        (element) =>
-                                            element.nome == dev[index].nome);
-                                    await devElement.delete();
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Home()));
-                                  },
-                                  icon: Icon(
-                                    dev[index].isGraduated
-                                        ? Icons.school
-                                        : Icons.person,
-                                    color: CustomColors.textColor,
-                                  ),
-                                  text: dev[index].nome ?? "default",
-                                  subtitle: dev[index].choices == null
-                                      ? Text("Unknow")
-                                      : Text(dev[index].choices),
-                                );
-                              }))
+                      ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: dev.length,
+                          itemBuilder: (context, index) {
+                            return DeveloperWidget(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DeveloperUpdate(
+                                              id: index,
+                                              nomeChange: dev[index].nome,
+                                            )));
+                              },
+                              onLongPress: () async {
+                                final devElement = box.values.firstWhere(
+                                    (element) =>
+                                        element.nome == dev[index].nome);
+                                await devElement.delete();
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Home()));
+                              },
+                              icon: Icon(
+                                dev[index].isGraduated
+                                    ? Icons.school
+                                    : Icons.person,
+                                color: CustomColors.textColor,
+                              ),
+                              text: dev[index].nome ?? "default",
+                              subtitle: dev[index].choices == null
+                                  ? Text("Unknow")
+                                  : Text(
+                                      dev[index].choices,
+                                      style: TextStyle(
+                                          color: CustomColors.textColor),
+                                    ),
+                            );
+                          })
                     ],
                   );
                 })
@@ -229,51 +235,50 @@ class _HomeState extends State<Home> {
                                   color: CustomColors.theme,
                                   size: 30.0,
                                 ),
-                              ))),
+                              )
+                              )
+                              ),
                       Container(
                         width: size.width * 0.99,
-                        child: Expanded(
-                            child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: box.length,
-                                itemBuilder: (context, index) {
-                                  Developer dev = box.getAt(index);
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: box.length,
+                            itemBuilder: (context, index) {
+                              Developer dev = box.getAt(index);
 
-                                  return DeveloperWidget(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    DeveloperUpdate(
-                                                      id: index,
-                                                      nomeChange: dev.nome,
-                                                    )));
-                                      },
-                                      onLongPress: () async {
-                                        await box.deleteAt(index);
-                                      },
-                                      icon: Icon(
-                                        dev.isGraduated
-                                            ? Icons.school
-                                            : Icons.person,
-                                        color: CustomColors.textColor,
-                                      ),
-                                      text: dev.nome ?? "default",
-                                      subtitle: dev.choices == null
-                                          ? Text(
-                                              "Unknow",
-                                              style: TextStyle(
-                                                  color:
-                                                      CustomColors.textColor),
-                                            )
-                                          : Text(
-                                              dev.choices,
-                                              style: TextStyle(
-                                                  color:
-                                                      CustomColors.textColor),
-                                            ));
-                                })),
+                              return DeveloperWidget(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DeveloperUpdate(
+                                                  id: index,
+                                                  nomeChange: dev.nome,
+                                                )));
+                                  },
+                                  onLongPress: () async {
+                                    await box.deleteAt(index);
+                                  },
+                                  icon: Icon(
+                                    dev.isGraduated
+                                        ? Icons.school
+                                        : Icons.person,
+                                    color: CustomColors.textColor,
+                                  ),
+                                  text: dev.nome ?? "default",
+                                  subtitle: dev.choices == null
+                                      ? Text(
+                                          "Unknow",
+                                          style: TextStyle(
+                                              color: CustomColors.textColor),
+                                        )
+                                      : Text(
+                                          dev.choices,
+                                          style: TextStyle(
+                                              color: CustomColors.textColor),
+                                        ));
+                            }),
                       )
                     ],
                   );

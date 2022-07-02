@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hive/css/colors.dart';
 import 'package:flutter_hive/models/developer.dart';
 import 'package:flutter_hive/widgets/checkbox_widget.dart';
 import 'package:hive/hive.dart';
@@ -35,7 +36,6 @@ class _DeveloperCreateState extends State<DeveloperCreate> {
   List<Map<String, dynamic>> devLevel2 = [
     {"nome": "Especialista"},
   ];
- 
 
   @override
   void initState() {
@@ -49,6 +49,7 @@ class _DeveloperCreateState extends State<DeveloperCreate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: CustomColors.theme,
         centerTitle: true,
         title: Text("Create Developer",
             style: TextStyle(fontFamily: 'Montserrat')),
@@ -117,7 +118,7 @@ class _DeveloperCreateState extends State<DeveloperCreate> {
                 CheckBoxWidget(
                   checkedIten: Checkbox(
                     value: isGraduated,
-                    activeColor: Colors.orange,
+                    activeColor: CustomColors.theme,
                     onChanged: (bool valor) {
                       setState(() {
                         isGraduated = valor;
@@ -129,7 +130,10 @@ class _DeveloperCreateState extends State<DeveloperCreate> {
                   height: 60,
                 ),
                 ElevatedButton(
-                    onPressed: submitData, child: Text('Register Developer')),
+                    style:
+                        ElevatedButton.styleFrom(primary: CustomColors.theme),
+                    onPressed: submitData,
+                    child: Text('Register Developer')),
               ],
             )),
       ),
