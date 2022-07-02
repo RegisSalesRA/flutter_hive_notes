@@ -86,21 +86,22 @@ class _DeveloperCreateState extends State<DeveloperCreate> {
                           padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                           child: Text(
                             'Selecione a opção',
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(
+                                fontSize: 18, color: CustomColors.textColor),
                           ),
                         )
                       : Padding(
                           padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                           child: Text(
                             choices,
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: CustomColors.textColor),
                           ),
                         ),
                   dropdownItens: devLevel.map(
                     (val) {
                       return DropdownMenuItem<String>(
                         value: val["nome"],
-                        child: Text(val["nome"]),
+                        child: Container(width: 100, child: Text(val["nome"])),
                       );
                     },
                   ).toList(),

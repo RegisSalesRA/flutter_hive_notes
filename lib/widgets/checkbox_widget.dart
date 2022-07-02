@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hive/css/colors.dart';
 
 class CheckBoxWidget extends StatefulWidget {
   Widget checkedIten;
@@ -12,11 +13,14 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      padding: EdgeInsets.all(10),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         Text(
-          'Press if developer is graduated',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          'Graduated?',
+          style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: CustomColors.theme),
         ),
         widget.checkedIten
       ]),
