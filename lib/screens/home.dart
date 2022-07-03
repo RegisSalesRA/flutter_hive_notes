@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/css/colors.dart';
 import 'package:flutter_hive/models/developer.dart';
+import 'package:flutter_hive/widgets/appbar_widget.dart';
 import 'package:flutter_hive/widgets/developer_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -52,14 +53,7 @@ class _HomeState extends State<Home> {
           dev.add(iten);
         });
       }
-    }
-    print("Lista filtrada de ${dev}");
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _serachController;
+    } 
   }
 
   @override
@@ -78,12 +72,9 @@ class _HomeState extends State<Home> {
             );
           },
         ),
-        appBar: AppBar(
-          backgroundColor: Color(0xFF00BCD4),
-          title: Text("Hive Developers"),
-          centerTitle: true,
-          actions: [
-            Row(
+        appBar: MyAppBar(
+            title: "Hive Developers",
+            actionsAppBar: Row(
               children: [
                 InkWell(
                   onTap: () {
@@ -105,9 +96,7 @@ class _HomeState extends State<Home> {
                   },
                 ),
               ],
-            )
-          ],
-        ),
+            )),
         body: dev.length != 0
             ? ValueListenableBuilder(
                 valueListenable: boxform,
@@ -248,8 +237,7 @@ class _HomeState extends State<Home> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                FormDeveloper(
+                                            builder: (context) => FormDeveloper(
                                                   id: index,
                                                   nomeChange: dev.nome,
                                                 )));
