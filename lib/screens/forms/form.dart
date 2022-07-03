@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/css/colors.dart';
 import 'package:flutter_hive/models/developer.dart';
+import 'package:flutter_hive/widgets/appbar_widget.dart';
 import 'package:flutter_hive/widgets/checkbox_widget.dart';
 import 'package:hive/hive.dart';
 
@@ -63,96 +64,102 @@ class _FormDeveloperState extends State<FormDeveloper> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: CustomColors.theme,
-        centerTitle: true,
-        title: Text(widget.id == null ? "Create Developer" : widget.nomeChange,
-            style: TextStyle(fontFamily: 'Montserrat')),
+      appBar: MyAppBar(
+        title: widget.id == null ? "Create Developer" : widget.nomeChange,
+        actionsAppBar: Container(),
       ),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: Form(
-            key: widget.developerForm,
-            child: ListView(
-              children: [
-                SizedBox(
-                  height: 5,
-                ),
-                InputText(
-                  nome: nome,
-                  validator: (v) {
-                    if (v.isEmpty) {
-                      return "Por favor preencher os dados";
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    setState(() {
-                      nome = value;
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                DropDownWidget(
-                  hint: choices == null
-                      ? Padding(
-                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                          child: Text(
-                            'Selecione a opção',
-                            style: TextStyle(
-                                fontSize: 18, color: CustomColors.textColor),
-                          ),
-                        )
-                      : Padding(
-                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                          child: Text(
-                            choices,
-                            style: TextStyle(color: CustomColors.textColor),
-                          ),
-                        ),
-                  dropdownItens: devLevel.map(
-                    (val) {
-                      return DropdownMenuItem<String>(
-                        value: val["nome"],
-                        child: Container(width: 100, child: Text(val["nome"])),
-                      );
+      body: Center(
+        child: Container(
+          width: size.width * 0.95,
+          padding: EdgeInsets.all(5),
+          child: Form(
+              key: widget.developerForm,
+              child: ListView(
+                children: [
+                  SizedBox(
+                    height: 5,
+                  ),
+                  InputText(
+                    nome: nome,
+                    validator: (v) {
+                      if (v.isEmpty) {
+                        return "Por favor preencher os dados";
+                      }
+                      return null;
                     },
-                  ).toList(),
-                  onChanged: (val) {
-                    setState(
-                      () {
-                        choices = val;
-                      },
-                    );
-                  },
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                CheckBoxWidget(
-                  checkedIten: Checkbox(
-                    value: isGraduated,
-                    activeColor: CustomColors.theme,
-                    onChanged: (bool valor) {
+                    onChanged: (value) {
                       setState(() {
-                        isGraduated = valor;
+                        nome = value;
                       });
                     },
                   ),
-                ),
-                SizedBox(
-                  height: 60,
-                ),
-                ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(primary: CustomColors.theme),
-                    onPressed: submitData,
-                    child: Text('Submit')),
-              ],
-            )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  DropDownWidget(
+                    hint: choices == null
+                        ? Padding(
+                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            child: Text(
+                              'Selecione a opção',
+                              style: TextStyle(
+                                  fontSize: 18, color: CustomColors.textColor),
+                            ),
+                          )
+                        : Padding(
+                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            child: Text(
+                              choices,
+                              style: TextStyle(color: CustomColors.textColor),
+                            ),
+                          ),
+                    dropdownItens: devLevel.map(
+                      (val) {
+                        return DropdownMenuItem<String>(
+                          value: val["nome"],
+                          child:
+                              Container(width: 100, child: Text(val["nome"])),
+                        );
+                      },
+                    ).toList(),
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          choices = val;
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  CheckBoxWidget(
+                    checkedIten: Checkbox(
+                      value: isGraduated,
+                      activeColor: CustomColors.theme,
+                      onChanged: (bool valor) {
+                        setState(() {
+                          isGraduated = valor;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 60,
+                  ),
+                  ElevatedButton(
+                      style:
+                          ElevatedButton.styleFrom(primary: CustomColors.theme),
+                      onPressed: submitData,
+                      child: widget.id == null
+                          ? Text("Create Developer")
+                          : Text("Update Developer")),
+                ],
+              )),
+        ),
       ),
     );
   }
