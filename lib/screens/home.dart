@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
           dev.add(iten);
         });
       }
-    } 
+    }
   }
 
   @override
@@ -107,77 +107,86 @@ class _HomeState extends State<Home> {
                           style: TextStyle(fontFamily: 'Montserrat')),
                     );
                   }
-                  return Column(
-                    children: [
-                      Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: TextField(
-                              style: const TextStyle(
-                                  color: CustomColors.textInput),
-                              onSubmitted: (valorInputSearch) {
-                                searchFunction(valorInputSearch);
-                              },
-                              decoration: InputDecoration(
-                                hintStyle: const TextStyle(
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: [
+                        Container(
+                            width: size.width * 0.95,
+                            padding: const EdgeInsets.all(10),
+                            child: TextField(
+                                style: const TextStyle(
                                     color: CustomColors.textInput),
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 15.0),
-                                filled: true,
-                                enabledBorder: const OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: CustomColors.theme)),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(0.0),
-                                    borderSide: const BorderSide(
-                                        color: CustomColors.theme)),
-                                hintText: 'Search dev pesquisados',
-                                prefixIcon: const Icon(
-                                  Icons.search,
-                                  color: CustomColors.theme,
-                                  size: 30.0,
+                                onSubmitted: (valorInputSearch) {
+                                  searchFunction(valorInputSearch);
+                                },
+                                decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: CustomColors.theme)),
+                                  hintStyle: const TextStyle(
+                                      color: CustomColors.textInput),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 15.0),
+                                  fillColor: CustomColors.textColor,
+                                  filled: true,
+                                  enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: CustomColors.theme)),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(0.0),
+                                      borderSide: const BorderSide(
+                                          color: CustomColors.theme)),
+                                  hintText: 'Search developer',
+                                  prefixIcon: const Icon(
+                                    Icons.search,
+                                    color: CustomColors.theme,
+                                    size: 30.0,
+                                  ),
+                                ))),
+                        ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: dev.length,
+                            itemBuilder: (context, index) {
+                              return DeveloperWidget(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => FormDeveloper(
+                                                id: index,
+                                                nomeChange: dev[index].nome,
+                                              )));
+                                },
+                                onLongPress: () async {
+                                  final devElement = box.values.firstWhere(
+                                      (element) =>
+                                          element.nome == dev[index].nome);
+                                  await devElement.delete();
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Home()));
+                                },
+                                icon: Icon(
+                                  dev[index].isGraduated
+                                      ? Icons.school
+                                      : Icons.person,
+                                  color: CustomColors.textColor,
                                 ),
-                              ))),
-                      ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: dev.length,
-                          itemBuilder: (context, index) {
-                            return DeveloperWidget(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => FormDeveloper(
-                                              id: index,
-                                              nomeChange: dev[index].nome,
-                                            )));
-                              },
-                              onLongPress: () async {
-                                final devElement = box.values.firstWhere(
-                                    (element) =>
-                                        element.nome == dev[index].nome);
-                                await devElement.delete();
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Home()));
-                              },
-                              icon: Icon(
-                                dev[index].isGraduated
-                                    ? Icons.school
-                                    : Icons.person,
-                                color: CustomColors.textColor,
-                              ),
-                              text: dev[index].nome ?? "default",
-                              subtitle: dev[index].choices == null
-                                  ? Text("Unknow")
-                                  : Text(
-                                      dev[index].choices,
-                                      style: TextStyle(
-                                          color: CustomColors.textColor),
-                                    ),
-                            );
-                          })
-                    ],
+                                text: dev[index].nome ?? "default",
+                                subtitle: dev[index].choices == null
+                                    ? Text("Unknow")
+                                    : Text(
+                                        dev[index].choices,
+                                        style: TextStyle(
+                                            color: CustomColors.textColor),
+                                      ),
+                              );
+                            })
+                      ],
+                    ),
                   );
                 })
             : ValueListenableBuilder(
@@ -189,83 +198,88 @@ class _HomeState extends State<Home> {
                           style: TextStyle(fontFamily: 'Montserrat')),
                     );
                   }
-                  return Column(
-                    children: [
-                      Container(
-                          width: size.width * 0.95,
-                          padding: const EdgeInsets.all(10),
-                          child: TextField(
-                              style: const TextStyle(
-                                  color: CustomColors.textInput),
-                              onSubmitted: (valorInputSearch) {
-                                searchFunction(valorInputSearch);
-                              },
-                              decoration: InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: CustomColors.theme)),
-                                hintStyle: const TextStyle(
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: [
+                        Container(
+                            width: size.width * 0.95,
+                            padding: const EdgeInsets.all(10),
+                            child: TextField(
+                                style: const TextStyle(
                                     color: CustomColors.textInput),
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 15.0),
-                                fillColor: CustomColors.textColor,
-                                filled: true,
-                                enabledBorder: const OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: CustomColors.theme)),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(0.0),
-                                    borderSide: const BorderSide(
-                                        color: CustomColors.theme)),
-                                hintText: 'Search dev',
-                                prefixIcon: const Icon(
-                                  Icons.search,
-                                  color: CustomColors.theme,
-                                  size: 30.0,
-                                ),
-                              ))),
-                      Container(
-                        width: size.width * 0.99,
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: box.length,
-                            itemBuilder: (context, index) {
-                              Developer dev = box.getAt(index);
-
-                              return DeveloperWidget(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => FormDeveloper(
-                                                  id: index,
-                                                  nomeChange: dev.nome,
-                                                )));
-                                  },
-                                  onLongPress: () async {
-                                    await box.deleteAt(index);
-                                  },
-                                  icon: Icon(
-                                    dev.isGraduated
-                                        ? Icons.school
-                                        : Icons.person,
-                                    color: CustomColors.textColor,
+                                onSubmitted: (valorInputSearch) {
+                                  searchFunction(valorInputSearch);
+                                },
+                                decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: CustomColors.theme)),
+                                  hintStyle: const TextStyle(
+                                      color: CustomColors.textInput),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 15.0),
+                                  fillColor: CustomColors.textColor,
+                                  filled: true,
+                                  enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: CustomColors.theme)),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(0.0),
+                                      borderSide: const BorderSide(
+                                          color: CustomColors.theme)),
+                                  hintText: 'Search developer',
+                                  prefixIcon: const Icon(
+                                    Icons.search,
+                                    color: CustomColors.theme,
+                                    size: 30.0,
                                   ),
-                                  text: dev.nome ?? "default",
-                                  subtitle: dev.choices == null
-                                      ? Text(
-                                          "Unknow",
-                                          style: TextStyle(
-                                              color: CustomColors.textColor),
-                                        )
-                                      : Text(
-                                          dev.choices,
-                                          style: TextStyle(
-                                              color: CustomColors.textColor),
-                                        ));
-                            }),
-                      )
-                    ],
+                                ))),
+                        Container(
+                          width: size.width * 0.99,
+                          child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: box.length,
+                              itemBuilder: (context, index) {
+                                Developer dev = box.getAt(index);
+
+                                return DeveloperWidget(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FormDeveloper(
+                                                    id: index,
+                                                    nomeChange: dev.nome,
+                                                  )));
+                                    },
+                                    onLongPress: () async {
+                                      await box.deleteAt(index);
+                                    },
+                                    icon: Icon(
+                                      dev.isGraduated
+                                          ? Icons.school
+                                          : Icons.person,
+                                      color: CustomColors.textColor,
+                                    ),
+                                    text: dev.nome ?? "default",
+                                    subtitle: dev.choices == null
+                                        ? Text(
+                                            "Unknow",
+                                            style: TextStyle(
+                                                color: CustomColors.textColor),
+                                          )
+                                        : Text(
+                                            dev.choices,
+                                            style: TextStyle(
+                                                color: CustomColors.textColor),
+                                          ));
+                              }),
+                        )
+                      ],
+                    ),
                   );
                 },
               ));

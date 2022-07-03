@@ -86,7 +86,7 @@ class _FormDeveloperState extends State<FormDeveloper> {
                     nome: nome,
                     validator: (v) {
                       if (v.isEmpty) {
-                        return "Por favor preencher os dados";
+                        return "Field can not be empty";
                       }
                       return null;
                     },
@@ -104,7 +104,7 @@ class _FormDeveloperState extends State<FormDeveloper> {
                         ? Padding(
                             padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                             child: Text(
-                              'Selecione a opção',
+                              'Select option',
                               style: TextStyle(
                                   fontSize: 18, color: CustomColors.textColor),
                             ),
