@@ -51,7 +51,7 @@ class _FormDeveloperState extends State<FormDeveloper> {
   ];
 
   List<Map<String, dynamic>> devLevel2 = [
-    {"nome": "Especialista"},
+    {"nome": "Especialist"},
   ];
 
   @override
