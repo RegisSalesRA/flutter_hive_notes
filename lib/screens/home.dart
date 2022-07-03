@@ -2,12 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/css/colors.dart';
 import 'package:flutter_hive/models/developer.dart';
-import 'package:flutter_hive/screens/forms/update_developer.dart';
 import 'package:flutter_hive/widgets/developer_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'graduated.dart';
-import 'forms/create_developer.dart';
+import 'forms/form.dart';
 import 'not_graduated.dart';
 
 class Home extends StatefulWidget {
@@ -75,7 +74,7 @@ class _HomeState extends State<Home> {
           ),
           onPressed: () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => DeveloperCreate()),
+              MaterialPageRoute(builder: (context) => FormDeveloper()),
             );
           },
         ),
@@ -158,7 +157,7 @@ class _HomeState extends State<Home> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => DeveloperUpdate(
+                                        builder: (context) => FormDeveloper(
                                               id: index,
                                               nomeChange: dev[index].nome,
                                             )));
@@ -235,9 +234,7 @@ class _HomeState extends State<Home> {
                                   color: CustomColors.theme,
                                   size: 30.0,
                                 ),
-                              )
-                              )
-                              ),
+                              ))),
                       Container(
                         width: size.width * 0.99,
                         child: ListView.builder(
@@ -252,7 +249,7 @@ class _HomeState extends State<Home> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                DeveloperUpdate(
+                                                FormDeveloper(
                                                   id: index,
                                                   nomeChange: dev.nome,
                                                 )));

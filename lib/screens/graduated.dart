@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/models/developer.dart';
-import 'package:flutter_hive/screens/forms/update_developer.dart';
+import 'package:flutter_hive/models/developer.dart'; 
 import 'package:flutter_hive/widgets/developer_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'forms/create_developer.dart';
+import 'forms/form.dart';
 
 class Graduated extends StatefulWidget {
   @override
@@ -26,7 +25,7 @@ class _GraduatedState extends State<Graduated> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => DeveloperCreate()),
+            MaterialPageRoute(builder: (context) => FormDeveloper()),
           );
         },
       ),
@@ -62,7 +61,7 @@ class _GraduatedState extends State<Graduated> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DeveloperUpdate(
+                              builder: (context) => FormDeveloper(
                                     id: index,
                                     nomeChange: dev.nome,
                                   )));

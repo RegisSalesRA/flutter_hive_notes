@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/developer.dart';
-import 'package:flutter_hive/screens/forms/update_developer.dart';
 import 'package:flutter_hive/widgets/developer_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'forms/create_developer.dart';
+import 'forms/form.dart';
 
 class NotGraduated extends StatefulWidget {
   @override
@@ -24,7 +23,7 @@ class _NotGraduatedState extends State<NotGraduated> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => DeveloperCreate()),
+            MaterialPageRoute(builder: (context) => FormDeveloper()),
           );
         },
       ),
@@ -42,7 +41,6 @@ class _NotGraduatedState extends State<NotGraduated> {
                 .cast<int>()
                 .where((key) => box.get(key).isGraduated == false)
                 .toList();
- 
 
             if (box.values.isEmpty) {
               return Center(
@@ -61,7 +59,7 @@ class _NotGraduatedState extends State<NotGraduated> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DeveloperUpdate(
+                              builder: (context) => FormDeveloper(
                                     id: index,
                                     nomeChange: dev.nome,
                                   )));

@@ -7,23 +7,39 @@ import 'package:hive/hive.dart';
 import '../../widgets/dropdown_widget.dart';
 import '../../widgets/input_text.dart';
 
-class DeveloperCreate extends StatefulWidget {
+class FormDeveloper extends StatefulWidget {
+  int id = null;
+  final String nomeChange;
   final developerForm = GlobalKey<FormState>();
+  FormDeveloper({Key key, this.id, this.nomeChange}) : super(key: key);
   @override
-  _DeveloperCreateState createState() => _DeveloperCreateState();
+  _FormDeveloperState createState() => _FormDeveloperState();
 }
 
-class _DeveloperCreateState extends State<DeveloperCreate> {
+class _FormDeveloperState extends State<FormDeveloper> {
   String nome;
   String choices;
   bool isGraduated = false;
 
-  Future submitData() async {
-    if (widget.developerForm.currentState.validate()) {
-      Box<Developer> todoBox = Hive.box<Developer>('developers');
-      todoBox.add(
-          Developer(nome: nome, isGraduated: isGraduated, choices: choices));
-      Navigator.of(context).pop();
+  void submitData() {
+    final index = widget.id;
+
+    if (index == null) {
+      if (widget.developerForm.currentState.validate()) {
+        Box<Developer> todoBox = Hive.box<Developer>('developers');
+        todoBox.add(
+            Developer(nome: nome, isGraduated: isGraduated, choices: choices));
+        Navigator.of(context).pop();
+      }
+    } else {
+      if (widget.developerForm.currentState.validate()) {
+        final index = widget.id;
+        Developer developer =
+            Developer(nome: nome, isGraduated: isGraduated, choices: choices);
+        Box<Developer> todoBox = Hive.box<Developer>('developers');
+        todoBox.putAt(index, developer);
+        Navigator.of(context).pop();
+      }
     }
   }
 
@@ -51,7 +67,7 @@ class _DeveloperCreateState extends State<DeveloperCreate> {
       appBar: AppBar(
         backgroundColor: CustomColors.theme,
         centerTitle: true,
-        title: Text("Create Developer",
+        title: Text(widget.id == null ? "Create Developer" : widget.nomeChange,
             style: TextStyle(fontFamily: 'Montserrat')),
       ),
       body: Container(
@@ -134,7 +150,7 @@ class _DeveloperCreateState extends State<DeveloperCreate> {
                     style:
                         ElevatedButton.styleFrom(primary: CustomColors.theme),
                     onPressed: submitData,
-                    child: Text('Register Developer')),
+                    child: Text('Submit')),
               ],
             )),
       ),
