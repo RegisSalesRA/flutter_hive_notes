@@ -1,4 +1,4 @@
-<img src="https://img.shields.io/badge/Version-2.0.0-blue"> 
+<img src="https://img.shields.io/badge/Version-1.0.0+1-blue"> 
 
 # Flutter Hive
 
@@ -61,7 +61,14 @@ $ flutter run
 <h2>Packages utilizados</h2>
 <p>
 
-- hive
+- hive: ^2.0.3
+- hive_flutter: ^1.0.0
+- intl: ^0.17.0  
+
+- build_runner: ^2.1.10
+- hive_generator: ^1.0.1
+- flutter_native_splash: ^1.2.0
+- flutter_launcher_icons: ^0.9.1
 
 </br>
 
