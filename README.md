@@ -52,6 +52,9 @@ $ flutter pub get / flutter packages get
 - Execute:
 $ flutter run
 
+- add Fields on hive:
+$ flutter packages pub run build_runner build --delete-conflicting-outputs
+
 ```
 
 </p>
