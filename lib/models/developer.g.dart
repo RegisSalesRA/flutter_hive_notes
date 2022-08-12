@@ -17,9 +17,9 @@ class DeveloperAdapter extends TypeAdapter<Developer> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Developer(
-      nome: fields[0] as String,
-      isGraduated: fields[2] as bool,
-      choices: fields[1] as String,
+      name: fields[1] as String,
+      isGraduated: fields[3] as bool,
+      choices: fields[2] as String,
     );
   }
 
@@ -27,11 +27,11 @@ class DeveloperAdapter extends TypeAdapter<Developer> {
   void write(BinaryWriter writer, Developer obj) {
     writer
       ..writeByte(3)
-      ..writeByte(0)
-      ..write(obj.nome)
       ..writeByte(1)
-      ..write(obj.choices)
+      ..write(obj.name)
       ..writeByte(2)
+      ..write(obj.choices)
+      ..writeByte(3)
       ..write(obj.isGraduated);
   }
 

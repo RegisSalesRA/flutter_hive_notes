@@ -21,7 +21,13 @@ class _DropDownWidgetState extends State<DropDownWidget> {
         child: DropdownButtonHideUnderline(
             child: ButtonTheme(
           alignedDropdown: true,
-          child: DropdownButton(
+          child: DropdownButtonFormField<String>(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please select a information';
+                }
+                return null;
+              },
               hint: widget.hint,
               elevation: 16,
               isExpanded: true,

@@ -10,48 +10,47 @@ import '../../widgets/input_text.dart';
 
 class FormDeveloper extends StatefulWidget {
   int id = null;
-  final String nomeChange;
+  final String nameChange;
   final developerForm = GlobalKey<FormState>();
-  FormDeveloper({Key key, this.id, this.nomeChange}) : super(key: key);
+  FormDeveloper({Key key, this.id, this.nameChange}) : super(key: key);
   @override
   _FormDeveloperState createState() => _FormDeveloperState();
 }
 
 class _FormDeveloperState extends State<FormDeveloper> {
-  String nome;
+  String name;
   String choices;
   bool isGraduated = false;
 
   void submitData() {
     final index = widget.id;
-
     if (index == null) {
       if (widget.developerForm.currentState.validate()) {
         Box<Developer> todoBox = Hive.box<Developer>('developers');
         todoBox.add(
-            Developer(nome: nome, isGraduated: isGraduated, choices: choices));
+            Developer(name: name, isGraduated: isGraduated, choices: choices));
         Navigator.of(context).pop();
       }
     } else {
       if (widget.developerForm.currentState.validate()) {
         final index = widget.id;
         Developer developer =
-            Developer(nome: nome, isGraduated: isGraduated, choices: choices);
+            Developer(name: name, isGraduated: isGraduated, choices: choices);
         Box<Developer> todoBox = Hive.box<Developer>('developers');
-        todoBox.putAt(index, developer);
+        todoBox.put(index, developer);
         Navigator.of(context).pop();
       }
     }
   }
 
   List<Map<String, dynamic>> devLevel = [
-    {"nome": "Junior"},
-    {"nome": "Pleno"},
-    {"nome": "Senior"},
+    {"name": "Junior"},
+    {"name": "Pleno"},
+    {"name": "Senior"},
   ];
 
   List<Map<String, dynamic>> devLevel2 = [
-    {"nome": "Especialist"},
+    {"name": "Especialist"},
   ];
 
   @override
@@ -68,7 +67,7 @@ class _FormDeveloperState extends State<FormDeveloper> {
 
     return Scaffold(
       appBar: MyAppBar(
-        title: widget.id == null ? "Create Developer" : widget.nomeChange,
+        title: widget.id == null ? "Create Developer" : widget.nameChange,
         actionsAppBar: Container(),
       ),
       body: Center(
@@ -83,7 +82,7 @@ class _FormDeveloperState extends State<FormDeveloper> {
                     height: 5,
                   ),
                   InputText(
-                    nome: nome,
+                    name: name,
                     validator: (v) {
                       if (v.isEmpty) {
                         return "Field can not be empty";
@@ -92,7 +91,7 @@ class _FormDeveloperState extends State<FormDeveloper> {
                     },
                     onChanged: (value) {
                       setState(() {
-                        nome = value;
+                        name = value;
                       });
                     },
                   ),
@@ -100,6 +99,7 @@ class _FormDeveloperState extends State<FormDeveloper> {
                     height: 15,
                   ),
                   DropDownWidget(
+                    
                     hint: choices == null
                         ? Padding(
                             padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -115,16 +115,17 @@ class _FormDeveloperState extends State<FormDeveloper> {
                               choices,
                               style: TextStyle(color: CustomColors.textColor),
                             ),
-                          ),
+                          ), 
                     dropdownItens: devLevel.map(
                       (val) {
                         return DropdownMenuItem<String>(
-                          value: val["nome"],
+                          value: val["name"],
                           child:
-                              Container(width: 100, child: Text(val["nome"])),
+                              Container(width: 100, child: Text(val["name"])),
                         );
                       },
                     ).toList(),
+                    
                     onChanged: (val) {
                       setState(
                         () {
