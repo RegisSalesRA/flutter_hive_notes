@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hive/css/colors.dart';
 
 class InputText extends StatefulWidget {
-  String nome;
+  String name;
   Function validator;
   Function onChanged;
 
-  InputText({Key key, this.nome, this.validator, this.onChanged})
+  InputText({Key key, this.name, this.validator, this.onChanged})
       : super(key: key);
 
   @override

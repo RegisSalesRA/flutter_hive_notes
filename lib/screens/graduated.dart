@@ -49,7 +49,7 @@ class _GraduatedState extends State<Graduated> {
 
               if (box.values.isEmpty) {
                 return Center(
-                  child: Text("No data available!",
+                  child: Text("No graduated available!",
                       style: TextStyle(fontFamily: 'Montserrat')),
                 );
               }
@@ -66,17 +66,44 @@ class _GraduatedState extends State<Graduated> {
                             MaterialPageRoute(
                                 builder: (context) => FormDeveloper(
                                       id: index,
-                                      nomeChange: dev.nome,
+                                      nameChange: dev.name,
                                     )));
                       },
-                      onLongPress: () async {
-                        await box.deleteAt(index);
+                      onLongPress: () {
+                        showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text('Dev'),
+                            content: Text('Deseja deletar ${dev.name}'),
+                            actions: <Widget>[
+                              Center(
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Cancel'),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () async {
+                                        await box.delete(dev.key);
+
+                                        Navigator.pop(context, 'OK');
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ])),
+                            ],
+                          ),
+                        );
                       },
                       icon: Icon(
                         dev.isGraduated ? Icons.school : Icons.person,
                         color: CustomColors.textColor,
                       ),
-                      text: dev.nome ?? "default",
+                      text: dev.name ?? "default",
                       subtitle: dev.choices == null
                           ? Text("Unknow",
                               style: TextStyle(color: CustomColors.textColor))

@@ -46,8 +46,8 @@ class _HomeState extends State<Home> {
       dev = [];
     });
     for (var iten in boxform.value.values) {
-      if (iten.nome.startsWith(valorInputSearch)) {
-        print(iten.nome);
+      if (iten.name.startsWith(valorInputSearch)) {
+        print(iten.name);
 
         setState(() {
           dev.add(iten);
@@ -103,7 +103,7 @@ class _HomeState extends State<Home> {
                 builder: (context, Box<Developer> box, _) {
                   if (box.values.isEmpty) {
                     return Center(
-                      child: Text("No data available!",
+                      child: Text("No dev available!",
                           style: TextStyle(fontFamily: 'Montserrat')),
                     );
                   }
@@ -156,18 +156,47 @@ class _HomeState extends State<Home> {
                                       MaterialPageRoute(
                                           builder: (context) => FormDeveloper(
                                                 id: index,
-                                                nomeChange: dev[index].nome,
+                                                nameChange: dev[index].name,
                                               )));
                                 },
-                                onLongPress: () async {
-                                  final devElement = box.values.firstWhere(
-                                      (element) =>
-                                          element.nome == dev[index].nome);
-                                  await devElement.delete();
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Home()));
+                                onLongPress: () {
+                                  showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      title: const Text('Dev'),
+                                      content: Text(
+                                          'Deseja deletar ${dev[index].name}'),
+                                      actions: <Widget>[
+                                        Center(
+                                            child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Cancel'),
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () async {
+                                                  final devElement = box.values
+                                                      .firstWhere((element) =>
+                                                          element.name ==
+                                                          dev[index].name);
+                                                  await devElement.delete();
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Home()));
+                                                },
+                                                child: const Text('OK'),
+                                              ),
+                                            ])),
+                                      ],
+                                    ),
+                                  );
                                 },
                                 icon: Icon(
                                   dev[index].isGraduated
@@ -175,7 +204,7 @@ class _HomeState extends State<Home> {
                                       : Icons.person,
                                   color: CustomColors.textColor,
                                 ),
-                                text: dev[index].nome ?? "default",
+                                text: dev[index].name ?? "default",
                                 subtitle: dev[index].choices == null
                                     ? Text("Unknow")
                                     : Text(
@@ -194,9 +223,10 @@ class _HomeState extends State<Home> {
                 builder: (context, Box<Developer> box, _) {
                   if (box.values.isEmpty) {
                     return Center(
-                      child: Text("No data available!",
-                          style: TextStyle(fontFamily: 'Montserrat')),
-                    );
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [],
+                    ));
                   }
                   return SingleChildScrollView(
                     scrollDirection: Axis.vertical,
@@ -251,12 +281,44 @@ class _HomeState extends State<Home> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   FormDeveloper(
-                                                    id: index,
-                                                    nomeChange: dev.nome,
+                                                    id: dev.key,
+                                                    nameChange: dev.name,
                                                   )));
                                     },
-                                    onLongPress: () async {
-                                      await box.deleteAt(index);
+                                    onLongPress: () {
+                                      showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          title: const Text('Dev'),
+                                          content: Text(
+                                              'Deseja deletar ${dev.name}'),
+                                          actions: <Widget>[
+                                            Center(
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            context, 'Cancel'),
+                                                    child: const Text('Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () async {
+                                                      await box.delete(dev.key);
+
+                                                      Navigator.pop(
+                                                          context, 'OK');
+                                                    },
+                                                    child: const Text('OK'),
+                                                  ),
+                                                ])),
+                                          ],
+                                        ),
+                                      );
                                     },
                                     icon: Icon(
                                       dev.isGraduated
@@ -264,7 +326,7 @@ class _HomeState extends State<Home> {
                                           : Icons.person,
                                       color: CustomColors.textColor,
                                     ),
-                                    text: dev.nome ?? "default",
+                                    text: dev.name ?? "default",
                                     subtitle: dev.choices == null
                                         ? Text(
                                             "Unknow",
