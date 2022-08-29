@@ -108,6 +108,7 @@ class _HomeState extends State<Home> {
                     );
                   }
                   return SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     child: Column(
                       children: [
@@ -145,7 +146,7 @@ class _HomeState extends State<Home> {
                                   ),
                                 ))),
                         ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
+                            physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: dev.length,
                             itemBuilder: (context, index) {
@@ -229,6 +230,7 @@ class _HomeState extends State<Home> {
                     ));
                   }
                   return SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     child: Column(
                       children: [
