@@ -52,6 +52,7 @@ class _NotGraduatedState extends State<NotGraduated> {
                 );
               }
               return ListView.builder(
+                  physics: BouncingScrollPhysics(),
                   itemCount: keys.length,
                   itemBuilder: (context, index) {
                     final int key = keys[index];

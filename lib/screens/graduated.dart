@@ -54,6 +54,7 @@ class _GraduatedState extends State<Graduated> {
                 );
               }
               return ListView.builder(
+                  physics: BouncingScrollPhysics(),
                   itemCount: keys.length,
                   itemBuilder: (context, index) {
                     final int key = keys[index];
