@@ -1,4 +1,7 @@
-<img src="https://img.shields.io/badge/Version-1.0.0+1-blue"> 
+<img src="https://img.shields.io/badge/Flutter version-3.3.1-blue"> 
+<img src="https://img.shields.io/badge/Dart version-2.18.1-blueviolet"> 
+<img src="https://img.shields.io/badge/JDK version-11.0.16-yellowgreen"> 
+
 
 # Flutter Hive
 
