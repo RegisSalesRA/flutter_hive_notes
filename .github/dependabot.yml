@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: "pub" # See documentation for possible values
-    directory: "/client/" # Location of package manifests
+    directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
   - package-ecosystem: 'github-actions'
