@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/css/colors.dart';
 import 'package:flutter_hive/models/developer.dart';
-import 'package:flutter_hive/widgets/appbar_widget.dart';
 import 'package:flutter_hive/widgets/checkbox_widget.dart';
 import 'package:hive/hive.dart';
 
+import '../../config/colors.dart';
+import '../../widgets/appbar_widget.dart';
 import '../../widgets/dropdown_widget.dart';
 import '../../widgets/input_text.dart';
 
 class FormDeveloper extends StatefulWidget {
-  int id = null;
+  final int id;
   final String nameChange;
   final developerForm = GlobalKey<FormState>();
   FormDeveloper({Key key, this.id, this.nameChange}) : super(key: key);
@@ -66,7 +66,7 @@ class _FormDeveloperState extends State<FormDeveloper> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: AppBarWidget(
         title: widget.id == null ? "Create Developer" : widget.nameChange,
         actionsAppBar: Container(),
       ),
@@ -99,23 +99,22 @@ class _FormDeveloperState extends State<FormDeveloper> {
                     height: 15,
                   ),
                   DropDownWidget(
-                    
                     hint: choices == null
                         ? Padding(
                             padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                             child: Text(
                               'Select option',
                               style: TextStyle(
-                                  fontSize: 18, color: CustomColors.textColor),
+                                  fontSize: 18, color: ColorsTheme.textColor),
                             ),
                           )
                         : Padding(
                             padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                             child: Text(
                               choices,
-                              style: TextStyle(color: CustomColors.textColor),
+                              style: TextStyle(color: ColorsTheme.textColor),
                             ),
-                          ), 
+                          ),
                     dropdownItens: devLevel.map(
                       (val) {
                         return DropdownMenuItem<String>(
@@ -125,7 +124,6 @@ class _FormDeveloperState extends State<FormDeveloper> {
                         );
                       },
                     ).toList(),
-                    
                     onChanged: (val) {
                       setState(
                         () {
@@ -140,7 +138,6 @@ class _FormDeveloperState extends State<FormDeveloper> {
                   CheckBoxWidget(
                     checkedIten: Checkbox(
                       value: isGraduated,
-                      activeColor: CustomColors.theme,
                       onChanged: (bool valor) {
                         setState(() {
                           isGraduated = valor;
@@ -152,8 +149,6 @@ class _FormDeveloperState extends State<FormDeveloper> {
                     height: 60,
                   ),
                   ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(primary: CustomColors.theme),
                       onPressed: submitData,
                       child: widget.id == null
                           ? Text("Create Developer")

@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_hive/css/colors.dart';
+import 'package:flutter/material.dart'; 
+
+import '../config/colors.dart';
 
 class DropDownWidget extends StatefulWidget {
-  Function onChanged;
-  List dropdownItens = [];
-  Widget hint;
+  final Function onChanged;
+  final List dropdownItens ;
+ final Widget hint;
 
   DropDownWidget({Key key, this.onChanged, this.dropdownItens, this.hint})
       : super(key: key);
@@ -16,8 +17,7 @@ class DropDownWidget extends StatefulWidget {
 class _DropDownWidgetState extends State<DropDownWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: CustomColors.theme,
+    return Container( 
         child: DropdownButtonHideUnderline(
             child: ButtonTheme(
           alignedDropdown: true,
@@ -32,11 +32,10 @@ class _DropDownWidgetState extends State<DropDownWidget> {
               elevation: 16,
               isExpanded: true,
               icon: Icon(
-                Icons.arrow_drop_down,
-                color: CustomColors.textColor,
+                Icons.arrow_drop_down, 
               ),
               style: TextStyle(
-                color: CustomColors.textInput,
+                color: ColorsTheme.textInput,
               ),
               items: widget.dropdownItens,
               onChanged: widget.onChanged),

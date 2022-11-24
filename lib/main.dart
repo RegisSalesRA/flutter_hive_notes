@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/css/colors.dart';
-import 'package:flutter_hive/screens/home.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'config/app_theme.dart';
 import 'models/developer.dart';
 
 Future main() async {
@@ -17,20 +16,5 @@ Future main() async {
   // Aqui criamos a box e colocamos o nome onde vai ser inserido os dados
   await Hive.openBox<Developer>('developers');
 
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Dev Hive',
-      theme: ThemeData(
-          accentColor: CustomColors.theme,
-          primaryColor: CustomColors.theme,
-          splashColor: CustomColors.theme),
-      home: Home(),
-    );
-  }
+  runApp(App());
 }

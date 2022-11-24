@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_hive/css/colors.dart';
+import 'package:flutter/material.dart'; 
 
 class DeveloperWidget extends StatelessWidget {
   final Function onTap;
@@ -25,7 +24,7 @@ class DeveloperWidget extends StatelessWidget {
             margin: EdgeInsets.all(8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
-              color: CustomColors.theme,
+              color: Colors.white,
               boxShadow: [
                 BoxShadow(
                   color: Colors.black,
@@ -41,10 +40,7 @@ class DeveloperWidget extends StatelessWidget {
                 trailing: icon,
                 title: Text(
                   text,
-                  style: TextStyle(
-                      color: CustomColors.textColor,
-                      fontSize: 20,
-                      fontFamily: 'Montserrat'),
+                  style: Theme.of(context).textTheme.headline2,
                 ),
                 subtitle: subtitle)));
   }

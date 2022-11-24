@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/css/colors.dart';
+ 
 
 class CheckBoxWidget extends StatefulWidget {
-  Widget checkedIten;
+ final Widget checkedIten;
   CheckBoxWidget({Key key, this.checkedIten}) : super(key: key);
 
   @override
@@ -20,7 +20,7 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget> {
           style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: CustomColors.theme),
+           ),
         ),
         widget.checkedIten
       ]),

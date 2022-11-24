@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/css/colors.dart';
 import 'package:flutter_hive/models/developer.dart';
 import 'package:flutter_hive/widgets/developer_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -22,7 +21,6 @@ class _GraduatedState extends State<Graduated> {
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
-          color: CustomColors.textColor,
         ),
         onPressed: () {
           Navigator.of(context).push(
@@ -30,7 +28,7 @@ class _GraduatedState extends State<Graduated> {
           );
         },
       ),
-      appBar: MyAppBar(
+      appBar: AppBarWidget(
         title: "Hive Graduated",
         actionsAppBar: Container(),
       ),
@@ -102,14 +100,16 @@ class _GraduatedState extends State<Graduated> {
                       },
                       icon: Icon(
                         dev.isGraduated ? Icons.school : Icons.person,
-                        color: CustomColors.textColor,
+                        color: Theme.of(context).iconTheme.color,
                       ),
                       text: dev.name ?? "default",
                       subtitle: dev.choices == null
-                          ? Text("Unknow",
-                              style: TextStyle(color: CustomColors.textColor))
-                          : Text(dev.choices,
-                              style: TextStyle(color: CustomColors.textColor)),
+                          ? Text(
+                              "Unknow",
+                            )
+                          : Text(
+                              dev.choices,
+                            ),
                     );
                   });
             },
