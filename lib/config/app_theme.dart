@@ -31,12 +31,12 @@ class App extends StatelessWidget {
         textTheme: TextTheme(
           headline1: TextStyle(
             fontSize: 18,
-            color: Colors.grey.shade800,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
           headline2: TextStyle(
             overflow: TextOverflow.ellipsis,
-            fontSize: 18,
+            fontSize: 16,
             color: Colors.black,
           ),
           headline3: TextStyle(

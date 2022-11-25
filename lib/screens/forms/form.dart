@@ -11,13 +11,14 @@ import '../../widgets/input_text.dart';
 class FormDeveloper extends StatefulWidget {
   final int id;
   final String nameChange;
-  final developerForm = GlobalKey<FormState>();
+
   FormDeveloper({Key key, this.id, this.nameChange}) : super(key: key);
   @override
   _FormDeveloperState createState() => _FormDeveloperState();
 }
 
 class _FormDeveloperState extends State<FormDeveloper> {
+  final developerForm = GlobalKey<FormState>();
   String name;
   String choices;
   bool isGraduated = false;
@@ -25,14 +26,14 @@ class _FormDeveloperState extends State<FormDeveloper> {
   void submitData() {
     final index = widget.id;
     if (index == null) {
-      if (widget.developerForm.currentState.validate()) {
+      if (developerForm.currentState.validate()) {
         Box<Developer> todoBox = Hive.box<Developer>('developers');
         todoBox.add(
             Developer(name: name, isGraduated: isGraduated, choices: choices));
         Navigator.of(context).pop();
       }
     } else {
-      if (widget.developerForm.currentState.validate()) {
+      if (developerForm.currentState.validate()) {
         final index = widget.id;
         Developer developer =
             Developer(name: name, isGraduated: isGraduated, choices: choices);
@@ -73,10 +74,12 @@ class _FormDeveloperState extends State<FormDeveloper> {
       body: Center(
         child: Container(
           width: size.width * 0.95,
+          height: size.height * 0.95,
           padding: EdgeInsets.all(5),
           child: Form(
-              key: widget.developerForm,
+              key: developerForm,
               child: ListView(
+                shrinkWrap: true,
                 children: [
                   SizedBox(
                     height: 5,

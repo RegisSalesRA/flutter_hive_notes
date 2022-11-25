@@ -19,6 +19,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         title,
         style: Theme.of(context).textTheme.headline1,
       ),
+      actions: [actionsAppBar],
     );
   }
 }

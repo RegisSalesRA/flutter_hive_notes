@@ -5,9 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../config/colors.dart';
 import '../widgets/widget.dart';
-import 'graduated.dart';
 import 'forms/form.dart';
-import 'not_graduated.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -21,20 +19,6 @@ class _HomeState extends State<Home> {
   ValueListenable<Box<Developer>> boxform =
       Hive.box<Developer>('developers').listenable();
 
-  _menuOptions(String options) {
-    switch (options) {
-      case "Developers graduated":
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Graduated()));
-        break;
-
-      case "Developers not graduated":
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => NotGraduated()));
-        break;
-    }
-  }
-
   void onItemTapped(int index) {
     setState(() {
       indexValue = index;
@@ -43,74 +27,67 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
           appBar: AppBarWidget(
-              title: "Hive Developers",
+              title: "Flutter Hive",
               actionsAppBar: Row(
                 children: [
-                  PopupMenuButton<String>(
-                    onSelected: _menuOptions,
-                    itemBuilder: (context) {
-                      return menu.map((String item) {
-                        return PopupMenuItem<String>(
-                          value: item,
-                          child: Text(item),
-                        );
-                      }).toList();
-                    },
-                  ),
+                  IconButton(
+                      onPressed: () {
+                        return Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => FormDeveloper()));
+                      },
+                      icon: Icon(
+                        Icons.add,
+                        color: Theme.of(context).iconTheme.color,
+                      ))
                 ],
               )),
-          body: Column(children: [
-            if (indexValue == 0) ...{
-              ValueListenableBuilder(
-                valueListenable: boxform,
-                builder: (context, Box<Developer> box, _) {
-                  if (box.values.isEmpty) {
-                    return Center(
-                        child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [],
-                    ));
-                  }
-                  return SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      children: [
-                        Container(
-                            width: size.width * 0.95,
-                            padding: const EdgeInsets.all(10),
-                            child: TextField(
-                                onChanged: (value) {
-                                  setState(() {
-                                    search = value;
-                                  });
-                                  print(value);
-                                },
-                                style: const TextStyle(
+          body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Column(children: [
+                if (indexValue == 0) ...{
+                  ValueListenableBuilder(
+                    valueListenable: boxform,
+                    builder: (context, Box<Developer> box, _) {
+                      if (box.values.isEmpty) {
+                        return Center(
+                            child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [],
+                        ));
+                      }
+                      return Column(
+                        children: [
+                          TextField(
+                              onChanged: (value) {
+                                setState(() {
+                                  search = value;
+                                });
+                                print(value);
+                              },
+                              style:
+                                  const TextStyle(color: ColorsTheme.textInput),
+                              decoration: InputDecoration(
+                                hintStyle: const TextStyle(
                                     color: ColorsTheme.textInput),
-                                decoration: InputDecoration(
-                                  hintStyle: const TextStyle(
-                                      color: ColorsTheme.textInput),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 15.0),
-                                  fillColor: ColorsTheme.textColor,
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(0.0),
-                                  ),
-                                  hintText: 'Search developer',
-                                  prefixIcon: const Icon(
-                                    Icons.search,
-                                    size: 30.0,
-                                  ),
-                                ))),
-                        Container(
-                          width: size.width * 0.99,
-                          child: ListView.builder(
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 15.0),
+                                fillColor: ColorsTheme.textColor,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(0.0),
+                                ),
+                                hintText: 'Search developer',
+                                prefixIcon: const Icon(
+                                  Icons.search,
+                                  size: 30.0,
+                                ),
+                              )),
+                          ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: box.length,
@@ -192,21 +169,179 @@ class _HomeState extends State<Home> {
                                                         ColorsTheme.textColor),
                                               ))
                                     : Container();
-                              }),
-                        )
-                      ],
-                    ),
-                  );
-                },
-              )
-            } else if (indexValue == 1) ...{
-              Text("2")
-            } else if (indexValue == 2) ...{
-              Text("3")
-            } else if (indexValue == 3) ...{
-              Text("4")
-            }
-          ]),
+                              })
+                        ],
+                      );
+                    },
+                  )
+                } else if (indexValue == 1)
+                  ValueListenableBuilder(
+                    valueListenable: boxform,
+                    builder: (context, Box<Developer> box, _) {
+                      List<int> keys;
+
+                      keys = box.keys
+                          .cast<int>()
+                          .where((key) => box.get(key).isGraduated)
+                          .toList();
+
+                      if (box.values.isEmpty) {
+                        return Center(
+                          child: Text("No graduated available!",
+                              style: TextStyle(fontFamily: 'Montserrat')),
+                        );
+                      }
+                      return ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: keys.length,
+                          itemBuilder: (context, index) {
+                            final int key = keys[index];
+                            final Developer dev = box.get(key);
+
+                            return DeveloperWidget(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FormDeveloper(
+                                              id: index,
+                                              nameChange: dev.name,
+                                            )));
+                              },
+                              onLongPress: () {
+                                showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    title: const Text('Dev'),
+                                    content: Text('Deseja deletar ${dev.name}'),
+                                    actions: <Widget>[
+                                      Center(
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  context, 'Cancel'),
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                await box.delete(dev.key);
+
+                                                Navigator.pop(context, 'OK');
+                                              },
+                                              child: const Text('OK'),
+                                            ),
+                                          ])),
+                                    ],
+                                  ),
+                                );
+                              },
+                              icon: Icon(
+                                dev.isGraduated ? Icons.school : Icons.person,
+                                color: Theme.of(context).iconTheme.color,
+                              ),
+                              text: dev.name ?? "default",
+                              subtitle: dev.choices == null
+                                  ? Text(
+                                      "Unknow",
+                                    )
+                                  : Text(
+                                      dev.choices,
+                                    ),
+                            );
+                          });
+                    },
+                  )
+                else if (indexValue == 2) ...{
+                  ValueListenableBuilder(
+                    valueListenable: boxform,
+                    builder: (context, Box<Developer> box, _) {
+                      List<int> keys;
+
+                      keys = box.keys
+                          .cast<int>()
+                          .where((key) => box.get(key).isGraduated == false)
+                          .toList();
+
+                      if (box.values.isEmpty) {
+                        return Center(
+                          child: Text("No graduated available!",
+                              style: TextStyle(fontFamily: 'Montserrat')),
+                        );
+                      }
+                      return ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: keys.length,
+                          itemBuilder: (context, index) {
+                            final int key = keys[index];
+                            final Developer dev = box.get(key);
+
+                            return DeveloperWidget(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FormDeveloper(
+                                              id: index,
+                                              nameChange: dev.name,
+                                            )));
+                              },
+                              onLongPress: () {
+                                showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    title: const Text('Dev'),
+                                    content: Text('Deseja deletar ${dev.name}'),
+                                    actions: <Widget>[
+                                      Center(
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  context, 'Cancel'),
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                await box.delete(dev.key);
+
+                                                Navigator.pop(context, 'OK');
+                                              },
+                                              child: const Text('OK'),
+                                            ),
+                                          ])),
+                                    ],
+                                  ),
+                                );
+                              },
+                              icon: Icon(
+                                dev.isGraduated ? Icons.school : Icons.person,
+                                color: Theme.of(context).iconTheme.color,
+                              ),
+                              text: dev.name ?? "default",
+                              subtitle: dev.choices == null
+                                  ? Text(
+                                      "Unknow",
+                                    )
+                                  : Text(
+                                      dev.choices,
+                                    ),
+                            );
+                          });
+                    },
+                  )
+                }
+              ]),
+            ),
+          ),
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
@@ -219,10 +354,6 @@ class _HomeState extends State<Home> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.school),
-                label: ' ',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.app_registration),
                 label: ' ',
               ),
             ],

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 
 class DeveloperWidget extends StatelessWidget {
   final Function onTap;
@@ -18,30 +18,28 @@ class DeveloperWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.all(10),
-        child: Container(
-            margin: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black,
-                  blurRadius: 2.0,
-                  spreadRadius: 0.0,
-                  offset: Offset(2.0, 2.0),
-                )
-              ],
+    return Container(
+        margin: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 2.0,
+              spreadRadius: 0.0,
+              offset: Offset(2.0, 2.0),
+            )
+          ],
+        ),
+        child: ListTile(
+            onTap: onTap,
+            onLongPress: onLongPress,
+            trailing: icon,
+            title: Text(
+              text,
+              style: Theme.of(context).textTheme.headline2,
             ),
-            child: ListTile(
-                onTap: onTap,
-                onLongPress: onLongPress,
-                trailing: icon,
-                title: Text(
-                  text,
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-                subtitle: subtitle)));
+            subtitle: subtitle));
   }
 }
