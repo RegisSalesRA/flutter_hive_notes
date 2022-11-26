@@ -30,15 +30,8 @@ class GraduatedWidget extends StatelessWidget {
             .where((key) => box.get(key).isGraduated)
             .toList();
 
-        if (box.values.isEmpty) {
-          return SizedBox(
-            height: size.height * 0.50,
-            child: Center(
-              child: Text("No graduated available!",
-                  style: TextStyle(fontFamily: 'Montserrat')),
-            ),
-          );
-        }
+       
+       
         return ListView.builder(
             physics: BouncingScrollPhysics(),
             shrinkWrap: true,

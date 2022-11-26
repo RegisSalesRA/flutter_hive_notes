@@ -13,7 +13,7 @@ class DeveloperWidget extends StatelessWidget {
       this.onLongPress,
       this.icon,
       this.text,
-      this.subtitle})
+      this.subtitle, Function ontap, Function longPress})
       : super(key: key);
 
   @override

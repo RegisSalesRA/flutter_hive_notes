@@ -7,14 +7,14 @@ import '../screens/forms/form.dart';
 import 'widget.dart';
 
 class NoGraduatedWidget extends StatelessWidget {
+  final ValueListenable<Box<Developer>> boxform;
+  final Size size;
+
   const NoGraduatedWidget({
     Key key,
     @required this.boxform,
     @required this.size,
   }) : super(key: key);
-
-  final ValueListenable<Box<Developer>> boxform;
-  final Size size;
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +28,7 @@ class NoGraduatedWidget extends StatelessWidget {
             .where((key) => box.get(key).isGraduated == false)
             .toList();
 
-        if (box.values.isEmpty) {
-          return SizedBox(
-            height: size.height * 0.50,
-            child: Center(
-              child: Text("No students available!",
-                  style: TextStyle(fontFamily: 'Montserrat')),
-            ),
-          );
-        }
+
         return ListView.builder(
             physics: BouncingScrollPhysics(),
             shrinkWrap: true,

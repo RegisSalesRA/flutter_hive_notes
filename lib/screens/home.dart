@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/developer.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../config/colors.dart';
 import '../widgets/widget.dart';
 import 'forms/form.dart';
 
@@ -36,6 +35,10 @@ class _HomeState extends State<Home> {
                 children: [
                   IconButton(
                       onPressed: () {
+                        FocusScope.of(context).unfocus();
+                        setState(() {
+                          search = "";
+                        });
                         return Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => FormDeveloper()));
                       },
@@ -52,94 +55,16 @@ class _HomeState extends State<Home> {
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Column(children: [
                 if (indexValue == 0) ...{
-                  ValueListenableBuilder(
-                    valueListenable: boxform,
-                    builder: (context, Box<Developer> box, _) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 5),
-                            child: TextField(
-                                onChanged: (value) {
-                                  setState(() {
-                                    search = value;
-                                  });
-                                },
-                                style: const TextStyle(
-                                    color: ColorsTheme.textInput),
-                                decoration: InputDecoration(
-                                  hintStyle: const TextStyle(
-                                      color: ColorsTheme.textInput),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 15.0),
-                                  fillColor: ColorsTheme.textColor,
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(0.0),
-                                  ),
-                                  hintText: 'Search developer',
-                                  prefixIcon: const Icon(
-                                    Icons.search,
-                                    size: 30.0,
-                                  ),
-                                )),
-                          ),
-                          if (boxform.value.values.length == 0)
-                            SizedBox(
-                              height: size.height * 0.50,
-                              child: Center(child: Text("No dev available!")),
-                            ),
-                          ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: box.length,
-                              itemBuilder: (context, index) {
-                                Developer dev = box.getAt(index);
-                                return dev.name
-                                        .toString()
-                                        .toLowerCase()
-                                        .contains(search)
-                                    ? DeveloperWidget(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      FormDeveloper(
-                                                        id: dev.key,
-                                                        nameChange: dev.name,
-                                                      )));
-                                        },
-                                        onLongPress: () async {
-                                          await showDialogWidget(
-                                              context, dev, box);
-                                        },
-                                        icon: Icon(
-                                          dev.isGraduated
-                                              ? Icons.school
-                                              : Icons.person,
-                                          color:
-                                              Theme.of(context).iconTheme.color,
-                                        ),
-                                        text: dev.name ?? "default",
-                                        subtitle: dev.choices == null
-                                            ? Text(
-                                                "Unknow",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline3,
-                                              )
-                                            : Text(
-                                                dev.choices,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline3,
-                                              ))
-                                    : Container();
-                              })
-                        ],
-                      );
+                  DeveloperListWidget(
+                    boxform: boxform,
+                    size: size,
+                    search: search,
+                    onChanged: (value) {
+                      setState(() {
+                        search = value;
+                      });
                     },
+                    longPress: () async {},
                   )
                 } else if (indexValue == 1)
                   GraduatedWidget(boxform: boxform, size: size)
