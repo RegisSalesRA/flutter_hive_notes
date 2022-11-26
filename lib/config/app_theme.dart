@@ -30,18 +30,23 @@ class App extends StatelessWidget {
         // Text Css
         textTheme: TextTheme(
           headline1: TextStyle(
-            fontSize: 18,
+            fontSize: 22,
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
           headline2: TextStyle(
             overflow: TextOverflow.ellipsis,
-            fontSize: 16,
+            fontSize: 20,
             color: Colors.black,
           ),
           headline3: TextStyle(
-            fontSize: 14,
-            color: Colors.grey.shade200,
+            fontSize: 16,
+            color: Colors.grey.shade400,
+          ),
+          headline4: TextStyle(
+            overflow: TextOverflow.ellipsis,
+            fontSize: 18,
+            color: Colors.white,
           ),
         ),
         // Input Css
@@ -50,13 +55,22 @@ class App extends StatelessWidget {
             fillColor: Colors.white,
             filled: true,
             isDense: true,
+            hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
                 borderSide: BorderSide(
                   color: Colors.grey.shade200,
                   width: 2,
                 )),
-            hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
+            errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(width: 2, color: Colors.red)),
+            focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(
+                  color: Colors.grey.shade200,
+                  width: 2,
+                )),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
                 borderSide: BorderSide(width: 2, color: Colors.grey.shade200)),

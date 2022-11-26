@@ -154,8 +154,14 @@ class _FormDeveloperState extends State<FormDeveloper> {
                   ElevatedButton(
                       onPressed: submitData,
                       child: widget.id == null
-                          ? Text("Create Developer")
-                          : Text("Update Developer")),
+                          ? Text(
+                              "Create Developer",
+                              style: Theme.of(context).textTheme.headline4,
+                            )
+                          : Text(
+                              "Update Developer",
+                              style: Theme.of(context).textTheme.headline4,
+                            )),
                 ],
               )),
         ),

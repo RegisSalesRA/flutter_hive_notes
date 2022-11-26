@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
           appBar: AppBarWidget(
@@ -40,6 +41,7 @@ class _HomeState extends State<Home> {
                       },
                       icon: Icon(
                         Icons.add,
+                        size: 30,
                         color: Theme.of(context).iconTheme.color,
                       ))
                 ],
@@ -53,47 +55,46 @@ class _HomeState extends State<Home> {
                   ValueListenableBuilder(
                     valueListenable: boxform,
                     builder: (context, Box<Developer> box, _) {
-                      if (box.values.isEmpty) {
-                        return Center(
-                            child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [],
-                        ));
-                      }
                       return Column(
                         children: [
-                          TextField(
-                              onChanged: (value) {
-                                setState(() {
-                                  search = value;
-                                });
-                                print(value);
-                              },
-                              style:
-                                  const TextStyle(color: ColorsTheme.textInput),
-                              decoration: InputDecoration(
-                                hintStyle: const TextStyle(
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5),
+                            child: TextField(
+                                onChanged: (value) {
+                                  setState(() {
+                                    search = value;
+                                  });
+                                },
+                                style: const TextStyle(
                                     color: ColorsTheme.textInput),
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 15.0),
-                                fillColor: ColorsTheme.textColor,
-                                filled: true,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(0.0),
-                                ),
-                                hintText: 'Search developer',
-                                prefixIcon: const Icon(
-                                  Icons.search,
-                                  size: 30.0,
-                                ),
-                              )),
+                                decoration: InputDecoration(
+                                  hintStyle: const TextStyle(
+                                      color: ColorsTheme.textInput),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 15.0),
+                                  fillColor: ColorsTheme.textColor,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(0.0),
+                                  ),
+                                  hintText: 'Search developer',
+                                  prefixIcon: const Icon(
+                                    Icons.search,
+                                    size: 30.0,
+                                  ),
+                                )),
+                          ),
+                          if (boxform.value.values.length == 0)
+                            SizedBox(
+                              height: size.height * 0.50,
+                              child: Center(child: Text("No dev available!")),
+                            ),
                           ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: box.length,
                               itemBuilder: (context, index) {
                                 Developer dev = box.getAt(index);
-                                print(dev);
                                 return dev.name
                                         .toString()
                                         .toLowerCase()
@@ -109,43 +110,9 @@ class _HomeState extends State<Home> {
                                                         nameChange: dev.name,
                                                       )));
                                         },
-                                        onLongPress: () {
-                                          showDialog<String>(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                AlertDialog(
-                                              title: const Text('Dev'),
-                                              content: Text(
-                                                  'Deseja deletar ${dev.name}'),
-                                              actions: <Widget>[
-                                                Center(
-                                                    child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                      TextButton(
-                                                        onPressed: () =>
-                                                            Navigator.pop(
-                                                                context,
-                                                                'Cancel'),
-                                                        child: const Text(
-                                                            'Cancel'),
-                                                      ),
-                                                      TextButton(
-                                                        onPressed: () async {
-                                                          await box
-                                                              .delete(dev.key);
-
-                                                          Navigator.pop(
-                                                              context, 'OK');
-                                                        },
-                                                        child: const Text('OK'),
-                                                      ),
-                                                    ])),
-                                              ],
-                                            ),
-                                          );
+                                        onLongPress: () async {
+                                          await showDialogWidget(
+                                              context, dev, box);
                                         },
                                         icon: Icon(
                                           dev.isGraduated
@@ -158,15 +125,15 @@ class _HomeState extends State<Home> {
                                         subtitle: dev.choices == null
                                             ? Text(
                                                 "Unknow",
-                                                style: TextStyle(
-                                                    color:
-                                                        ColorsTheme.textColor),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline3,
                                               )
                                             : Text(
                                                 dev.choices,
-                                                style: TextStyle(
-                                                    color:
-                                                        ColorsTheme.textColor),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline3,
                                               ))
                                     : Container();
                               })
@@ -175,169 +142,9 @@ class _HomeState extends State<Home> {
                     },
                   )
                 } else if (indexValue == 1)
-                  ValueListenableBuilder(
-                    valueListenable: boxform,
-                    builder: (context, Box<Developer> box, _) {
-                      List<int> keys;
-
-                      keys = box.keys
-                          .cast<int>()
-                          .where((key) => box.get(key).isGraduated)
-                          .toList();
-
-                      if (box.values.isEmpty) {
-                        return Center(
-                          child: Text("No graduated available!",
-                              style: TextStyle(fontFamily: 'Montserrat')),
-                        );
-                      }
-                      return ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: keys.length,
-                          itemBuilder: (context, index) {
-                            final int key = keys[index];
-                            final Developer dev = box.get(key);
-
-                            return DeveloperWidget(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => FormDeveloper(
-                                              id: index,
-                                              nameChange: dev.name,
-                                            )));
-                              },
-                              onLongPress: () {
-                                showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                    title: const Text('Dev'),
-                                    content: Text('Deseja deletar ${dev.name}'),
-                                    actions: <Widget>[
-                                      Center(
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  context, 'Cancel'),
-                                              child: const Text('Cancel'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () async {
-                                                await box.delete(dev.key);
-
-                                                Navigator.pop(context, 'OK');
-                                              },
-                                              child: const Text('OK'),
-                                            ),
-                                          ])),
-                                    ],
-                                  ),
-                                );
-                              },
-                              icon: Icon(
-                                dev.isGraduated ? Icons.school : Icons.person,
-                                color: Theme.of(context).iconTheme.color,
-                              ),
-                              text: dev.name ?? "default",
-                              subtitle: dev.choices == null
-                                  ? Text(
-                                      "Unknow",
-                                    )
-                                  : Text(
-                                      dev.choices,
-                                    ),
-                            );
-                          });
-                    },
-                  )
+                  GraduatedWidget(boxform: boxform, size: size)
                 else if (indexValue == 2) ...{
-                  ValueListenableBuilder(
-                    valueListenable: boxform,
-                    builder: (context, Box<Developer> box, _) {
-                      List<int> keys;
-
-                      keys = box.keys
-                          .cast<int>()
-                          .where((key) => box.get(key).isGraduated == false)
-                          .toList();
-
-                      if (box.values.isEmpty) {
-                        return Center(
-                          child: Text("No graduated available!",
-                              style: TextStyle(fontFamily: 'Montserrat')),
-                        );
-                      }
-                      return ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: keys.length,
-                          itemBuilder: (context, index) {
-                            final int key = keys[index];
-                            final Developer dev = box.get(key);
-
-                            return DeveloperWidget(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => FormDeveloper(
-                                              id: index,
-                                              nameChange: dev.name,
-                                            )));
-                              },
-                              onLongPress: () {
-                                showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                    title: const Text('Dev'),
-                                    content: Text('Deseja deletar ${dev.name}'),
-                                    actions: <Widget>[
-                                      Center(
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  context, 'Cancel'),
-                                              child: const Text('Cancel'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () async {
-                                                await box.delete(dev.key);
-
-                                                Navigator.pop(context, 'OK');
-                                              },
-                                              child: const Text('OK'),
-                                            ),
-                                          ])),
-                                    ],
-                                  ),
-                                );
-                              },
-                              icon: Icon(
-                                dev.isGraduated ? Icons.school : Icons.person,
-                                color: Theme.of(context).iconTheme.color,
-                              ),
-                              text: dev.name ?? "default",
-                              subtitle: dev.choices == null
-                                  ? Text(
-                                      "Unknow",
-                                    )
-                                  : Text(
-                                      dev.choices,
-                                    ),
-                            );
-                          });
-                    },
-                  )
+                  NoGraduatedWidget(boxform: boxform, size: size)
                 }
               ]),
             ),
@@ -349,11 +156,11 @@ class _HomeState extends State<Home> {
                 label: ' ',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.person),
+                icon: Icon(Icons.school),
                 label: ' ',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.school),
+                icon: Icon(Icons.person),
                 label: ' ',
               ),
             ],

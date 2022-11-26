@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import '../config/colors.dart';
 
 class InputText extends StatefulWidget {
- final String name;
+  final String name;
   final Function validator;
   final Function onChanged;
 
@@ -19,17 +18,9 @@ class _InputTextState extends State<InputText> {
     return TextFormField(
         validator: widget.validator,
         decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(),
-          hintStyle: const TextStyle(color: ColorsTheme.textInput),
-          contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
-          fillColor: ColorsTheme.textColor,
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(0.0),
-          ),
           prefixIcon: const Icon(
-            Icons.arrow_right,
-            size: 30.0,
+            Icons.app_registration,
+            size: 25.0,
           ),
           labelText: "Name",
         ),
