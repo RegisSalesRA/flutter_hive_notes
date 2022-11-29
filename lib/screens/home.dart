@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
   void onItemTapped(int index) {
     setState(() {
       indexValue = index;
+      search = "";
     });
   }
 
