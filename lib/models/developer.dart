@@ -3,7 +3,6 @@ part 'developer.g.dart';
 
 @HiveType(typeId: 0)
 class Developer extends HiveObject {
-
   @HiveField(1)
   String name;
 

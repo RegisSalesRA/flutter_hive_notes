@@ -20,19 +20,22 @@ class DeveloperAdapter extends TypeAdapter<Developer> {
       name: fields[1] as String,
       isGraduated: fields[3] as bool,
       choices: fields[2] as String,
+      createdAt: fields[4] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, Developer obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
       ..write(obj.choices)
       ..writeByte(3)
-      ..write(obj.isGraduated);
+      ..write(obj.isGraduated)
+      ..writeByte(4)
+      ..write(obj.createdAt);
   }
 
   @override

@@ -39,8 +39,11 @@ class _FormDeveloperState extends State<FormDeveloper> {
     } else {
       if (developerForm.currentState.validate()) {
         final index = widget.id;
-        Developer developer =
-            Developer(name: name, isGraduated: isGraduated, choices: choices);
+        Developer developer = Developer(
+            name: name,
+            isGraduated: isGraduated,
+            choices: choices,
+            createdAt: DateTime.now());
         Box<Developer> todoBox = Hive.box<Developer>('developers');
         todoBox.put(index, developer);
         Navigator.of(context).pop();
