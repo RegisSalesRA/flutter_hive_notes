@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/developer.dart';
 import 'package:flutter_hive/widgets/checkbox_widget.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 import '../../config/colors.dart';
 import '../../widgets/appbar_widget.dart';
@@ -28,8 +29,11 @@ class _FormDeveloperState extends State<FormDeveloper> {
     if (index == null) {
       if (developerForm.currentState.validate()) {
         Box<Developer> todoBox = Hive.box<Developer>('developers');
-        todoBox.add(
-            Developer(name: name, isGraduated: isGraduated, choices: choices));
+        todoBox.add(Developer(
+            name: name,
+            isGraduated: isGraduated,
+            choices: choices,
+            createdAt: DateTime.now()));
         Navigator.of(context).pop();
       }
     } else {
@@ -44,13 +48,13 @@ class _FormDeveloperState extends State<FormDeveloper> {
     }
   }
 
-  List<Map<String, dynamic>> devLevel = [
+  List<Map<String, dynamic>> taskLevel = [
     {"name": "Junior"},
     {"name": "Pleno"},
     {"name": "Senior"},
   ];
 
-  List<Map<String, dynamic>> devLevel2 = [
+  List<Map<String, dynamic>> taskLevel2 = [
     {"name": "Especialist"},
   ];
 
@@ -58,7 +62,7 @@ class _FormDeveloperState extends State<FormDeveloper> {
   void initState() {
     super.initState();
     setState(() {
-      devLevel.addAll(devLevel2);
+      taskLevel.addAll(taskLevel2);
     });
   }
 
@@ -118,7 +122,7 @@ class _FormDeveloperState extends State<FormDeveloper> {
                               style: TextStyle(color: ColorsTheme.textColor),
                             ),
                           ),
-                    dropdownItens: devLevel.map(
+                    dropdownItens: taskLevel.map(
                       (val) {
                         return DropdownMenuItem<String>(
                           value: val["name"],

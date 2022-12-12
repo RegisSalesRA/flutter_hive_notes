@@ -12,7 +12,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<String> menu = ["Developers graduated", "Developers not graduated"];
   String search = "";
   int indexValue = 0;
   ValueListenable<Box<Developer>> boxform =
@@ -82,11 +81,11 @@ class _HomeState extends State<Home> {
                 label: ' ',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.school),
+                icon: Icon(Icons.done),
                 label: ' ',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.person),
+                icon: Icon(Icons.cancel),
                 label: ' ',
               ),
             ],

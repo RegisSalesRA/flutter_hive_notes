@@ -13,5 +13,8 @@ class Developer extends HiveObject {
   @HiveField(3)
   bool isGraduated;
 
-  Developer({this.name, this.isGraduated, this.choices});
+  @HiveField(4)
+  DateTime createdAt;
+
+  Developer({this.name, this.isGraduated, this.choices, this.createdAt});
 }

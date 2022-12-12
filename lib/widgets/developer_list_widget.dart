@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 import '../config/colors.dart';
+import '../helpers/helpers.dart';
 import '../models/developer.dart';
 import '../screens/forms/form.dart';
 import 'alert_dialog_widget.dart';
@@ -46,14 +47,13 @@ class DeveloperListWidget extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(0.0),
                     ),
-                    hintText: 'Search developer',
+                    hintText: 'Search notes',
                     prefixIcon: const Icon(
                       Icons.search,
                       size: 30.0,
                     ),
                   )),
             ),
-            
             ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -79,16 +79,7 @@ class DeveloperListWidget extends StatelessWidget {
                             color: Theme.of(context).iconTheme.color,
                           ),
                           text: dev.name ?? "default",
-                          subtitle: dev.choices == null
-                              ? Text(
-                                  "Unknow",
-                                  style: Theme.of(context).textTheme.headline3,
-                                )
-                              : Text(
-                                  dev.choices,
-                                  style: Theme.of(context).textTheme.headline3,
-                                ),
-                        )
+                          subtitle: Text(dateTimeFormat(dev.createdAt)))
                       : Container();
                 })
           ],
