@@ -6,26 +6,21 @@ import '../config/colors.dart';
 import '../helpers/helpers.dart';
 import '../models/developer.dart';
 import '../screens/forms/form.dart';
-import 'alert_dialog_widget.dart';
-import 'developer_widget.dart';
+import 'widget.dart';
 
-class DeveloperListWidget extends StatelessWidget {
+class TaskListWidget extends StatelessWidget {
   final ValueListenable<Box<Developer>> boxform;
   final Size size;
   final String search;
-  final Function ontap;
-  final Function longPress;
   final void Function(String) onChanged;
 
-  const DeveloperListWidget(
-      {Key key,
-      this.boxform,
-      this.size,
-      this.search,
-      this.onChanged,
-      this.ontap,
-      this.longPress})
-      : super(key: key);
+  const TaskListWidget({
+    Key key,
+    this.boxform,
+    this.size,
+    this.search,
+    this.onChanged,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,25 +56,39 @@ class DeveloperListWidget extends StatelessWidget {
                 itemBuilder: (context, index) {
                   Developer dev = box.getAt(index);
                   return dev.name.toString().toLowerCase().contains(search)
-                      ? DeveloperWidget(
-                          ontap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => FormDeveloper(
-                                          id: dev.key,
-                                          nameChange: dev.name,
-                                        )));
-                          },
-                          longPress: () async {
-                            await showDialogWidget(context, dev, box);
-                          },
-                          icon: Icon(
-                            dev.isGraduated ? Icons.school : Icons.person,
-                            color: Theme.of(context).iconTheme.color,
-                          ),
-                          text: dev.name ?? "default",
-                          subtitle: Text(dateTimeFormat(dev.createdAt)))
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: Colors.white,
+                                  border:
+                                      Border.all(color: Colors.grey.shade400)),
+                              child: ListTile(
+                                  onTap: () async {
+                                    await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => TaskForm(
+                                                  id: dev.key,
+                                                  nameChange: dev.name,
+                                                )));
+                                  },
+                                  onLongPress: () async {
+                                    await showDialogWidget(context, dev, box);
+                                  },
+                                  trailing: Icon(Icons.assignment),
+                                  title: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: Text(
+                                      dev.name ?? "default",
+                                      style:
+                                          Theme.of(context).textTheme.headline2,
+                                    ),
+                                  ),
+                                  subtitle:
+                                      Text(dateTimeFormat(dev.createdAt)))),
+                        )
                       : Container();
                 })
           ],

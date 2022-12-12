@@ -13,86 +13,75 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String search = "";
-  int indexValue = 0;
   ValueListenable<Box<Developer>> boxform =
       Hive.box<Developer>('developers').listenable();
-
-  void onItemTapped(int index) {
-    setState(() {
-      indexValue = index;
-      search = "";
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              await Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => TaskForm()));
+            },
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
           appBar: AppBarWidget(
-              title: "Flutter Hive",
-              actionsAppBar: Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
-                        setState(() {
-                          search = "";
-                        });
-                        return Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => FormDeveloper()));
-                      },
-                      icon: Icon(
-                        Icons.add,
-                        size: 30,
-                        color: Theme.of(context).iconTheme.color,
-                      ))
-                ],
-              )),
+            title: "Flutter Hive",
+          ),
           body: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Column(children: [
-                if (indexValue == 0) ...{
-                  DeveloperListWidget(
-                    boxform: boxform,
-                    size: size,
-                    search: search,
-                    onChanged: (value) {
-                      setState(() {
-                        search = value;
-                      });
-                    },
-                    longPress: () async {},
-                  )
-                } else if (indexValue == 1)
-                  GraduatedWidget(boxform: boxform, size: size)
-                else if (indexValue == 2) ...{
-                  NoGraduatedWidget(boxform: boxform, size: size)
-                }
+                TaskListWidget(
+                  boxform: boxform,
+                  size: size,
+                  search: search,
+                  onChanged: (value) {
+                    setState(() {
+                      search = value;
+                    });
+                  },
+                
+                )
               ]),
             ),
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: ' ',
+          bottomNavigationBar: BottomAppBar(
+            color: Theme.of(context).colorScheme.primary,
+            shape: CircularNotchedRectangle(),
+            notchMargin: 5,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.home,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {},
+                  ),
+                  SizedBox(),
+                  IconButton(
+                    icon: Icon(
+                      Icons.timeline,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.done),
-                label: ' ',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.cancel),
-                label: ' ',
-              ),
-            ],
-            currentIndex: indexValue,
-            onTap: onItemTapped,
-            selectedItemColor: Theme.of(context).colorScheme.primary,
-            unselectedItemColor: Colors.grey.shade400,
+            ),
           )),
     );
   }

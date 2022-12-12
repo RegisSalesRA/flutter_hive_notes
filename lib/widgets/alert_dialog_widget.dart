@@ -8,7 +8,7 @@ showDialogWidget(
   showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
-      title: const Text('Alert'),
+      title: Center(child: const Text('Alert')),
       content: Text('Wish delete ${dev.name} ?'),
       actions: <Widget>[
         Center(
@@ -20,7 +20,6 @@ showDialogWidget(
           TextButton(
             onPressed: () async {
               await box.delete(dev.key);
-
               Navigator.pop(context, 'Confirm');
             },
             child: const Text('Confirm'),

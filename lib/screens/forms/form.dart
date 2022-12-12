@@ -2,23 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/developer.dart';
 import 'package:flutter_hive/widgets/checkbox_widget.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 
 import '../../config/colors.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/dropdown_widget.dart';
 import '../../widgets/input_text.dart';
 
-class FormDeveloper extends StatefulWidget {
+class TaskForm extends StatefulWidget {
   final int id;
   final String nameChange;
 
-  FormDeveloper({Key key, this.id, this.nameChange}) : super(key: key);
+  TaskForm({Key key, this.id, this.nameChange}) : super(key: key);
   @override
-  _FormDeveloperState createState() => _FormDeveloperState();
+  _TaskFormState createState() => _TaskFormState();
 }
 
-class _FormDeveloperState extends State<FormDeveloper> {
+class _TaskFormState extends State<TaskForm> {
   final developerForm = GlobalKey<FormState>();
   String name;
   String choices;
@@ -76,7 +75,6 @@ class _FormDeveloperState extends State<FormDeveloper> {
     return Scaffold(
       appBar: AppBarWidget(
         title: widget.id == null ? "Create Developer" : widget.nameChange,
-        actionsAppBar: Container(),
       ),
       body: Center(
         child: Container(
