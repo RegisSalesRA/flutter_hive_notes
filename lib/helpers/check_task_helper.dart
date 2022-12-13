@@ -1,0 +1,3 @@
+checkTask(value) {
+  value = !value;
+}

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/models/developer.dart';
+import 'package:flutter_hive/models/task.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../widgets/widget.dart';
@@ -13,8 +13,17 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String search = "";
-  ValueListenable<Box<Developer>> boxform =
-      Hive.box<Developer>('developers').listenable();
+  bool isTaped = false;
+
+  ValueListenable<Box<Task>> boxform = Hive.box<Task>('tasks').listenable();
+
+  onTap() {
+    setState(() {
+      isTaped = !isTaped;
+    });
+    print(isTaped);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +43,7 @@ class _HomeState extends State<Home> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           appBar: AppBarWidget(
-            title: "Flutter Hive",
+            title: "Flutter Task",
           ),
           body: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
@@ -42,15 +51,18 @@ class _HomeState extends State<Home> {
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Column(children: [
                 TaskListWidget(
+                  onTap: onTap,
+                  isTaped: isTaped,
                   boxform: boxform,
                   size: size,
                   search: search,
+              
+              
                   onChanged: (value) {
                     setState(() {
                       search = value;
                     });
                   },
-                
                 )
               ]),
             ),
@@ -74,7 +86,7 @@ class _HomeState extends State<Home> {
                   SizedBox(),
                   IconButton(
                     icon: Icon(
-                      Icons.timeline,
+                      Icons.check,
                       color: Colors.white,
                     ),
                     onPressed: () {},

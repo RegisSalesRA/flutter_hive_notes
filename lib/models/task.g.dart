@@ -1,40 +1,40 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'developer.dart';
+part of 'task.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class DeveloperAdapter extends TypeAdapter<Developer> {
+class TaskAdapter extends TypeAdapter<Task> {
   @override
   final int typeId = 0;
 
   @override
-  Developer read(BinaryReader reader) {
+  Task read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Developer(
+    return Task(
       name: fields[1] as String,
-      isGraduated: fields[3] as bool,
-      choices: fields[2] as String,
-      createdAt: fields[4] as DateTime,
+      urgency: fields[2] as String,
+      isComplete: fields[4] as bool,
+      createdAt: fields[5] as DateTime,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Developer obj) {
+  void write(BinaryWriter writer, Task obj) {
     writer
       ..writeByte(4)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.choices)
-      ..writeByte(3)
-      ..write(obj.isGraduated)
+      ..write(obj.urgency)
       ..writeByte(4)
+      ..write(obj.isComplete)
+      ..writeByte(5)
       ..write(obj.createdAt);
   }
 
@@ -44,7 +44,7 @@ class DeveloperAdapter extends TypeAdapter<Developer> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DeveloperAdapter &&
+      other is TaskAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

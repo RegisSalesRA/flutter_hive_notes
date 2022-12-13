@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/models/developer.dart';
+import 'package:flutter_hive/models/task.dart';
 import 'package:flutter_hive/widgets/checkbox_widget.dart';
 import 'package:hive/hive.dart';
 
@@ -18,46 +18,37 @@ class TaskForm extends StatefulWidget {
 }
 
 class _TaskFormState extends State<TaskForm> {
-  final developerForm = GlobalKey<FormState>();
+  final taskForm = GlobalKey<FormState>();
   String name;
-  String choices;
-  bool isGraduated = false;
+  String urgency;
 
   void submitData() {
     final index = widget.id;
     if (index == null) {
-      if (developerForm.currentState.validate()) {
-        Box<Developer> todoBox = Hive.box<Developer>('developers');
-        todoBox.add(Developer(
-            name: name,
-            isGraduated: isGraduated,
-            choices: choices,
-            createdAt: DateTime.now()));
+      if (taskForm.currentState.validate()) {
+        Box<Task> todoBox = Hive.box<Task>('tasks');
+        todoBox
+            .add(Task(name: name, urgency: urgency, createdAt: DateTime.now()));
         Navigator.of(context).pop();
       }
     } else {
-      if (developerForm.currentState.validate()) {
+      if (taskForm.currentState.validate()) {
         final index = widget.id;
-        Developer developer = Developer(
-            name: name,
-            isGraduated: isGraduated,
-            choices: choices,
-            createdAt: DateTime.now());
-        Box<Developer> todoBox = Hive.box<Developer>('developers');
-        todoBox.put(index, developer);
+        Task task =
+            Task(name: name, urgency: urgency, createdAt: DateTime.now());
+        Box<Task> todoBox = Hive.box<Task>('tasks');
+        todoBox.put(index, task);
         Navigator.of(context).pop();
       }
     }
   }
 
   List<Map<String, dynamic>> taskLevel = [
-    {"name": "Junior"},
-    {"name": "Pleno"},
-    {"name": "Senior"},
+    {"name": "Easy"},
+    {"name": "Middle"},
   ];
-
   List<Map<String, dynamic>> taskLevel2 = [
-    {"name": "Especialist"},
+    {"name": "Hard"},
   ];
 
   @override
@@ -74,7 +65,7 @@ class _TaskFormState extends State<TaskForm> {
 
     return Scaffold(
       appBar: AppBarWidget(
-        title: widget.id == null ? "Create Developer" : widget.nameChange,
+        title: widget.id == null ? "Create task" : widget.nameChange,
       ),
       body: Center(
         child: Container(
@@ -82,7 +73,7 @@ class _TaskFormState extends State<TaskForm> {
           height: size.height * 0.95,
           padding: EdgeInsets.all(5),
           child: Form(
-              key: developerForm,
+              key: taskForm,
               child: ListView(
                 shrinkWrap: true,
                 children: [
@@ -107,7 +98,7 @@ class _TaskFormState extends State<TaskForm> {
                     height: 15,
                   ),
                   DropDownWidget(
-                    hint: choices == null
+                    hint: urgency == null
                         ? Padding(
                             padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                             child: Text(
@@ -119,7 +110,7 @@ class _TaskFormState extends State<TaskForm> {
                         : Padding(
                             padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                             child: Text(
-                              choices,
+                              urgency,
                               style: TextStyle(color: ColorsTheme.textColor),
                             ),
                           ),
@@ -135,23 +126,13 @@ class _TaskFormState extends State<TaskForm> {
                     onChanged: (val) {
                       setState(
                         () {
-                          choices = val;
+                          urgency = val;
                         },
                       );
                     },
                   ),
                   SizedBox(
                     height: 15,
-                  ),
-                  CheckBoxWidget(
-                    checkedIten: Checkbox(
-                      value: isGraduated,
-                      onChanged: (bool valor) {
-                        setState(() {
-                          isGraduated = valor;
-                        });
-                      },
-                    ),
                   ),
                   SizedBox(
                     height: 60,
@@ -160,11 +141,11 @@ class _TaskFormState extends State<TaskForm> {
                       onPressed: submitData,
                       child: widget.id == null
                           ? Text(
-                              "Create Developer",
+                              "Create task",
                               style: Theme.of(context).textTheme.headline4,
                             )
                           : Text(
-                              "Update Developer",
+                              "Update task",
                               style: Theme.of(context).textTheme.headline4,
                             )),
                 ],
