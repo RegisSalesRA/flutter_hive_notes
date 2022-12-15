@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../screens/home_screen.dart'; 
+import '../screens/completed_tasks_screen.dart';
+import '../screens/forms/form.dart';
+import '../screens/home_screen.dart';
 import 'config.dart';
 
 class App extends StatelessWidget {
@@ -39,6 +41,8 @@ class App extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Home(),
+        '/complete': (context) => CompleteTaskScreen(),
+        '/form': (context) => TaskForm(),
       },
     );
   }

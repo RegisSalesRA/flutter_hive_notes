@@ -9,10 +9,10 @@ class Task extends HiveObject {
   @HiveField(2)
   String urgency;
 
-  @HiveField(4)
+  @HiveField(3)
   bool isComplete;
 
-  @HiveField(5)
+  @HiveField(4, defaultValue: DateTime)
   DateTime createdAt;
 
   Task({this.name, this.urgency, this.isComplete, this.createdAt});

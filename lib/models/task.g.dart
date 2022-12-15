@@ -19,8 +19,8 @@ class TaskAdapter extends TypeAdapter<Task> {
     return Task(
       name: fields[1] as String,
       urgency: fields[2] as String,
-      isComplete: fields[4] as bool,
-      createdAt: fields[5] as DateTime,
+      isComplete: fields[3] == null ? false : fields[3] as bool,
+      createdAt: fields[4] as DateTime,
     );
   }
 
@@ -32,9 +32,9 @@ class TaskAdapter extends TypeAdapter<Task> {
       ..write(obj.name)
       ..writeByte(2)
       ..write(obj.urgency)
-      ..writeByte(4)
+      ..writeByte(3)
       ..write(obj.isComplete)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.createdAt);
   }
 

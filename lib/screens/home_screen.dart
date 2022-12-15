@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/task.dart';
+import 'package:flutter_hive/screens/completed_tasks_screen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../widgets/widget.dart';
@@ -24,7 +25,6 @@ class _HomeState extends State<Home> {
     print(isTaped);
   }
 
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -33,7 +33,8 @@ class _HomeState extends State<Home> {
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
               await Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => TaskForm()));
+                  .push(MaterialPageRoute(builder: (context) => TaskForm()))
+                  .then((value) => setState(() {}));
             },
             child: Icon(
               Icons.add,
@@ -43,6 +44,7 @@ class _HomeState extends State<Home> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           appBar: AppBarWidget(
+            automaticallyImplyLeading: false,
             title: "Flutter Task",
           ),
           body: SingleChildScrollView(
@@ -56,8 +58,6 @@ class _HomeState extends State<Home> {
                   boxform: boxform,
                   size: size,
                   search: search,
-              
-              
                   onChanged: (value) {
                     setState(() {
                       search = value;
@@ -81,7 +81,10 @@ class _HomeState extends State<Home> {
                       Icons.home,
                       color: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Home()));
+                    },
                   ),
                   SizedBox(),
                   IconButton(
@@ -89,7 +92,10 @@ class _HomeState extends State<Home> {
                       Icons.check,
                       color: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => CompleteTaskScreen()));
+                    },
                   ),
                 ],
               ),

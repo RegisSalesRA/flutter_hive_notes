@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/task.dart';
-import 'package:flutter_hive/widgets/checkbox_widget.dart';
 import 'package:hive/hive.dart';
 
 import '../../config/colors.dart';
@@ -27,9 +26,13 @@ class _TaskFormState extends State<TaskForm> {
     if (index == null) {
       if (taskForm.currentState.validate()) {
         Box<Task> todoBox = Hive.box<Task>('tasks');
-        todoBox
-            .add(Task(name: name, urgency: urgency, createdAt: DateTime.now()));
-        Navigator.of(context).pop();
+        todoBox.add(Task(
+            name: name,
+            urgency: urgency,
+            isComplete: false,
+            createdAt: DateTime.now()));
+
+        Navigator.pushNamed(context, '/');
       }
     } else {
       if (taskForm.currentState.validate()) {
@@ -65,6 +68,7 @@ class _TaskFormState extends State<TaskForm> {
 
     return Scaffold(
       appBar: AppBarWidget(
+        automaticallyImplyLeading: true,
         title: widget.id == null ? "Create task" : widget.nameChange,
       ),
       body: Center(
