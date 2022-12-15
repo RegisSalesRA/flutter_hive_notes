@@ -71,7 +71,6 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                     itemBuilder: (_, index, animation) {
                       Task task = box.getAt(index);
                       return SizeTransition(
-                        key: UniqueKey(),
                         sizeFactor: animation,
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 5),
@@ -89,33 +88,6 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                                 children: [
                                   Row(
                                     children: [
-                                      if (task.urgency == "Easy")
-                                        Container(
-                                          height: 10,
-                                          width: 10,
-                                          decoration: BoxDecoration(
-                                              color: Colors.green,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                        ),
-                                      if (task.urgency == "Middle")
-                                        Container(
-                                          height: 10,
-                                          width: 10,
-                                          decoration: BoxDecoration(
-                                              color: Colors.yellow,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                        ),
-                                      if (task.urgency == "Hard")
-                                        Container(
-                                          height: 10,
-                                          width: 10,
-                                          decoration: BoxDecoration(
-                                              color: Colors.red,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                        ),
                                       SizedBox(
                                         width: 10,
                                       ),
@@ -127,7 +99,10 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                                         children: [
                                           Text(
                                             task.name ?? "default",
-                                            style: task.isComplete != false
+                                            style: box.values
+                                                        .toList()[index]
+                                                        .isComplete !=
+                                                    false
                                                 ? Theme.of(context)
                                                     .textTheme
                                                     .headline5
@@ -138,7 +113,9 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          Text(dateTimeFormat(task.createdAt)),
+                                          Text(dateTimeFormat(box.values
+                                              .toList()[index]
+                                              .createdAt)),
                                         ],
                                       ),
                                     ],
@@ -153,8 +130,12 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         TaskForm(
-                                                          id: task.key,
-                                                          nameChange: task.name,
+                                                          id: box.values
+                                                              .toList()[index]
+                                                              .key,
+                                                          nameChange: box.values
+                                                              .toList()[index]
+                                                              .name,
                                                         )));
                                           },
                                           child: Icon(Icons.edit)),
@@ -162,8 +143,9 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                                         height: 10,
                                       ),
                                       InkWell(
-                                          onTap: () {
-                                            removeItem(index, task, box);
+                                          onTap: () async {
+                                            await showDialogWidget(
+                                                context, task, box);
                                           },
                                           child: Icon(Icons.delete))
                                     ],
@@ -218,20 +200,6 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
   }
 }
 
-class CompletedTaskScreen2 extends StatefulWidget {
-  const CompletedTaskScreen2({Key key}) : super(key: key);
-
-  @override
-  State<CompletedTaskScreen2> createState() => _CompletedTaskScreen2State();
-}
-
-class _CompletedTaskScreen2State extends State<CompletedTaskScreen2> {
-  ValueListenable<Box<Task>> boxform = Hive.box<Task>('tasks').listenable();
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
 
 /*
 
