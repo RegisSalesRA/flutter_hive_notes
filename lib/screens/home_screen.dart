@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/models/task.dart';
-import 'package:flutter_hive/screens/completed_tasks_screen.dart';
+import 'package:flutter_hive/models/task.dart'; 
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../widgets/widget.dart';
-import 'forms/form.dart';
+import '../widgets/widget.dart'; 
 
 class Home extends StatefulWidget {
   @override
@@ -32,9 +30,8 @@ class _HomeState extends State<Home> {
       child: Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              await Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => TaskForm()))
-                  .then((value) => setState(() {}));
+              await Navigator.pushNamed(context, '/form');
+              FocusScope.of(context).unfocus();
             },
             child: Icon(
               Icons.add,
@@ -82,8 +79,7 @@ class _HomeState extends State<Home> {
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Home()));
+                      return null;
                     },
                   ),
                   SizedBox(),
@@ -93,8 +89,7 @@ class _HomeState extends State<Home> {
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => CompleteTaskScreen()));
+                      Navigator.pushNamed(context, '/complete');
                     },
                   ),
                 ],

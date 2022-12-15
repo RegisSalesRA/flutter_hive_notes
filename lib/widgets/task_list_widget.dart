@@ -64,96 +64,104 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                 itemCount: box.length,
                 itemBuilder: (context, index) {
                   Task task = box.getAt(index);
-                  return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    child: Container(
-                        height: 75,
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: widget.isTaped == false
-                                    ? Colors.transparent
-                                    : Colors.black,
-                                blurRadius: 2.0,
-                                spreadRadius: 0.0,
-                                offset: Offset(2.0, 2.0),
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(15.0),
-                            color: Colors.white,
-                            border: Border.all(color: Colors.grey.shade400)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                if (task.urgency == "Easy")
-                                  Container(
-                                    height: 10,
-                                    width: 10,
-                                    decoration: BoxDecoration(
-                                        color: Colors.green,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10))),
-                                  ),
-                                if (task.urgency == "Middle")
-                                  Container(
-                                    height: 10,
-                                    width: 10,
-                                    decoration: BoxDecoration(
-                                        color: Colors.yellow,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10))),
-                                  ),
-                                if (task.urgency == "Hard")
-                                  Container(
-                                    height: 10,
-                                    width: 10,
-                                    decoration: BoxDecoration(
-                                        color: Colors.red,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10))),
-                                  ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      task.name ?? "default",
-                                      style: task.isComplete != false
-                                          ? Theme.of(context)
-                                              .textTheme
-                                              .headline5
-                                          : Theme.of(context)
-                                              .textTheme
-                                              .headline2,
+                  return task.name
+                          .toString()
+                          .toLowerCase()
+                          .contains(widget.search)
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Container(
+                              height: 75,
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: widget.isTaped == false
+                                          ? Colors.transparent
+                                          : Colors.black,
+                                      blurRadius: 2.0,
+                                      spreadRadius: 0.0,
+                                      offset: Offset(2.0, 2.0),
                                     ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(dateTimeFormat(task.createdAt)),
                                   ],
-                                ),
-                              ],
-                            ),
-                            IconButton(
-                                onPressed: () async {
-                                  await showDialogWidget(context, task, box);
-                                  setState(() {
-                                    task.isComplete = !task.isComplete;
-                                  });
-                                  print("Task ${task.isComplete}");
-                                },
-                                icon: task.isComplete != false
-                                    ? Icon(Icons.cancel)
-                                    : Icon(Icons.check))
-                          ],
-                        )),
-                  );
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: Colors.white,
+                                  border:
+                                      Border.all(color: Colors.grey.shade400)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      if (task.urgency == "Easy")
+                                        Container(
+                                          height: 10,
+                                          width: 10,
+                                          decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                        ),
+                                      if (task.urgency == "Middle")
+                                        Container(
+                                          height: 10,
+                                          width: 10,
+                                          decoration: BoxDecoration(
+                                              color: Colors.yellow,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                        ),
+                                      if (task.urgency == "Hard")
+                                        Container(
+                                          height: 10,
+                                          width: 10,
+                                          decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                        ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            task.name ?? "default",
+                                            style: task.isComplete != false
+                                                ? Theme.of(context)
+                                                    .textTheme
+                                                    .headline5
+                                                : Theme.of(context)
+                                                    .textTheme
+                                                    .headline2,
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(dateTimeFormat(task.createdAt)),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  IconButton(
+                                      onPressed: () async {
+                                        setState(() {
+                                          task.isComplete = !task.isComplete;
+                                        });
+                                        print("Task ${task.isComplete}");
+                                      },
+                                      icon: task.isComplete != false
+                                          ? Icon(Icons.cancel)
+                                          : Icon(Icons.check))
+                                ],
+                              )),
+                        )
+                      : SizedBox();
                 })
           ],
         );

@@ -5,7 +5,6 @@ import '../helpers/helpers.dart';
 import '../models/task.dart';
 import '../widgets/widget.dart';
 import 'forms/form.dart';
-import 'home_screen.dart';
 
 class CompleteTaskScreen extends StatefulWidget {
   @override
@@ -13,28 +12,7 @@ class CompleteTaskScreen extends StatefulWidget {
 }
 
 class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
-  final GlobalKey<AnimatedListState> _key = GlobalKey();
-
   ValueListenable<Box<Task>> boxform = Hive.box<Task>('tasks').listenable();
-
-  void removeItem(int index, var task, var box) async {
-    _key.currentState.removeItem(
-      index,
-      (_, animation) {
-        return SizeTransition(
-          sizeFactor: animation,
-          child: const Card(
-            margin: EdgeInsets.all(10),
-            child: ListTile(
-              contentPadding: EdgeInsets.all(15),
-              title: Text(""),
-            ),
-          ),
-        );
-      },
-    );
-    await box.delete(task.key);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +20,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            await Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => TaskForm()));
+            await Navigator.pushNamed(context, '/form');
             FocusScope.of(context).unfocus();
           },
           child: Icon(
@@ -62,97 +39,100 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  AnimatedList(
+                  Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      child: Container(
+                        child: Center(child: Text("Numbers task")),
+                      )),
+                  ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
-                    key: _key,
-                    initialItemCount: box.length,
+                    itemCount: box.length,
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(10),
-                    itemBuilder: (_, index, animation) {
+                    itemBuilder: (
+                      context,
+                      index,
+                    ) {
                       Task task = box.getAt(index);
-                      return SizeTransition(
-                        sizeFactor: animation,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Container(
-                              height: 75,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  color: Colors.white,
-                                  border:
-                                      Border.all(color: Colors.grey.shade400)),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            task.name ?? "default",
-                                            style: box.values
-                                                        .toList()[index]
-                                                        .isComplete !=
-                                                    false
-                                                ? Theme.of(context)
-                                                    .textTheme
-                                                    .headline5
-                                                : Theme.of(context)
-                                                    .textTheme
-                                                    .headline2,
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(dateTimeFormat(box.values
-                                              .toList()[index]
-                                              .createdAt)),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      InkWell(
-                                          onTap: () async {
-                                            await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        TaskForm(
-                                                          id: box.values
-                                                              .toList()[index]
-                                                              .key,
-                                                          nameChange: box.values
-                                                              .toList()[index]
-                                                              .name,
-                                                        )));
-                                          },
-                                          child: Icon(Icons.edit)),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      InkWell(
-                                          onTap: () async {
-                                            await showDialogWidget(
-                                                context, task, box);
-                                          },
-                                          child: Icon(Icons.delete))
-                                    ],
-                                  )
-                                ],
-                              )),
-                        ),
+                      return Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        child: Container(
+                            height: 75,
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                color: Colors.white,
+                                border:
+                                    Border.all(color: Colors.grey.shade400)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          task.name ?? "default",
+                                          style: box.values
+                                                      .toList()[index]
+                                                      .isComplete !=
+                                                  false
+                                              ? Theme.of(context)
+                                                  .textTheme
+                                                  .headline5
+                                              : Theme.of(context)
+                                                  .textTheme
+                                                  .headline2,
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(dateTimeFormat(box.values
+                                            .toList()[index]
+                                            .createdAt)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                        onTap: () async {
+                                          await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TaskForm(
+                                                        id: box.values
+                                                            .toList()[index]
+                                                            .key,
+                                                        nameChange: box.values
+                                                            .toList()[index]
+                                                            .name,
+                                                      )));
+                                        },
+                                        child: Icon(Icons.edit)),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    InkWell(
+                                        onTap: () async {
+                                          await showDialogWidget(
+                                              context, task, box);
+                                        },
+                                        child: Icon(Icons.delete))
+                                  ],
+                                )
+                              ],
+                            )),
                       );
                     },
                   ),
@@ -176,8 +156,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => Home()));
+                    Navigator.pushNamed(context, '/');
                   },
                 ),
                 SizedBox(),
@@ -187,8 +166,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CompleteTaskScreen()));
+                    return null;
                   },
                 ),
               ],
