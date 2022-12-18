@@ -44,16 +44,16 @@ dev_dependencies:
  
 
 flutter_icons:
-  image_path: "assets/splash/logo_splash.png"
+  image_path: "assets/launcher_icon/android_icon.png"
   ios: true
   remove_alpha_ios: true
-  android: "logo_splash"
-  adaptive_icon_background: "#a0aefc"
-  adaptive_icon_foreground: "assets/splash/logo_splash.png"
+  android: "launcher_icon"
+  adaptive_icon_background: "#c8bfe7"
+  adaptive_icon_foreground: "assets/launcher_icon/adptative_icon.png"
 
 
 flutter_native_splash:
-  color: "#a0aefc"
+  color: "#FFFFFF"
   image: assets/splash/logo_splash.png #u must place logo.png in your assets folder
   android: true
   ios: true
