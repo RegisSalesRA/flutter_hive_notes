@@ -97,142 +97,144 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
         body: ValueListenableBuilder(
           valueListenable: boxform,
           builder: (context, Box<Task> box, _) {
-            return box.isNotEmpty
-                ? SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: box.length,
-                            shrinkWrap: true,
-                            itemBuilder: (
-                              context,
-                              index,
-                            ) {
-                              Task task = box.getAt(index);
-                              return Padding(
-                                padding: EdgeInsets.symmetric(vertical: 5),
-                                child: Container(
-                                    height: 75,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        color: Colors.white,
-                                        border: Border.all(
-                                            color: Colors.grey.shade400)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+            List<int> keys;
+
+            keys = box.keys
+                .cast<int>()
+                .where((key) => box.get(key).isComplete)
+                .toList();
+
+            if (keys.isNotEmpty) {
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: keys.length,
+                        shrinkWrap: true,
+                        itemBuilder: (
+                          context,
+                          index,
+                        ) {
+                          final int key = keys[index];
+                          final Task task = box.get(key);
+                          return Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5),
+                            child: Container(
+                                height: 75,
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        color: Colors.grey.shade400)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
                                       children: [
-                                        Row(
-                                          children: [
-                                            if (task.urgency == "Easy")
-                                              Container(
-                                                height: 10,
-                                                width: 10,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.green,
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10))),
-                                              ),
-                                            if (task.urgency == "Middle")
-                                              Container(
-                                                height: 10,
-                                                width: 10,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.yellow,
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10))),
-                                              ),
-                                            if (task.urgency == "Hard")
-                                              Container(
-                                                height: 10,
-                                                width: 10,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.red,
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10))),
-                                              ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  task.name ?? "default",
-                                                  style: box.values
-                                                              .toList()[index]
-                                                              .isComplete !=
-                                                          false
-                                                      ? Theme.of(context)
-                                                          .textTheme
-                                                          .headline5
-                                                      : Theme.of(context)
-                                                          .textTheme
-                                                          .headline2,
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(dateTimeFormat(box.values
-                                                    .toList()[index]
-                                                    .createdAt)),
-                                              ],
-                                            ),
-                                          ],
+                                        if (task.urgency == "Home")
+                                          Container(
+                                            height: 10,
+                                            width: 10,
+                                            decoration: BoxDecoration(
+                                                color: Colors.green,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10))),
+                                          ),
+                                        if (task.urgency == "Job")
+                                          Container(
+                                            height: 10,
+                                            width: 10,
+                                            decoration: BoxDecoration(
+                                                color: Colors.yellow,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10))),
+                                          ),
+                                        if (task.urgency == "Urgency")
+                                          Container(
+                                            height: 10,
+                                            width: 10,
+                                            decoration: BoxDecoration(
+                                                color: Colors.red,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10))),
+                                          ),
+                                        SizedBox(
+                                          width: 10,
                                         ),
                                         Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            InkWell(
-                                                onTap: () {
-                                                  showDialogWidget(
-                                                      context, task, box);
-                                                },
-                                                child: Icon(Icons.delete))
+                                            Text(
+                                              task.name ?? "default",
+                                              style: box.values
+                                                          .toList()[index]
+                                                          .isComplete !=
+                                                      false
+                                                  ? Theme.of(context)
+                                                      .textTheme
+                                                      .headline5
+                                                  : Theme.of(context)
+                                                      .textTheme
+                                                      .headline2,
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(dateTimeFormat(box.values
+                                                .toList()[index]
+                                                .createdAt)),
                                           ],
-                                        )
+                                        ),
                                       ],
-                                    )),
-                              );
-                            },
-                          ),
-                        ],
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        InkWell(
+                                            onTap: () {
+                                              showDialogWidget(
+                                                  context, task, box);
+                                            },
+                                            child: Icon(Icons.delete))
+                                      ],
+                                    )
+                                  ],
+                                )),
+                          );
+                        },
                       ),
-                    ),
-                  )
-                : Container(
-                    height: MediaQuerySize.heigthSize(context) * 0.85,
-                    width: MediaQuerySize.widthSize(context),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.assignment_outlined,
-                            size: 50,
-                          ),
-                          Text(
-                            "No task avaliable",
-                            style: TextStyle(color: Colors.grey.shade400),
-                          )
-                        ]),
-                  );
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              return Container(
+                height: MediaQuerySize.heigthSize(context) * 0.85,
+                width: MediaQuerySize.widthSize(context),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.assignment_outlined,
+                        size: 50,
+                      ),
+                      Text(
+                        "No task avaliable",
+                        style: TextStyle(color: Colors.grey.shade400),
+                      )
+                    ]),
+              );
+            }
           },
         ),
         bottomNavigationBar: BottomAppBar(
