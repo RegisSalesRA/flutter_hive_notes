@@ -47,11 +47,11 @@ class _TaskFormState extends State<TaskForm> {
   }
 
   List<Map<String, dynamic>> taskLevel = [
-    {"name": "Easy"},
-    {"name": "Middle"},
+    {"name": "Home"},
+    {"name": "Job"},
   ];
   List<Map<String, dynamic>> taskLevel2 = [
-    {"name": "Hard"},
+    {"name": "Urgency"},
   ];
 
   @override
