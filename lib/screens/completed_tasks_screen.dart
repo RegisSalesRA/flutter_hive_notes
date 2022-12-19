@@ -101,7 +101,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
 
             keys = box.keys
                 .cast<int>()
-                .where((key) => box.get(key).isComplete)
+                .where((key) => box.get(key).urgency == "Home")
                 .toList();
 
             if (keys.isNotEmpty) {
