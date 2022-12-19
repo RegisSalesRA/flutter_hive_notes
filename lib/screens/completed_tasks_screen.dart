@@ -19,12 +19,11 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await Navigator.pushNamed(context, '/form');
-            FocusScope.of(context).unfocus();
+          onPressed: () {
+            print("Filter");
           },
           child: Icon(
-            Icons.add,
+            Icons.filter_list_rounded,
             color: Colors.white,
           ),
         ),
@@ -69,6 +68,33 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                               children: [
                                 Row(
                                   children: [
+                                    if (task.urgency == "Easy")
+                                      Container(
+                                        height: 10,
+                                        width: 10,
+                                        decoration: BoxDecoration(
+                                            color: Colors.green,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                      ),
+                                    if (task.urgency == "Middle")
+                                      Container(
+                                        height: 10,
+                                        width: 10,
+                                        decoration: BoxDecoration(
+                                            color: Colors.yellow,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                      ),
+                                    if (task.urgency == "Hard")
+                                      Container(
+                                        height: 10,
+                                        width: 10,
+                                        decoration: BoxDecoration(
+                                            color: Colors.red,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                      ),
                                     SizedBox(
                                       width: 10,
                                     ),
@@ -124,9 +150,8 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                                       height: 10,
                                     ),
                                     InkWell(
-                                        onTap: () async {
-                                          await showDialogWidget(
-                                              context, task, box);
+                                        onTap: () {
+                                          showDialogWidget(context, task, box);
                                         },
                                         child: Icon(Icons.delete))
                                   ],
@@ -153,7 +178,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                 IconButton(
                   icon: Icon(
                     Icons.home,
-                    color: Colors.white,
+                    color: Colors.grey.shade300,
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, '/');
@@ -177,57 +202,3 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
     );
   }
 }
-
-
-/*
-
- 
-
-ListTile(
-                                  onTap: onTap,
-                                  trailing: InkWell(
-                                      onTap: () => print("teste"),
-                                      child: Icon(Icons.assignment)),
-                                  title: Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
-                                    child: Text(
-                                      task.name ?? "default",
-                                      style:
-                                          Theme.of(context).textTheme.headline2,
-                                    ),
-                                  ),
-                                  subtitle:
-                                      Text(dateTimeFormat(dev.createdAt)))
-
-
-
-
-
-  onTap: () async {
-                                    await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => TaskForm(
-                                                  id: dev.key,
-                                                  nameChange: dev.name,
-                                                )));
-                                  },
-                                  onLongPress: () async {
-                                    await showDialogWidget(context, dev, box);
-                                  },
-
-
-                                      InkWell(
-                                      onTap: onTap,
-                                      child: Icon(Icons.assignment))
-
-
-
-
-
-
-
-                                      //////////////////////// UPDATE AND DELETE
-                                      
-                                  
-*/

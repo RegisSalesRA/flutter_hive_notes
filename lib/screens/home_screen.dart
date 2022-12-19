@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/models/task.dart'; 
+import 'package:flutter_hive/models/task.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../widgets/widget.dart'; 
+import '../widgets/widget.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -86,7 +86,7 @@ class _HomeState extends State<Home> {
                   IconButton(
                     icon: Icon(
                       Icons.check,
-                      color: Colors.white,
+                      color: Colors.grey.shade300,
                     ),
                     onPressed: () {
                       Navigator.pushNamed(context, '/complete');
