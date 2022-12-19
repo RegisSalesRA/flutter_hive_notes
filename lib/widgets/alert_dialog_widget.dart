@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 
 import '../models/task.dart';
 
-showDialogWidget(BuildContext context, Task dev, Box<Task> box) async {
+showDialogWidget(BuildContext context, Task dev, Box<Task> box) {
   showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(

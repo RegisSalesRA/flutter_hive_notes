@@ -25,7 +25,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
           floatingActionButton: FloatingActionButton(
@@ -47,21 +46,18 @@ class _HomeState extends State<Home> {
           body: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Column(children: [
-                TaskListWidget(
-                  onTap: onTap,
-                  isTaped: isTaped,
-                  boxform: boxform,
-                  size: size,
-                  search: search,
-                  onChanged: (value) {
-                    setState(() {
-                      search = value;
-                    });
-                  },
-                )
-              ]),
+              padding: EdgeInsets.all(10),
+              child: TaskListWidget(
+                onTap: onTap,
+                isTaped: isTaped,
+                boxform: boxform,
+                search: search,
+                onChanged: (value) {
+                  setState(() {
+                    search = value;
+                  });
+                },
+              ),
             ),
           ),
           bottomNavigationBar: BottomAppBar(
@@ -75,7 +71,7 @@ class _HomeState extends State<Home> {
                 children: [
                   IconButton(
                     icon: Icon(
-                      Icons.home,
+                      Icons.list,
                       color: Colors.white,
                     ),
                     onPressed: () {
@@ -85,7 +81,7 @@ class _HomeState extends State<Home> {
                   SizedBox(),
                   IconButton(
                     icon: Icon(
-                      Icons.check,
+                      Icons.show_chart,
                       color: Colors.grey.shade300,
                     ),
                     onPressed: () {

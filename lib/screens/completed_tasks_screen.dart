@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import '../config/config.dart';
 import '../helpers/helpers.dart';
 import '../models/task.dart';
 import '../widgets/widget.dart';
-import 'forms/form.dart';
 
 class CompleteTaskScreen extends StatefulWidget {
   @override
@@ -20,7 +20,69 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            print("Filter");
+            showModalBottomSheet<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return Container(
+                  height: 200,
+                  color: Colors.white,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                  color: ColorsTheme.primaryColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: Text(
+                                "Home Task",
+                                style: Theme.of(context).textTheme.headline4,
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                  color: ColorsTheme.primaryColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: Text(
+                                "Work Task",
+                                style: Theme.of(context).textTheme.headline4,
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                  color: ColorsTheme.primaryColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: Text(
+                                "Urgent Task",
+                                style: Theme.of(context).textTheme.headline4,
+                              ),
+                            ),
+                          ],
+                        ),
+                        ElevatedButton(
+                          child: Text(
+                            'Close',
+                            style: Theme.of(context).textTheme.headline4,
+                          ),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
           },
           child: Icon(
             Icons.filter_list_rounded,
@@ -35,102 +97,183 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
         body: ValueListenableBuilder(
           valueListenable: boxform,
           builder: (context, Box<Task> box, _) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                      child: Container(
-                        child: Center(child: Text("Numbers task")),
-                      )),
-                  ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: box.length,
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(10),
-                    itemBuilder: (
-                      context,
-                      index,
-                    ) {
-                      Task task = box.getAt(index);
-                      return Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
-                        child: Container(
-                            height: 75,
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                color: Colors.white,
-                                border:
-                                    Border.all(color: Colors.grey.shade400)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    if (task.urgency == "Easy")
-                                      Container(
-                                        height: 10,
-                                        width: 10,
-                                        decoration: BoxDecoration(
-                                            color: Colors.green,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                      ),
-                                    if (task.urgency == "Middle")
-                                      Container(
-                                        height: 10,
-                                        width: 10,
-                                        decoration: BoxDecoration(
-                                            color: Colors.yellow,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                      ),
-                                    if (task.urgency == "Hard")
-                                      Container(
-                                        height: 10,
-                                        width: 10,
-                                        decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                      ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
+            return box.isNotEmpty
+                ? SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: box.length,
+                            shrinkWrap: true,
+                            itemBuilder: (
+                              context,
+                              index,
+                            ) {
+                              Task task = box.getAt(index);
+                              return Padding(
+                                padding: EdgeInsets.symmetric(vertical: 5),
+                                child: Container(
+                                    height: 75,
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        color: Colors.white,
+                                        border: Border.all(
+                                            color: Colors.grey.shade400)),
+                                    child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          task.name ?? "default",
-                                          style: box.values
-                                                      .toList()[index]
-                                                      .isComplete !=
-                                                  false
-                                              ? Theme.of(context)
-                                                  .textTheme
-                                                  .headline5
-                                              : Theme.of(context)
-                                                  .textTheme
-                                                  .headline2,
+                                        Row(
+                                          children: [
+                                            if (task.urgency == "Easy")
+                                              Container(
+                                                height: 10,
+                                                width: 10,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.green,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10))),
+                                              ),
+                                            if (task.urgency == "Middle")
+                                              Container(
+                                                height: 10,
+                                                width: 10,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.yellow,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10))),
+                                              ),
+                                            if (task.urgency == "Hard")
+                                              Container(
+                                                height: 10,
+                                                width: 10,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.red,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10))),
+                                              ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  task.name ?? "default",
+                                                  style: box.values
+                                                              .toList()[index]
+                                                              .isComplete !=
+                                                          false
+                                                      ? Theme.of(context)
+                                                          .textTheme
+                                                          .headline5
+                                                      : Theme.of(context)
+                                                          .textTheme
+                                                          .headline2,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(dateTimeFormat(box.values
+                                                    .toList()[index]
+                                                    .createdAt)),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(dateTimeFormat(box.values
-                                            .toList()[index]
-                                            .createdAt)),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            InkWell(
+                                                onTap: () {
+                                                  showDialogWidget(
+                                                      context, task, box);
+                                                },
+                                                child: Icon(Icons.delete))
+                                          ],
+                                        )
                                       ],
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    InkWell(
+                                    )),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : Container(
+                    height: MediaQuerySize.heigthSize(context) * 0.85,
+                    width: MediaQuerySize.widthSize(context),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.assignment_outlined,
+                            size: 50,
+                          ),
+                          Text(
+                            "No task avaliable",
+                            style: TextStyle(color: Colors.grey.shade400),
+                          )
+                        ]),
+                  );
+          },
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: Theme.of(context).colorScheme.primary,
+          shape: CircularNotchedRectangle(),
+          notchMargin: 5,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.list,
+                    color: Colors.grey.shade300,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/');
+                  },
+                ),
+                SizedBox(),
+                IconButton(
+                  icon: Icon(
+                    Icons.show_chart,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/*
+   InkWell(
                                         onTap: () async {
                                           await Navigator.push(
                                               context,
@@ -146,59 +289,4 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                                                       )));
                                         },
                                         child: Icon(Icons.edit)),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    InkWell(
-                                        onTap: () {
-                                          showDialogWidget(context, task, box);
-                                        },
-                                        child: Icon(Icons.delete))
-                                  ],
-                                )
-                              ],
-                            )),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-        bottomNavigationBar: BottomAppBar(
-          color: Theme.of(context).colorScheme.primary,
-          shape: CircularNotchedRectangle(),
-          notchMargin: 5,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.home,
-                    color: Colors.grey.shade300,
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/');
-                  },
-                ),
-                SizedBox(),
-                IconButton(
-                  icon: Icon(
-                    Icons.check,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    return null;
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+*/

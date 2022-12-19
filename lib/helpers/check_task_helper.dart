@@ -1,3 +1,0 @@
-checkTask(value) {
-  value = !value;
-}
