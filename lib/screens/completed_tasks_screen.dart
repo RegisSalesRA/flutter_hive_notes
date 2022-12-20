@@ -21,11 +21,18 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             showModalBottomSheet<void>(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25.0),
+              ),
               context: context,
               builder: (BuildContext context) {
                 return Container(
                   height: 200,
-                  color: Colors.white,
+                  decoration: new BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: new BorderRadius.only(
+                          topLeft: const Radius.circular(15.0),
+                          topRight: const Radius.circular(15.0))),
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -45,7 +52,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                               child: Container(
                                 padding: EdgeInsets.all(6),
                                 decoration: BoxDecoration(
-                                    color: ColorsTheme.primaryColor,
+                                    color: Colors.green.shade400,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
                                 child: Text(
@@ -64,7 +71,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                               child: Container(
                                 padding: EdgeInsets.all(6),
                                 decoration: BoxDecoration(
-                                    color: ColorsTheme.primaryColor,
+                                    color: Colors.orange.shade400,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
                                 child: Text(
@@ -83,7 +90,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                               child: Container(
                                 padding: EdgeInsets.all(6),
                                 decoration: BoxDecoration(
-                                    color: ColorsTheme.primaryColor,
+                                    color: Colors.red.shade400,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
                                 child: Text(
