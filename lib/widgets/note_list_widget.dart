@@ -33,7 +33,14 @@ class _TaskListWidgetState extends State<TaskListWidget> {
     return ValueListenableBuilder(
       valueListenable: widget.boxform,
       builder: (context, Box<Task> box, _) {
-        if (box.isNotEmpty) {
+        List<int> keys;
+
+        keys = box.keys
+            .cast<int>()
+            .where((key) => box.get(key).isComplete == false)
+            .toList();
+
+        if (keys.isNotEmpty) {
           return Column(
             children: [
               Padding(
@@ -60,107 +67,108 @@ class _TaskListWidgetState extends State<TaskListWidget> {
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: box.length,
+                  itemCount: keys.length,
                   itemBuilder: (context, index) {
-                    Task task = box.getAt(index);
-                    return task.name
-                            .toString()
-                            .toLowerCase()
-                            .contains(widget.search)
-                        ? Padding(
-                            padding: EdgeInsets.symmetric(vertical: 5),
-                            child: Container(
-                                height: 75,
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: widget.isTaped == false
-                                            ? Colors.transparent
-                                            : Colors.black,
-                                        blurRadius: 2.0,
-                                        spreadRadius: 0.0,
-                                        offset: Offset(2.0, 2.0),
-                                      ),
-                                    ],
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    color: Colors.white,
-                                    border: Border.all(
-                                        color: Colors.grey.shade400)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                    final int key = keys[index];
+                    Task task = box.get(key);
+                    if (task.name
+                        .toString()
+                        .toLowerCase()
+                        .contains(widget.search)) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        child: Container(
+                            height: 75,
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: widget.isTaped == false
+                                        ? Colors.transparent
+                                        : Colors.black,
+                                    blurRadius: 2.0,
+                                    spreadRadius: 0.0,
+                                    offset: Offset(2.0, 2.0),
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(15.0),
+                                color: Colors.white,
+                                border:
+                                    Border.all(color: Colors.grey.shade400)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
                                   children: [
-                                    Row(
+                                    if (task.urgency == "Home")
+                                      Container(
+                                        height: 10,
+                                        width: 10,
+                                        decoration: BoxDecoration(
+                                            color: Colors.green,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                      ),
+                                    if (task.urgency == "Job")
+                                      Container(
+                                        height: 10,
+                                        width: 10,
+                                        decoration: BoxDecoration(
+                                            color: Colors.yellow,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                      ),
+                                    if (task.urgency == "Urgency")
+                                      Container(
+                                        height: 10,
+                                        width: 10,
+                                        decoration: BoxDecoration(
+                                            color: Colors.red,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                      ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        if (task.urgency == "Home")
-                                          Container(
-                                            height: 10,
-                                            width: 10,
-                                            decoration: BoxDecoration(
-                                                color: Colors.green,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                          ),
-                                        if (task.urgency == "Job")
-                                          Container(
-                                            height: 10,
-                                            width: 10,
-                                            decoration: BoxDecoration(
-                                                color: Colors.yellow,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                          ),
-                                        if (task.urgency == "Urgency")
-                                          Container(
-                                            height: 10,
-                                            width: 10,
-                                            decoration: BoxDecoration(
-                                                color: Colors.red,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                          ),
+                                        Text(
+                                          task.name ?? "default",
+                                          style: task.isComplete != false
+                                              ? Theme.of(context)
+                                                  .textTheme
+                                                  .headline5
+                                              : Theme.of(context)
+                                                  .textTheme
+                                                  .headline2,
+                                        ),
                                         SizedBox(
-                                          width: 10,
+                                          height: 10,
                                         ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              task.name ?? "default",
-                                              style: task.isComplete != false
-                                                  ? Theme.of(context)
-                                                      .textTheme
-                                                      .headline5
-                                                  : Theme.of(context)
-                                                      .textTheme
-                                                      .headline2,
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                                dateTimeFormat(task.createdAt)),
-                                          ],
-                                        ),
+                                        Text(dateTimeFormat(task.createdAt)),
                                       ],
                                     ),
-                                    IconButton(
-                                        onPressed: () async {
-                                          setState(() {
-                                            task.isComplete = !task.isComplete;
-                                          });
-                                        },
-                                        icon: task.isComplete != false
-                                            ? Icon(Icons.check_circle_outline)
-                                            : Icon(Icons.circle_outlined))
                                   ],
-                                )),
-                          )
-                        : SizedBox();
+                                ),
+                                IconButton(
+                                    onPressed: () async {
+                                      setState(() {
+                                        task.isComplete = !task.isComplete;
+                                      });
+                                    },
+                                    icon: task.isComplete != false
+                                        ? Icon(Icons.check_circle_outline)
+                                        : Icon(Icons.circle_outlined))
+                              ],
+                            )),
+                      );
+                    } else {
+                      return SizedBox();
+                    }
                   })
             ],
           );
