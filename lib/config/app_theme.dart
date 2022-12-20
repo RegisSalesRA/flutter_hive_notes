@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../screens/completed_tasks_screen.dart';
+import '../screens/completed_notes_screen.dart';
 import '../screens/forms/form.dart';
 import '../screens/home_screen.dart';
 import 'config.dart';
