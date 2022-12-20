@@ -36,8 +36,30 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                           topRight: const Radius.circular(15.0))),
                   child: Center(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              height: 10,
+                              width: 70,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade400,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Sort by",
+                              style: Theme.of(context).textTheme.headline3,
+                            )
+                          ],
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,7 +75,9 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                               child: Container(
                                 padding: EdgeInsets.all(6),
                                 decoration: BoxDecoration(
-                                    color: Colors.green.shade400,
+                                    color: indexFilter == 1
+                                        ? ColorsTheme.primaryColor
+                                        : Colors.grey.shade400,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
                                 child: Text(
@@ -72,7 +96,9 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                               child: Container(
                                 padding: EdgeInsets.all(6),
                                 decoration: BoxDecoration(
-                                    color: Colors.orange.shade400,
+                                    color: indexFilter == 2
+                                        ? ColorsTheme.primaryColor
+                                        : Colors.grey.shade400,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
                                 child: Text(
@@ -91,7 +117,9 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                               child: Container(
                                 padding: EdgeInsets.all(6),
                                 decoration: BoxDecoration(
-                                    color: Colors.red.shade400,
+                                    color: indexFilter == 3
+                                        ? ColorsTheme.primaryColor
+                                        : Colors.grey.shade400,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
                                 child: Text(
@@ -102,13 +130,16 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                             ),
                           ],
                         ),
-                        ElevatedButton(
+                        SizedBox()
+                        /*
+ ElevatedButton(
                           child: Text(
                             'Close',
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           onPressed: () => Navigator.pop(context),
                         ),
+                       */
                       ],
                     ),
                   ),

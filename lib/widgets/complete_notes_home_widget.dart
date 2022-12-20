@@ -23,7 +23,9 @@ class CompleteNotesHomeWidget extends StatelessWidget {
 
         keys = box.keys
             .cast<int>()
-            .where((key) => box.get(key).urgency == "Home")
+            .where((key) =>
+                box.get(key).urgency == "Home" &&
+                box.get(key).isComplete == true)
             .toList();
 
         if (keys.isNotEmpty) {
@@ -105,16 +107,9 @@ class CompleteNotesHomeWidget extends StatelessWidget {
                                       children: [
                                         Text(
                                           task.name ?? "default",
-                                          style: box.values
-                                                      .toList()[index]
-                                                      .isComplete !=
-                                                  false
-                                              ? Theme.of(context)
-                                                  .textTheme
-                                                  .headline5
-                                              : Theme.of(context)
-                                                  .textTheme
-                                                  .headline2,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5,
                                         ),
                                         SizedBox(
                                           height: 10,

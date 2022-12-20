@@ -105,16 +105,9 @@ class CompleteNotesWidget extends StatelessWidget {
                                       children: [
                                         Text(
                                           task.name ?? "default",
-                                          style: box.values
-                                                      .toList()[index]
-                                                      .isComplete !=
-                                                  false
-                                              ? Theme.of(context)
-                                                  .textTheme
-                                                  .headline5
-                                              : Theme.of(context)
-                                                  .textTheme
-                                                  .headline2,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5,
                                         ),
                                         SizedBox(
                                           height: 10,

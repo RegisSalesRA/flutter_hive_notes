@@ -23,7 +23,9 @@ class CompleteNotesUrgencyWidget extends StatelessWidget {
 
         keys = box.keys
             .cast<int>()
-            .where((key) => box.get(key).urgency == "Urgency")
+            .where((key) =>
+                box.get(key).urgency == "Urgency" &&
+                box.get(key).isComplete == true)
             .toList();
 
         if (keys.isNotEmpty) {
@@ -103,19 +105,10 @@ class CompleteNotesUrgencyWidget extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          task.name ?? "default",
-                                          style: box.values
-                                                      .toList()[index]
-                                                      .isComplete !=
-                                                  false
-                                              ? Theme.of(context)
-                                                  .textTheme
-                                                  .headline5
-                                              : Theme.of(context)
-                                                  .textTheme
-                                                  .headline2,
-                                        ),
+                                        Text(task.name ?? "default",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5),
                                         SizedBox(
                                           height: 10,
                                         ),
