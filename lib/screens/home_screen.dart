@@ -14,7 +14,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String search = "";
   bool isTaped = false;
-
+  var selectedItem = '';
   ValueListenable<Box<Task>> boxform = Hive.box<Task>('tasks').listenable();
 
   onTap() {
@@ -47,23 +47,69 @@ class _HomeState extends State<Home> {
               IconButton(
                 color: ColorsTheme.primaryColor,
                 icon: Icon(
-                  Icons.timer,
+                  Icons.refresh,
                   size: 30,
                 ),
                 onPressed: () {
                   print("Filter");
                 },
               ),
-              IconButton(
-                color: ColorsTheme.primaryColor,
-                icon: Icon(
-                  Icons.more_vert,
-                  size: 30,
-                ),
-                onPressed: () {
-                  print("Filter");
-                },
-              ),
+              PopupMenuButton(
+                  iconSize: 30,
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: ColorsTheme.primaryColor,
+                  ),
+                  onSelected: (value) {},
+                  itemBuilder: (BuildContext bc) {
+                    return [
+                      PopupMenuItem(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.home,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("Home notes")
+                            ]),
+                        value: '/hello',
+                      ),
+                      PopupMenuItem(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.work_outlined,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("Job notes")
+                            ]),
+                        value: '/about',
+                      ),
+                      PopupMenuItem(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.crisis_alert_rounded,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("Urgency notes")
+                            ]),
+                        value: '/contact',
+                      )
+                    ];
+                  })
             ]),
           ),
           body: SingleChildScrollView(

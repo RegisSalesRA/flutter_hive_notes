@@ -60,7 +60,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                             )
                           ],
                         ),
-                        Row(
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
@@ -80,10 +80,22 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                                         : Colors.grey.shade400,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
-                                child: Text(
-                                  "Home Task",
-                                  style: Theme.of(context).textTheme.headline4,
-                                ),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.home,
+                                        color: Colors.white,
+                                      ),
+                                      Text(
+                                        "Home notes",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
+                                      )
+                                    ]),
                               ),
                             ),
                             InkWell(
@@ -101,10 +113,22 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                                         : Colors.grey.shade400,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
-                                child: Text(
-                                  "Work Task",
-                                  style: Theme.of(context).textTheme.headline4,
-                                ),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.work_outlined,
+                                        color: Colors.white,
+                                      ),
+                                      Text(
+                                        "Job notes",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
+                                      )
+                                    ]),
                               ),
                             ),
                             InkWell(
@@ -122,10 +146,22 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                                         : Colors.grey.shade400,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
-                                child: Text(
-                                  "Urgent Task",
-                                  style: Theme.of(context).textTheme.headline4,
-                                ),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.crisis_alert_rounded,
+                                        color: Colors.white,
+                                      ),
+                                      Text(
+                                        "Urgency notes",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
+                                      )
+                                    ]),
                               ),
                             ),
                           ],
