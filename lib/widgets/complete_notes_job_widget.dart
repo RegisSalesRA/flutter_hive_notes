@@ -156,7 +156,7 @@ class CompleteNotesJobWidget extends StatelessWidget {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.clear_outlined)
+                                      Icon(Icons.circle_outlined)
                                     ],
                                   )
                                 ],

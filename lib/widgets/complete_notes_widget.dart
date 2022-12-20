@@ -154,7 +154,7 @@ class CompleteNotesWidget extends StatelessWidget {
                                   ),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [Icon(Icons.clear_outlined)],
+                                    children: [Icon(Icons.circle_outlined)],
                                   )
                                 ],
                               )),

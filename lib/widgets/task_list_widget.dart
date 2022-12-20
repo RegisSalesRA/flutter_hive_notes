@@ -155,8 +155,8 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                           });
                                         },
                                         icon: task.isComplete != false
-                                            ? Icon(Icons.clear_outlined)
-                                            : Icon(Icons.check))
+                                            ? Icon(Icons.check_circle_outline)
+                                            : Icon(Icons.circle_outlined))
                                   ],
                                 )),
                           )

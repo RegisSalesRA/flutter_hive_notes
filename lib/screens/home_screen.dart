@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
               IconButton(
                 color: ColorsTheme.primaryColor,
                 icon: Icon(
-                  Icons.filter_list,
+                  Icons.timer,
                   size: 30,
                 ),
                 onPressed: () {
@@ -57,13 +57,13 @@ class _HomeState extends State<Home> {
               IconButton(
                 color: ColorsTheme.primaryColor,
                 icon: Icon(
-                  Icons.filter_list,
+                  Icons.more_vert,
                   size: 30,
                 ),
                 onPressed: () {
                   print("Filter");
                 },
-              )
+              ),
             ]),
           ),
           body: SingleChildScrollView(
