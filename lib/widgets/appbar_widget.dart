@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool automaticallyImplyLeading;
-  AppBarWidget({Key key, this.title, this.automaticallyImplyLeading}) : super(key: key);
+  AppBarWidget({Key key, this.title, this.automaticallyImplyLeading})
+      : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(50);
@@ -11,6 +12,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      foregroundColor: Colors.grey.shade400,
       automaticallyImplyLeading: automaticallyImplyLeading,
       elevation: 0,
       backgroundColor: Colors.transparent,

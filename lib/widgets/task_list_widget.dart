@@ -42,7 +42,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                     onChanged: widget.onChanged,
                     style: const TextStyle(color: ColorsTheme.textInput),
                     decoration: InputDecoration(
-                      hintStyle: const TextStyle(color: ColorsTheme.textInput),
+                      hintStyle: TextStyle(color: Colors.grey.shade400),
                       contentPadding:
                           const EdgeInsets.symmetric(vertical: 15.0),
                       fillColor: ColorsTheme.textColor,

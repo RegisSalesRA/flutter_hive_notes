@@ -136,9 +136,6 @@ class _TaskFormState extends State<TaskForm> {
                     },
                   ),
                   SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
                     height: 60,
                   ),
                   ElevatedButton(

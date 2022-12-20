@@ -4,7 +4,7 @@ TextTheme textThemeConfig() {
   return TextTheme(
     headline1: TextStyle(
       fontSize: 22,
-      color: Colors.black,
+      color: Colors.grey.shade400,
       fontWeight: FontWeight.bold,
     ),
     headline2: TextStyle(
