@@ -33,14 +33,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
     return ValueListenableBuilder(
       valueListenable: widget.boxform,
       builder: (context, Box<Task> box, _) {
-        List<int> keys;
-
-        keys = box.keys
-            .cast<int>()
-            .where((key) => box.get(key).isComplete == false)
-            .toList();
-
-        if (keys.isNotEmpty) {
+        if (box.isNotEmpty) {
           return Column(
             children: [
               Padding(
@@ -67,10 +60,9 @@ class _TaskListWidgetState extends State<TaskListWidget> {
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: keys.length,
+                  itemCount: box.length,
                   itemBuilder: (context, index) {
-                    final int key = keys[index];
-                    Task task = box.get(key);
+                    Task task = box.getAt(index);
                     if (task.name
                         .toString()
                         .toLowerCase()

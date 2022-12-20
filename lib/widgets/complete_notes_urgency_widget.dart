@@ -155,7 +155,7 @@ class CompleteNotesUrgencyWidget extends StatelessWidget {
                                   ),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [Icon(Icons.circle_outlined)],
+                                    children: [Icon(Icons.check_circle_outline)],
                                   )
                                 ],
                               )),
