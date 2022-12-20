@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+
 import '../config/config.dart';
 import '../models/task.dart';
 import '../widgets/widget.dart';
@@ -122,9 +123,17 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         appBar: AppBarWidget(
-          automaticallyImplyLeading: false,
-          title: "Complete tasks",
-        ),
+            automaticallyImplyLeading: false,
+            title: "Complete tasks",
+            widgetAction: IconButton(
+              color: ColorsTheme.primaryColor,
+              icon: Icon(Icons.refresh),
+              onPressed: () {
+                setState(() {
+                  indexFilter = 0;
+                });
+              },
+            )),
         body: Column(children: [
           if (indexFilter == 0) ...{
             CompleteNotesWidget(boxform: boxform),

@@ -32,6 +32,16 @@ class CompleteNotesWidget extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                    child: Text(
+                      "${keys.length} / ${boxform.value.values.length} ",
+                      style: TextStyle(
+                          color: Colors.grey.shade400,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: keys.length,

@@ -6,6 +6,7 @@ abstract class MediaQuerySize {
   static double heigthSize(context) {
     var heigthSize = MediaQuery.of(context).size.height -
         AppBarWidget(
+          widgetAction: SizedBox(),
           automaticallyImplyLeading: null,
           title: null,
         ).preferredSize.height -

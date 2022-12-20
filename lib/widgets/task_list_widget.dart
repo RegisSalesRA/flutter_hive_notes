@@ -62,7 +62,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                   shrinkWrap: true,
                   itemCount: box.length,
                   itemBuilder: (context, index) {
-                    Task task = box.getAt(index);
+                    Task task = box.getAt(index); 
                     return task.name
                             .toString()
                             .toLowerCase()

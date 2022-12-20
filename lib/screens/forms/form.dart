@@ -68,6 +68,7 @@ class _TaskFormState extends State<TaskForm> {
 
     return Scaffold(
       appBar: AppBarWidget(
+        widgetAction: SizedBox(),
         automaticallyImplyLeading: true,
         title: widget.id == null ? "Create task" : widget.nameChange,
       ),

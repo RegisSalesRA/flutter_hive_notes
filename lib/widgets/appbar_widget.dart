@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool automaticallyImplyLeading;
-  AppBarWidget({Key key, this.title, this.automaticallyImplyLeading})
+  final Widget widgetAction;
+  AppBarWidget(
+      {Key key, this.title, this.automaticallyImplyLeading, this.widgetAction})
       : super(key: key);
 
   @override
@@ -21,6 +23,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         title,
         style: Theme.of(context).textTheme.headline1,
       ),
+      actions: [widgetAction],
     );
   }
 }

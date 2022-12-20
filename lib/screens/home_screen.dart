@@ -42,6 +42,7 @@ class _HomeState extends State<Home> {
           appBar: AppBarWidget(
             automaticallyImplyLeading: false,
             title: "Flutter Task",
+            widgetAction: SizedBox(),
           ),
           body: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
