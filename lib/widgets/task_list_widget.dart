@@ -62,7 +62,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                   shrinkWrap: true,
                   itemCount: box.length,
                   itemBuilder: (context, index) {
-                    Task task = box.getAt(index); 
+                    Task task = box.getAt(index);
                     return task.name
                             .toString()
                             .toLowerCase()
@@ -153,7 +153,6 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                           setState(() {
                                             task.isComplete = !task.isComplete;
                                           });
-                                          print("Task ${task.isComplete}");
                                         },
                                         icon: task.isComplete != false
                                             ? Icon(Icons.clear_outlined)

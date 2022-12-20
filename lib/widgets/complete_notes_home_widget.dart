@@ -4,7 +4,6 @@ import 'package:hive/hive.dart';
 
 import '../helpers/helpers.dart';
 import '../models/task.dart';
-import 'widget.dart';
 
 class CompleteNotesHomeWidget extends StatelessWidget {
   const CompleteNotesHomeWidget({
@@ -158,14 +157,7 @@ class CompleteNotesHomeWidget extends StatelessWidget {
                                   ),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      InkWell(
-                                          onTap: () {
-                                            showDialogWidget(
-                                                context, task, box);
-                                          },
-                                          child: Icon(Icons.clear_outlined))
-                                    ],
+                                    children: [Icon(Icons.clear_outlined)],
                                   )
                                 ],
                               )),

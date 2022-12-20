@@ -4,7 +4,6 @@ import 'package:hive/hive.dart';
 
 import '../helpers/helpers.dart';
 import '../models/task.dart';
-import 'widget.dart';
 
 class CompleteNotesWidget extends StatelessWidget {
   const CompleteNotesWidget({
@@ -13,7 +12,6 @@ class CompleteNotesWidget extends StatelessWidget {
   }) : super(key: key);
 
   final ValueListenable<Box<Task>> boxform;
-
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -156,14 +154,7 @@ class CompleteNotesWidget extends StatelessWidget {
                                   ),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      InkWell(
-                                          onTap: () {
-                                            showDialogWidget(
-                                                context, task, box);
-                                          },
-                                          child: Icon(Icons.clear_outlined))
-                                    ],
+                                    children: [Icon(Icons.clear_outlined)],
                                   )
                                 ],
                               )),

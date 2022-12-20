@@ -66,92 +66,94 @@ class _TaskFormState extends State<TaskForm> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      appBar: AppBarWidget(
-        widgetAction: SizedBox(),
-        automaticallyImplyLeading: true,
-        title: widget.id == null ? "Create task" : widget.nameChange,
-      ),
-      body: Center(
-        child: Container(
-          width: size.width * 0.95,
-          height: size.height * 0.95,
-          padding: EdgeInsets.all(5),
-          child: Form(
-              key: taskForm,
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  SizedBox(
-                    height: 5,
-                  ),
-                  InputText(
-                    name: name,
-                    validator: (v) {
-                      if (v.isEmpty) {
-                        return "Field can not be empty";
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        name = value;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  DropDownWidget(
-                    hint: urgency == null
-                        ? Padding(
-                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                            child: Text(
-                              'Select option',
-                              style: TextStyle(
-                                  fontSize: 18, color: ColorsTheme.textColor),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBarWidget(
+          widgetAction: SizedBox(),
+          automaticallyImplyLeading: true,
+          title: widget.id == null ? "Create task" : widget.nameChange,
+        ),
+        body: Center(
+          child: Container(
+            width: size.width * 0.95,
+            height: size.height * 0.95,
+            padding: EdgeInsets.all(5),
+            child: Form(
+                key: taskForm,
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    SizedBox(
+                      height: 5,
+                    ),
+                    InputText(
+                      name: name,
+                      validator: (v) {
+                        if (v.isEmpty) {
+                          return "Field can not be empty";
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          name = value;
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    DropDownWidget(
+                      hint: urgency == null
+                          ? Padding(
+                              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              child: Text(
+                                'Select option',
+                                style: TextStyle(
+                                    fontSize: 18, color: ColorsTheme.textColor),
+                              ),
+                            )
+                          : Padding(
+                              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              child: Text(
+                                urgency,
+                                style: TextStyle(color: ColorsTheme.textColor),
+                              ),
                             ),
-                          )
-                        : Padding(
-                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                            child: Text(
-                              urgency,
-                              style: TextStyle(color: ColorsTheme.textColor),
-                            ),
-                          ),
-                    dropdownItens: taskLevel.map(
-                      (val) {
-                        return DropdownMenuItem<String>(
-                          value: val["name"],
-                          child:
-                              Container(width: 100, child: Text(val["name"])),
+                      dropdownItens: taskLevel.map(
+                        (val) {
+                          return DropdownMenuItem<String>(
+                            value: val["name"],
+                            child:
+                                Container(width: 100, child: Text(val["name"])),
+                          );
+                        },
+                      ).toList(),
+                      onChanged: (val) {
+                        setState(
+                          () {
+                            urgency = val;
+                          },
                         );
                       },
-                    ).toList(),
-                    onChanged: (val) {
-                      setState(
-                        () {
-                          urgency = val;
-                        },
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 60,
-                  ),
-                  ElevatedButton(
-                      onPressed: submitData,
-                      child: widget.id == null
-                          ? Text(
-                              "Create task",
-                              style: Theme.of(context).textTheme.headline4,
-                            )
-                          : Text(
-                              "Update task",
-                              style: Theme.of(context).textTheme.headline4,
-                            )),
-                ],
-              )),
+                    ),
+                    SizedBox(
+                      height: 60,
+                    ),
+                    ElevatedButton(
+                        onPressed: submitData,
+                        child: widget.id == null
+                            ? Text(
+                                "Create task",
+                                style: Theme.of(context).textTheme.headline4,
+                              )
+                            : Text(
+                                "Update task",
+                                style: Theme.of(context).textTheme.headline4,
+                              )),
+                  ],
+                )),
+          ),
         ),
       ),
     );

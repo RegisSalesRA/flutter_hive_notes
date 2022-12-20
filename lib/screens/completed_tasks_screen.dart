@@ -131,15 +131,6 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                           ],
                         ),
                         SizedBox()
-                        /*
- ElevatedButton(
-                          child: Text(
-                            'Close',
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                       */
                       ],
                     ),
                   ),
@@ -148,7 +139,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
             );
           },
           child: Icon(
-            Icons.filter_list_rounded,
+            Icons.filter_alt,
             color: Colors.white,
           ),
         ),
@@ -158,7 +149,10 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
             title: "Complete tasks",
             widgetAction: IconButton(
               color: ColorsTheme.primaryColor,
-              icon: Icon(Icons.refresh),
+              icon: Icon(
+                Icons.refresh,
+                size: 30,
+              ),
               onPressed: () {
                 setState(() {
                   indexFilter = 0;
@@ -218,11 +212,6 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
     );
   }
 }
-
-
-
-
-
 
 /*
    InkWell(

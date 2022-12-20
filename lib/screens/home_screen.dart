@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/task.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../config/config.dart';
 import '../widgets/widget.dart';
 
 class Home extends StatefulWidget {
@@ -42,7 +43,28 @@ class _HomeState extends State<Home> {
           appBar: AppBarWidget(
             automaticallyImplyLeading: false,
             title: "Flutter Task",
-            widgetAction: SizedBox(),
+            widgetAction: Row(children: [
+              IconButton(
+                color: ColorsTheme.primaryColor,
+                icon: Icon(
+                  Icons.filter_list,
+                  size: 30,
+                ),
+                onPressed: () {
+                  print("Filter");
+                },
+              ),
+              IconButton(
+                color: ColorsTheme.primaryColor,
+                icon: Icon(
+                  Icons.filter_list,
+                  size: 30,
+                ),
+                onPressed: () {
+                  print("Filter");
+                },
+              )
+            ]),
           ),
           body: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
