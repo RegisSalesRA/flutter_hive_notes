@@ -6,8 +6,8 @@ import '../helpers/helpers.dart';
 import '../models/task.dart';
 import 'widget.dart';
 
-class CompleteNotesUrgencyWidget extends StatelessWidget {
-  const CompleteNotesUrgencyWidget({
+class CompleteNotesJobWidget extends StatelessWidget {
+  const CompleteNotesJobWidget({
     Key key,
     @required this.boxform,
   }) : super(key: key);
@@ -24,7 +24,7 @@ class CompleteNotesUrgencyWidget extends StatelessWidget {
         keys = box.keys
             .cast<int>()
             .where((key) =>
-                box.get(key).urgency == "Urgency" &&
+                box.get(key).urgency == "Job" &&
                 box.get(key).isComplete == true)
             .toList();
 
