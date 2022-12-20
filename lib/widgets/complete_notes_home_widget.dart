@@ -128,7 +128,7 @@ class CompleteNotesHomeWidget extends StatelessWidget {
                                         onTap: () {
                                           showDialogWidget(context, task, box);
                                         },
-                                        child: Icon(Icons.delete))
+                                        child: Icon(Icons.clear_outlined))
                                   ],
                                 )
                               ],

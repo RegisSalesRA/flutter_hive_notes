@@ -52,85 +52,122 @@ class CompleteNotesWidget extends StatelessWidget {
                     ) {
                       final int key = keys[index];
                       final Task task = box.get(key);
-                      return Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
-                        child: Container(
-                            height: 75,
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                color: Colors.white,
-                                border:
-                                    Border.all(color: Colors.grey.shade400)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    if (task.urgency == "Home")
-                                      Container(
-                                        height: 10,
-                                        width: 10,
-                                        decoration: BoxDecoration(
-                                            color: Colors.green,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
+                      return Dismissible(
+                        direction: DismissDirection.endToStart,
+                        key: Key(task.key.toString()),
+                        background: Container(color: Colors.transparent),
+                        onDismissed: (direction) async {
+                          if (direction == DismissDirection.endToStart) {
+                            await box.delete(task.key);
+                          }
+                        },
+                        secondaryBackground: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        task.name,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
                                       ),
-                                    if (task.urgency == "Job")
-                                      Container(
-                                        height: 10,
-                                        width: 10,
-                                        decoration: BoxDecoration(
-                                            color: Colors.yellow,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
+                                      SizedBox(
+                                        width: 5,
                                       ),
-                                    if (task.urgency == "Urgency")
-                                      Container(
-                                        height: 10,
-                                        width: 10,
-                                        decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                      ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          task.name ?? "default",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline5,
-                                        ),
-                                        SizedBox(
+                                      Icon(Icons.delete)
+                                    ],
+                                  ))),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Container(
+                              height: 75,
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: Colors.white,
+                                  border:
+                                      Border.all(color: Colors.grey.shade400)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      if (task.urgency == "Home")
+                                        Container(
                                           height: 10,
+                                          width: 10,
+                                          decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
                                         ),
-                                        Text(dateTimeFormat(box.values
-                                            .toList()[index]
-                                            .createdAt)),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    InkWell(
-                                        onTap: () {
-                                          showDialogWidget(context, task, box);
-                                        },
-                                        child: Icon(Icons.delete))
-                                  ],
-                                )
-                              ],
-                            )),
+                                      if (task.urgency == "Job")
+                                        Container(
+                                          height: 10,
+                                          width: 10,
+                                          decoration: BoxDecoration(
+                                              color: Colors.yellow,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                        ),
+                                      if (task.urgency == "Urgency")
+                                        Container(
+                                          height: 10,
+                                          width: 10,
+                                          decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                        ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            task.name ?? "default",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5,
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(dateTimeFormat(box.values
+                                              .toList()[index]
+                                              .createdAt)),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      InkWell(
+                                          onTap: () {
+                                            showDialogWidget(
+                                                context, task, box);
+                                          },
+                                          child: Icon(Icons.clear_outlined))
+                                    ],
+                                  )
+                                ],
+                              )),
+                        ),
                       );
                     },
                   ),
