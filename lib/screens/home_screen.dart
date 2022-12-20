@@ -94,7 +94,7 @@ class _HomeState extends State<Home> {
                 children: [
                   IconButton(
                     icon: Icon(
-                      Icons.list,
+                      Icons.assignment_outlined,
                       color: Colors.white,
                     ),
                     onPressed: () {
@@ -104,7 +104,7 @@ class _HomeState extends State<Home> {
                   SizedBox(),
                   IconButton(
                     icon: Icon(
-                      Icons.show_chart,
+                      Icons.assignment_turned_in_outlined,
                       color: Colors.grey.shade300,
                     ),
                     onPressed: () {

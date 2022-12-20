@@ -187,7 +187,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
               children: [
                 IconButton(
                   icon: Icon(
-                    Icons.list,
+                    Icons.assignment_outlined,
                     color: Colors.grey.shade300,
                   ),
                   onPressed: () {
@@ -197,7 +197,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                 SizedBox(),
                 IconButton(
                   icon: Icon(
-                    Icons.show_chart,
+                    Icons.assignment_turned_in_outlined,
                     color: Colors.white,
                   ),
                   onPressed: () {
