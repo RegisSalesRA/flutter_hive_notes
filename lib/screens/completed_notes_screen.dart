@@ -13,7 +13,7 @@ class CompleteTaskScreen extends StatefulWidget {
 
 class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
   ValueListenable<Box<Task>> boxform = Hive.box<Task>('tasks').listenable();
-  int indexFilter = 0;
+  int filterValueComplete = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +70,14 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    indexFilter = 1;
+                                    filterValueComplete = 1;
                                   });
                                   Navigator.of(context).pop();
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(6),
                                   decoration: BoxDecoration(
-                                      color: indexFilter == 1
+                                      color: filterValueComplete == 1
                                           ? ColorsTheme.primaryColor
                                           : Colors.grey.shade400,
                                       borderRadius: BorderRadius.all(
@@ -107,14 +107,14 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    indexFilter = 2;
+                                    filterValueComplete = 2;
                                   });
                                   Navigator.of(context).pop();
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(6),
                                   decoration: BoxDecoration(
-                                      color: indexFilter == 2
+                                      color: filterValueComplete == 2
                                           ? ColorsTheme.primaryColor
                                           : Colors.grey.shade400,
                                       borderRadius: BorderRadius.all(
@@ -144,14 +144,14 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    indexFilter = 3;
+                                    filterValueComplete = 3;
                                   });
                                   Navigator.of(context).pop();
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(6),
                                   decoration: BoxDecoration(
-                                      color: indexFilter == 3
+                                      color: filterValueComplete == 3
                                           ? ColorsTheme.primaryColor
                                           : Colors.grey.shade400,
                                       borderRadius: BorderRadius.all(
@@ -203,26 +203,15 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
               ),
               onPressed: () {
                 setState(() {
-                  indexFilter = 0;
+                  filterValueComplete = 0;
                 });
               },
             )),
         body: Column(children: [
-          if (indexFilter == 0) ...{
-            CompleteNotesWidget(boxform: boxform),
-          } else if (indexFilter == 1) ...{
-            CompleteNotesHomeWidget(
-              boxform: boxform,
-            )
-          } else if (indexFilter == 2) ...{
-            CompleteNotesJobWidget(
-              boxform: boxform,
-            ),
-          } else if (indexFilter == 3) ...{
-            CompleteNotesUrgencyWidget(
-              boxform: boxform,
-            )
-          }
+          CompleteNotesWidget(
+            boxform: boxform,
+            filterValueComplete: filterValueComplete,
+          ),
         ]),
         bottomNavigationBar: BottomAppBar(
           color: Theme.of(context).colorScheme.primary,

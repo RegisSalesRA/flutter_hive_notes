@@ -9,9 +9,11 @@ class CompleteNotesWidget extends StatelessWidget {
   const CompleteNotesWidget({
     Key key,
     @required this.boxform,
+    @required this.filterValueComplete,
   }) : super(key: key);
 
   final ValueListenable<Box<Task>> boxform;
+  final int filterValueComplete;
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -19,10 +21,36 @@ class CompleteNotesWidget extends StatelessWidget {
       builder: (context, Box<Task> box, _) {
         List<int> keys;
 
-        keys = box.keys
-            .cast<int>()
-            .where((key) => box.get(key).isComplete)
-            .toList();
+        if (filterValueComplete == 0) {
+          keys = box.keys
+              .cast<int>()
+              .where((key) => box.get(key).isComplete)
+              .toList();
+        }
+        if (filterValueComplete == 1) {
+          keys = box.keys
+              .cast<int>()
+              .where((key) =>
+                  box.get(key).urgency == "Home" &&
+                  box.get(key).isComplete == true)
+              .toList();
+        }
+        if (filterValueComplete == 2) {
+          keys = box.keys
+              .cast<int>()
+              .where((key) =>
+                  box.get(key).urgency == "Job" &&
+                  box.get(key).isComplete == true)
+              .toList();
+        }
+        if (filterValueComplete == 3) {
+          keys = box.keys
+              .cast<int>()
+              .where((key) =>
+                  box.get(key).urgency == "Urgency" &&
+                  box.get(key).isComplete == true)
+              .toList();
+        }
 
         if (keys.isNotEmpty) {
           return SingleChildScrollView(
