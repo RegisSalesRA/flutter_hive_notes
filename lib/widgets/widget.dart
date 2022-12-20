@@ -7,4 +7,5 @@ export 'note_list_widget.dart';
 export './complete_notes_widget.dart';
 export './complete_notes_home_widget.dart';
 export './complete_notes_urgency_widget.dart';
-export 'complete_notes_job_widget.dart';
+export './complete_notes_job_widget.dart';
+export './note_list_filter_widget.dart';

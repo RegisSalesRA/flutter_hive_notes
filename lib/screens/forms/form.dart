@@ -46,11 +46,11 @@ class _TaskFormState extends State<TaskForm> {
     }
   }
 
-  List<Map<String, dynamic>> taskLevel = [
+  List<Map<String, dynamic>> noteLevel = [
     {"name": "Home"},
     {"name": "Job"},
   ];
-  List<Map<String, dynamic>> taskLevel2 = [
+  List<Map<String, dynamic>> noteLevel2 = [
     {"name": "Urgency"},
   ];
 
@@ -58,7 +58,7 @@ class _TaskFormState extends State<TaskForm> {
   void initState() {
     super.initState();
     setState(() {
-      taskLevel.addAll(taskLevel2);
+      noteLevel.addAll(noteLevel2);
     });
   }
 
@@ -120,7 +120,7 @@ class _TaskFormState extends State<TaskForm> {
                                 style: TextStyle(color: ColorsTheme.textColor),
                               ),
                             ),
-                      dropdownItens: taskLevel.map(
+                      dropdownItens: noteLevel.map(
                         (val) {
                           return DropdownMenuItem<String>(
                             value: val["name"],
@@ -144,11 +144,11 @@ class _TaskFormState extends State<TaskForm> {
                         onPressed: submitData,
                         child: widget.id == null
                             ? Text(
-                                "Create task",
+                                "Create note",
                                 style: Theme.of(context).textTheme.headline4,
                               )
                             : Text(
-                                "Update task",
+                                "Update note",
                                 style: Theme.of(context).textTheme.headline4,
                               )),
                   ],

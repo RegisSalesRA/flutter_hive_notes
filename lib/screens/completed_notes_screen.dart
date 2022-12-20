@@ -194,7 +194,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         appBar: AppBarWidget(
             automaticallyImplyLeading: false,
-            title: "Complete tasks",
+            title: "Complete notes",
             widgetAction: IconButton(
               color: ColorsTheme.primaryColor,
               icon: Icon(

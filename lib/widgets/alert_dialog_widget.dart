@@ -3,12 +3,12 @@ import 'package:hive/hive.dart';
 
 import '../models/task.dart';
 
-showDialogWidget(BuildContext context, Task dev, Box<Task> box) {
+showDialogWidget(BuildContext context, Task note, Box<Task> box) {
   showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
       title: Center(child: const Text('Alert')),
-      content: Text('Wish delete ${dev.name} ?'),
+      content: Text('Wish delete ${note.name} ?'),
       actions: <Widget>[
         Center(
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -18,7 +18,7 @@ showDialogWidget(BuildContext context, Task dev, Box<Task> box) {
           ),
           TextButton(
             onPressed: () async {
-              await box.delete(dev.key);
+              await box.delete(note.key);
               Navigator.pop(context, 'Confirm');
             },
             child: const Text('Confirm'),

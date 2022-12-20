@@ -6,34 +6,55 @@ import '../config/colors.dart';
 import '../helpers/helpers.dart';
 import '../models/task.dart';
 
-class NoteListWidget extends StatefulWidget {
+class NoteListFilterWidget extends StatefulWidget {
   final ValueListenable<Box<Task>> boxform;
   final String search;
   final Function onTap;
   final bool isTaped;
-
+  final int filterValue;
   final void Function(String) onChanged;
 
-  const NoteListWidget({
-    Key key,
-    this.boxform,
-    this.search,
-    this.onTap,
-    this.isTaped,
-    this.onChanged,
-  }) : super(key: key);
+  const NoteListFilterWidget(
+      {Key key,
+      this.boxform,
+      this.search,
+      this.onTap,
+      this.isTaped,
+      this.onChanged,
+      this.filterValue})
+      : super(key: key);
 
   @override
-  State<NoteListWidget> createState() => _NoteListWidgetState();
+  State<NoteListFilterWidget> createState() => _NoteListFilterWidgetState();
 }
 
-class _NoteListWidgetState extends State<NoteListWidget> {
+class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.boxform,
       builder: (context, Box<Task> box, _) {
-        if (box.isNotEmpty) {
+        List<int> keys;
+
+        if (widget.filterValue == 1) {
+          keys = box.keys
+              .cast<int>()
+              .where((key) => box.get(key).urgency == "Home")
+              .toList();
+        }
+        if (widget.filterValue == 2) {
+          keys = box.keys
+              .cast<int>()
+              .where((key) => box.get(key).urgency == "Job")
+              .toList();
+        }
+        if (widget.filterValue == 3) {
+          keys = box.keys
+              .cast<int>()
+              .where((key) => box.get(key).urgency == "Urgency")
+              .toList();
+        }
+        if (keys.isNotEmpty) {
           return Column(
             children: [
               Padding(
@@ -60,9 +81,10 @@ class _NoteListWidgetState extends State<NoteListWidget> {
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: box.length,
+                  itemCount: keys.length,
                   itemBuilder: (context, index) {
-                    Task note = box.getAt(index);
+                    final int key = keys[index];
+                    Task note = box.get(key);
                     if (note.name
                         .toString()
                         .toLowerCase()

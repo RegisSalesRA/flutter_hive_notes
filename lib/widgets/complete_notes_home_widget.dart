@@ -52,14 +52,14 @@ class CompleteNotesHomeWidget extends StatelessWidget {
                       index,
                     ) {
                       final int key = keys[index];
-                      final Task task = box.get(key);
+                      final Task note = box.get(key);
                       return Dismissible(
                         direction: DismissDirection.endToStart,
-                        key: Key(task.key.toString()),
+                        key: Key(note.key.toString()),
                         background: Container(color: Colors.transparent),
                         onDismissed: (direction) async {
                           if (direction == DismissDirection.endToStart) {
-                            await box.delete(task.key);
+                            await box.delete(note.key);
                           }
                         },
                         secondaryBackground: Container(
@@ -75,7 +75,7 @@ class CompleteNotesHomeWidget extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Text(
-                                        task.name,
+                                        note.name,
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline6,
@@ -103,7 +103,7 @@ class CompleteNotesHomeWidget extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      if (task.urgency == "Home")
+                                      if (note.urgency == "Home")
                                         Container(
                                           height: 10,
                                           width: 10,
@@ -112,7 +112,7 @@ class CompleteNotesHomeWidget extends StatelessWidget {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(10))),
                                         ),
-                                      if (task.urgency == "Job")
+                                      if (note.urgency == "Job")
                                         Container(
                                           height: 10,
                                           width: 10,
@@ -121,7 +121,7 @@ class CompleteNotesHomeWidget extends StatelessWidget {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(10))),
                                         ),
-                                      if (task.urgency == "Urgency")
+                                      if (note.urgency == "Urgency")
                                         Container(
                                           height: 10,
                                           width: 10,
@@ -140,7 +140,7 @@ class CompleteNotesHomeWidget extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            task.name ?? "default",
+                                            note.name ?? "default",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline5,
@@ -157,7 +157,9 @@ class CompleteNotesHomeWidget extends StatelessWidget {
                                   ),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [Icon(Icons.check_circle_outline)],
+                                    children: [
+                                      Icon(Icons.check_circle_outline)
+                                    ],
                                   )
                                 ],
                               )),
@@ -182,7 +184,7 @@ class CompleteNotesHomeWidget extends StatelessWidget {
                     size: 50,
                   ),
                   Text(
-                    "No task avaliable",
+                    "No note avaliable",
                     style: TextStyle(color: Colors.grey.shade400),
                   )
                 ]),

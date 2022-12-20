@@ -12,9 +12,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String search = "";
-  bool isTaped = false;
   var selectedItem = '';
+  bool isTaped = false;
+  String search = "";
+  int filterValue = 0;
   ValueListenable<Box<Task>> boxform = Hive.box<Task>('tasks').listenable();
 
   onTap() {
@@ -42,7 +43,7 @@ class _HomeState extends State<Home> {
               FloatingActionButtonLocation.centerDocked,
           appBar: AppBarWidget(
             automaticallyImplyLeading: false,
-            title: "Flutter Task",
+            title: "Flutter Note",
             widgetAction: Row(children: [
               IconButton(
                 color: ColorsTheme.primaryColor,
@@ -51,7 +52,10 @@ class _HomeState extends State<Home> {
                   size: 30,
                 ),
                 onPressed: () {
-                  print("Filter");
+                  setState(() {
+                    filterValue = 0;
+                  });
+                  print(filterValue);
                 },
               ),
               PopupMenuButton(
@@ -60,7 +64,12 @@ class _HomeState extends State<Home> {
                     Icons.more_vert,
                     color: ColorsTheme.primaryColor,
                   ),
-                  onSelected: (value) {},
+                  onSelected: (value) {
+                    setState(() {
+                      filterValue = value;
+                    });
+                    print(value);
+                  },
                   itemBuilder: (BuildContext bc) {
                     return [
                       PopupMenuItem(
@@ -76,7 +85,7 @@ class _HomeState extends State<Home> {
                               ),
                               Text("Home notes")
                             ]),
-                        value: '/hello',
+                        value: 1,
                       ),
                       PopupMenuItem(
                         child: Row(
@@ -91,7 +100,7 @@ class _HomeState extends State<Home> {
                               ),
                               Text("Job notes")
                             ]),
-                        value: '/about',
+                        value: 2,
                       ),
                       PopupMenuItem(
                         child: Row(
@@ -106,7 +115,7 @@ class _HomeState extends State<Home> {
                               ),
                               Text("Urgency notes")
                             ]),
-                        value: '/contact',
+                        value: 3,
                       )
                     ];
                   })
@@ -116,17 +125,30 @@ class _HomeState extends State<Home> {
             physics: BouncingScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.all(10),
-              child: TaskListWidget(
-                onTap: onTap,
-                isTaped: isTaped,
-                boxform: boxform,
-                search: search,
-                onChanged: (value) {
-                  setState(() {
-                    search = value;
-                  });
-                },
-              ),
+              child: filterValue == 0
+                  ? NoteListWidget(
+                      onTap: onTap,
+                      isTaped: isTaped,
+                      boxform: boxform,
+                      search: search,
+                      onChanged: (value) {
+                        setState(() {
+                          search = value;
+                        });
+                      },
+                    )
+                  : NoteListFilterWidget(
+                      onTap: onTap,
+                      isTaped: isTaped,
+                      boxform: boxform,
+                      search: search,
+                      onChanged: (value) {
+                        setState(() {
+                          search = value;
+                        });
+                      },
+                      filterValue: filterValue,
+                    ),
             ),
           ),
           bottomNavigationBar: BottomAppBar(
