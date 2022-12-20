@@ -12,11 +12,7 @@ TextTheme textThemeConfig() {
         fontSize: 20,
         color: Colors.black,
         decoration: TextDecoration.none),
-    headline5: TextStyle(
-        overflow: TextOverflow.ellipsis,
-        fontSize: 20,
-        color: Colors.black,
-        decoration: TextDecoration.lineThrough),
+
     headline3: TextStyle(
       fontSize: 16,
       color: Colors.grey.shade400,
@@ -26,5 +22,17 @@ TextTheme textThemeConfig() {
       fontSize: 18,
       color: Colors.white,
     ),
+    headline5: TextStyle(
+        overflow: TextOverflow.ellipsis,
+        fontSize: 20,
+        color: Colors.black,
+        decoration: TextDecoration.lineThrough),
+        
+          headline6: TextStyle(
+        overflow: TextOverflow.ellipsis,
+        fontSize: 20,
+        color: Colors.grey.shade400,
+        decoration: TextDecoration.lineThrough),
+        
   );
 }
