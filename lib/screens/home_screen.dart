@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/task.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../config/config.dart';
 import '../widgets/widget.dart';
 
 class Home extends StatefulWidget {
@@ -41,8 +42,75 @@ class _HomeState extends State<Home> {
               FloatingActionButtonLocation.centerDocked,
           appBar: AppBarWidget(
             automaticallyImplyLeading: false,
-            title: "Flutter Notes",
-            widgetAction: SizedBox(),
+            title: "Flutter Task",
+            widgetAction: Row(children: [
+              IconButton(
+                color: ColorsTheme.primaryColor,
+                icon: Icon(
+                  Icons.refresh,
+                  size: 30,
+                ),
+                onPressed: () {
+                  print("Filter");
+                },
+              ),
+              PopupMenuButton(
+                  iconSize: 30,
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: ColorsTheme.primaryColor,
+                  ),
+                  onSelected: (value) {},
+                  itemBuilder: (BuildContext bc) {
+                    return [
+                      PopupMenuItem(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.home,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("Home notes")
+                            ]),
+                        value: '/hello',
+                      ),
+                      PopupMenuItem(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.work_outlined,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("Job notes")
+                            ]),
+                        value: '/about',
+                      ),
+                      PopupMenuItem(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.crisis_alert_rounded,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("Urgency notes")
+                            ]),
+                        value: '/contact',
+                      )
+                    ];
+                  })
+            ]),
           ),
           body: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
