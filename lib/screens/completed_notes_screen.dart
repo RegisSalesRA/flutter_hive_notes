@@ -212,22 +212,3 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
     );
   }
 }
-
-/*
-   InkWell(
-                                        onTap: () async {
-                                          await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      TaskForm(
-                                                        id: box.values
-                                                            .toList()[index]
-                                                            .key,
-                                                        nameChange: box.values
-                                                            .toList()[index]
-                                                            .name,
-                                                      )));
-                                        },
-                                        child: Icon(Icons.edit)),
-*/
