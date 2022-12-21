@@ -24,6 +24,7 @@ class _InputTextState extends State<InputText> {
           ),
           labelText: "Name",
         ),
+        maxLength: 25,
         onChanged: widget.onChanged);
   }
 }
