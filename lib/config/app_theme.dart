@@ -41,8 +41,8 @@ class App extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Home(),
-        '/complete': (context) => CompleteTaskScreen(),
-        '/form': (context) => TaskForm(),
+        '/complete': (context) => CompleteNoteScreen(),
+        '/form': (context) => NoteForm(),
       },
     );
   }

@@ -6,12 +6,12 @@ import '../config/config.dart';
 import '../models/note.dart';
 import '../widgets/widget.dart';
 
-class CompleteTaskScreen extends StatefulWidget {
+class CompleteNoteScreen extends StatefulWidget {
   @override
-  State<CompleteTaskScreen> createState() => _TaskListWidgetTestState();
+  State<CompleteNoteScreen> createState() => _NoteListWidgetTestState();
 }
 
-class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
+class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
   ValueListenable<Box<Note>> boxform = Hive.box<Note>('notes').listenable();
   int filterValueComplete = 0;
 

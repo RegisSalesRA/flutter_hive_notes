@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_hive/models/note.dart';
+import 'package:flutter/material.dart'; 
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../config/config.dart';
+import '../models/note.dart';
 import '../widgets/widget.dart';
 
 class Home extends StatefulWidget {
@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
               FloatingActionButtonLocation.centerDocked,
           appBar: AppBarWidget(
             automaticallyImplyLeading: false,
-            title: "Flutter Note",
+            title: "Notes",
             widgetAction: Row(children: [
               IconButton(
                 color: ColorsTheme.primaryColor,

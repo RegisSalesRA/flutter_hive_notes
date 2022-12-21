@@ -8,21 +8,21 @@ import '../../widgets/appbar_widget.dart';
 import '../../widgets/dropdown_widget.dart';
 import '../../widgets/input_text.dart';
 
-class TaskForm extends StatefulWidget {
+class NoteForm extends StatefulWidget {
   final String nameChange;
 
-  TaskForm({Key key, this.nameChange}) : super(key: key);
+  NoteForm({Key key, this.nameChange}) : super(key: key);
   @override
-  _TaskFormState createState() => _TaskFormState();
+  _NoteFormState createState() => _NoteFormState();
 }
 
-class _TaskFormState extends State<TaskForm> {
-  final taskForm = GlobalKey<FormState>();
+class _NoteFormState extends State<NoteForm> {
+  final noteForm = GlobalKey<FormState>();
   String name;
   String urgency;
 
   void submitData() {
-    if (taskForm.currentState.validate()) {
+    if (noteForm.currentState.validate()) {
       Box<Note> todoBox = Hive.box<Note>('notes');
       todoBox.add(Note(
           name: name,
@@ -65,7 +65,7 @@ class _TaskFormState extends State<TaskForm> {
             height: MediaQuerySize.heigthSize(context) * 0.95,
             padding: EdgeInsets.all(5),
             child: Form(
-                key: taskForm,
+                key: noteForm,
                 child: ListView(
                   shrinkWrap: true,
                   children: [
