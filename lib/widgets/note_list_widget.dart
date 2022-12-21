@@ -4,10 +4,10 @@ import 'package:hive/hive.dart';
 
 import '../config/colors.dart';
 import '../helpers/helpers.dart';
-import '../models/task.dart';
+import '../models/note.dart'; 
 
 class NoteListWidget extends StatefulWidget {
-  final ValueListenable<Box<Task>> boxform;
+  final ValueListenable<Box<Note>> boxform;
   final String search;
   final Function onTap;
   final bool isTaped;
@@ -32,7 +32,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.boxform,
-      builder: (context, Box<Task> box, _) {
+      builder: (context, Box<Note> box, _) {
         if (box.isNotEmpty) {
           return Column(
             children: [
@@ -62,7 +62,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                   shrinkWrap: true,
                   itemCount: box.length,
                   itemBuilder: (context, index) {
-                    Task note = box.getAt(index);
+                    Note note = box.getAt(index);
                     if (note.name
                         .toString()
                         .toLowerCase()

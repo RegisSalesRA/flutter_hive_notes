@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-import '../models/task.dart';
+import '../models/note.dart';
 
-showDialogWidget(BuildContext context, Task note, Box<Task> box) {
+showDialogWidget(BuildContext context, Note note, Box<Note> box) {
   showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(

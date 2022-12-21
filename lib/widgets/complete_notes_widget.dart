@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 import '../helpers/helpers.dart';
-import '../models/task.dart';
+import '../models/note.dart'; 
 
 class CompleteNotesWidget extends StatelessWidget {
   const CompleteNotesWidget({
@@ -12,13 +12,13 @@ class CompleteNotesWidget extends StatelessWidget {
     @required this.filterValueComplete,
   }) : super(key: key);
 
-  final ValueListenable<Box<Task>> boxform;
+  final ValueListenable<Box<Note>> boxform;
   final int filterValueComplete;
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: boxform,
-      builder: (context, Box<Task> box, _) {
+      builder: (context, Box<Note> box, _) {
         List<int> keys;
 
         if (filterValueComplete == 0) {
@@ -77,7 +77,7 @@ class CompleteNotesWidget extends StatelessWidget {
                       index,
                     ) {
                       final int key = keys[index];
-                      final Task note = box.get(key);
+                      final Note note = box.get(key);
                       return Dismissible(
                         direction: DismissDirection.endToStart,
                         key: Key(note.key.toString()),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import '../config/config.dart';
-import '../models/task.dart';
+import '../models/note.dart';
 import '../widgets/widget.dart';
 
 class CompleteTaskScreen extends StatefulWidget {
@@ -12,7 +12,7 @@ class CompleteTaskScreen extends StatefulWidget {
 }
 
 class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
-  ValueListenable<Box<Task>> boxform = Hive.box<Task>('tasks').listenable();
+  ValueListenable<Box<Note>> boxform = Hive.box<Note>('notes').listenable();
   int filterValueComplete = 0;
 
   @override

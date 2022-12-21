@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/models/task.dart';
 import 'package:hive/hive.dart';
 
 import '../../config/colors.dart';
+import '../../models/note.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/dropdown_widget.dart';
 import '../../widgets/input_text.dart';
@@ -25,8 +25,8 @@ class _TaskFormState extends State<TaskForm> {
     final index = widget.id;
     if (index == null) {
       if (taskForm.currentState.validate()) {
-        Box<Task> todoBox = Hive.box<Task>('tasks');
-        todoBox.add(Task(
+        Box<Note> todoBox = Hive.box<Note>('notes');
+        todoBox.add(Note(
             name: name,
             urgency: urgency,
             isComplete: false,
@@ -37,9 +37,9 @@ class _TaskFormState extends State<TaskForm> {
     } else {
       if (taskForm.currentState.validate()) {
         final index = widget.id;
-        Task task =
-            Task(name: name, urgency: urgency, createdAt: DateTime.now());
-        Box<Task> todoBox = Hive.box<Task>('tasks');
+        Note task =
+            Note(name: name, urgency: urgency, createdAt: DateTime.now());
+        Box<Note> todoBox = Hive.box<Note>('notes');
         todoBox.put(index, task);
         Navigator.of(context).pop();
       }
@@ -71,7 +71,7 @@ class _TaskFormState extends State<TaskForm> {
         appBar: AppBarWidget(
           widgetAction: SizedBox(),
           automaticallyImplyLeading: true,
-          title: widget.id == null ? "Create task" : widget.nameChange,
+          title: widget.id == null ? "Create note" : widget.nameChange,
         ),
         body: Center(
           child: Container(

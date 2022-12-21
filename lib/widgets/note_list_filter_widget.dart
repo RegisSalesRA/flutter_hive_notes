@@ -4,10 +4,10 @@ import 'package:hive/hive.dart';
 
 import '../config/colors.dart';
 import '../helpers/helpers.dart';
-import '../models/task.dart';
+import '../models/note.dart'; 
 
 class NoteListFilterWidget extends StatefulWidget {
-  final ValueListenable<Box<Task>> boxform;
+  final ValueListenable<Box<Note>> boxform;
   final String search;
   final Function onTap;
   final bool isTaped;
@@ -33,7 +33,7 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.boxform,
-      builder: (context, Box<Task> box, _) {
+      builder: (context, Box<Note> box, _) {
         List<int> keys;
 
         if (widget.filterValue == 1) {
@@ -84,7 +84,7 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                   itemCount: keys.length,
                   itemBuilder: (context, index) {
                     final int key = keys[index];
-                    Task note = box.get(key);
+                    Note note = box.get(key);
                     if (note.name
                         .toString()
                         .toLowerCase()

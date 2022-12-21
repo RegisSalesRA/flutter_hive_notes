@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/models/task.dart';
+import 'package:flutter_hive/models/note.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../config/config.dart';
@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
   bool isTaped = false;
   String search = "";
   int filterValue = 0;
-  ValueListenable<Box<Task>> boxform = Hive.box<Task>('tasks').listenable();
+  ValueListenable<Box<Note>> boxform = Hive.box<Note>('notes').listenable();
 
   onTap() {
     setState(() {
