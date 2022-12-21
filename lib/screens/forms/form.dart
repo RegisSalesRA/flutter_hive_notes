@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 import '../../config/colors.dart';
+import '../../helpers/helpers.dart';
 import '../../models/note.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/dropdown_widget.dart';
 import '../../widgets/input_text.dart';
 
 class TaskForm extends StatefulWidget {
-  final int id;
   final String nameChange;
 
-  TaskForm({Key key, this.id, this.nameChange}) : super(key: key);
+  TaskForm({Key key, this.nameChange}) : super(key: key);
   @override
   _TaskFormState createState() => _TaskFormState();
 }
@@ -22,35 +22,23 @@ class _TaskFormState extends State<TaskForm> {
   String urgency;
 
   void submitData() {
-    final index = widget.id;
-    if (index == null) {
-      if (taskForm.currentState.validate()) {
-        Box<Note> todoBox = Hive.box<Note>('notes');
-        todoBox.add(Note(
-            name: name,
-            urgency: urgency,
-            isComplete: false,
-            createdAt: DateTime.now()));
+    if (taskForm.currentState.validate()) {
+      Box<Note> todoBox = Hive.box<Note>('notes');
+      todoBox.add(Note(
+          name: name,
+          urgency: urgency,
+          isComplete: false,
+          createdAt: DateTime.now()));
 
-        Navigator.pushNamed(context, '/');
-      }
-    } else {
-      if (taskForm.currentState.validate()) {
-        final index = widget.id;
-        Note task =
-            Note(name: name, urgency: urgency, createdAt: DateTime.now());
-        Box<Note> todoBox = Hive.box<Note>('notes');
-        todoBox.put(index, task);
-        Navigator.of(context).pop();
-      }
+      Navigator.pushNamed(context, '/');
     }
   }
 
-  List<Map<String, dynamic>> noteLevel = [
+  List<Map<String, dynamic>> noteCategory = [
     {"name": "Home"},
     {"name": "Job"},
   ];
-  List<Map<String, dynamic>> noteLevel2 = [
+  List<Map<String, dynamic>> noteCategory2 = [
     {"name": "Urgency"},
   ];
 
@@ -58,25 +46,23 @@ class _TaskFormState extends State<TaskForm> {
   void initState() {
     super.initState();
     setState(() {
-      noteLevel.addAll(noteLevel2);
+      noteCategory.addAll(noteCategory2);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBarWidget(
           widgetAction: SizedBox(),
           automaticallyImplyLeading: true,
-          title: widget.id == null ? "Create note" : widget.nameChange,
+          title: "Create note",
         ),
         body: Center(
           child: Container(
-            width: size.width * 0.95,
-            height: size.height * 0.95,
+            width: MediaQuerySize.widthSize(context) * 0.95,
+            height: MediaQuerySize.heigthSize(context) * 0.95,
             padding: EdgeInsets.all(5),
             child: Form(
                 key: taskForm,
@@ -120,7 +106,7 @@ class _TaskFormState extends State<TaskForm> {
                                 style: TextStyle(color: ColorsTheme.textColor),
                               ),
                             ),
-                      dropdownItens: noteLevel.map(
+                      dropdownItens: noteCategory.map(
                         (val) {
                           return DropdownMenuItem<String>(
                             value: val["name"],
@@ -142,15 +128,10 @@ class _TaskFormState extends State<TaskForm> {
                     ),
                     ElevatedButton(
                         onPressed: submitData,
-                        child: widget.id == null
-                            ? Text(
-                                "Create note",
-                                style: Theme.of(context).textTheme.headline4,
-                              )
-                            : Text(
-                                "Update note",
-                                style: Theme.of(context).textTheme.headline4,
-                              )),
+                        child: Text(
+                          "Create note",
+                          style: Theme.of(context).textTheme.headline4,
+                        )),
                   ],
                 )),
           ),

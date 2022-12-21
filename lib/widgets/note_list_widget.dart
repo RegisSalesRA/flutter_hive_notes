@@ -151,10 +151,20 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                     ],
                                   ),
                                   IconButton(
-                                      onPressed: () async {
+                                      onPressed: () {
                                         setState(() {
                                           note.isComplete = !note.isComplete;
                                         });
+                                        Note noteUpdate = Note(
+                                            name: note.name,
+                                            urgency: note.urgency,
+                                            isComplete: note.isComplete,
+                                            createdAt: note.createdAt);
+
+                                        box.put(note.key, noteUpdate);
+
+                                        print(note.isComplete);
+                                        print(noteUpdate.isComplete);
                                       },
                                       icon: note.isComplete != false
                                           ? Icon(Icons.check_circle_outline)

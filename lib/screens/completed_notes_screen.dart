@@ -21,170 +21,7 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            showModalBottomSheet<void>(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25.0),
-              ),
-              context: context,
-              builder: (BuildContext context) {
-                return Container(
-                  height: 250,
-                  decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.only(
-                          topLeft: const Radius.circular(15.0),
-                          topRight: const Radius.circular(15.0))),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              height: 10,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey.shade400,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15))),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "Sort by",
-                              style: Theme.of(context).textTheme.headline3,
-                            )
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    filterValueComplete = 1;
-                                  });
-                                  Navigator.of(context).pop();
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                      color: filterValueComplete == 1
-                                          ? ColorsTheme.primaryColor
-                                          : Colors.grey.shade400,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.home,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                          "Home notes",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline4,
-                                        )
-                                      ]),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    filterValueComplete = 2;
-                                  });
-                                  Navigator.of(context).pop();
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                      color: filterValueComplete == 2
-                                          ? ColorsTheme.primaryColor
-                                          : Colors.grey.shade400,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.work_outlined,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                          "Job notes",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline4,
-                                        )
-                                      ]),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    filterValueComplete = 3;
-                                  });
-                                  Navigator.of(context).pop();
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                      color: filterValueComplete == 3
-                                          ? ColorsTheme.primaryColor
-                                          : Colors.grey.shade400,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.crisis_alert_rounded,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                          "Urgency notes",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline4,
-                                        )
-                                      ]),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox()
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
+            showModalBottonSheetWidget(context);
           },
           child: Icon(
             Icons.filter_alt,
@@ -213,39 +50,214 @@ class _TaskListWidgetTestState extends State<CompleteTaskScreen> {
             filterValueComplete: filterValueComplete,
           ),
         ]),
-        bottomNavigationBar: BottomAppBar(
-          color: Theme.of(context).colorScheme.primary,
-          shape: CircularNotchedRectangle(),
-          notchMargin: 5,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.assignment_outlined,
-                    color: Colors.grey.shade300,
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/');
-                  },
-                ),
-                SizedBox(),
-                IconButton(
-                  icon: Icon(
-                    Icons.assignment_turned_in_outlined,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    return null;
-                  },
-                ),
-              ],
+        bottomNavigationBar: BottomAppBarWidget(
+          widgets: [
+            IconButton(
+              icon: Icon(
+                Icons.assignment_outlined,
+                color: Colors.grey.shade300,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/');
+              },
             ),
-          ),
+            SizedBox(),
+            IconButton(
+              icon: Icon(
+                Icons.assignment_turned_in_outlined,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                return null;
+              },
+            ),
+          ],
         ),
       ),
     );
   }
+
+
+
+  Future<void> showModalBottonSheetWidget(BuildContext context) {
+    return showModalBottomSheet<void>(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25.0),
+            ),
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                height: 250,
+                decoration: new BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: new BorderRadius.only(
+                        topLeft: const Radius.circular(15.0),
+                        topRight: const Radius.circular(15.0))),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            height: 10,
+                            width: 70,
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade400,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Sort by",
+                            style: Theme.of(context).textTheme.headline3,
+                          )
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  filterValueComplete = 1;
+                                });
+                                Navigator.of(context).pop();
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                    color: filterValueComplete == 1
+                                        ? ColorsTheme.primaryColor
+                                        : Colors.grey.shade400,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(10))),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.home,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Home notes",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
+                                      )
+                                    ]),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  filterValueComplete = 2;
+                                });
+                                Navigator.of(context).pop();
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                    color: filterValueComplete == 2
+                                        ? ColorsTheme.primaryColor
+                                        : Colors.grey.shade400,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(10))),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.work_outlined,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Job notes",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
+                                      )
+                                    ]),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  filterValueComplete = 3;
+                                });
+                                Navigator.of(context).pop();
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                    color: filterValueComplete == 3
+                                        ? ColorsTheme.primaryColor
+                                        : Colors.grey.shade400,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(10))),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.crisis_alert_rounded,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Urgency notes",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
+                                      )
+                                    ]),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox()
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+  }
 }
+
+/*
+
+
+
+*/

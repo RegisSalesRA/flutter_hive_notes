@@ -2,8 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
+import '../config/config.dart';
 import '../helpers/helpers.dart';
-import '../models/note.dart'; 
+import '../models/note.dart';
 
 class CompleteNotesWidget extends StatelessWidget {
   const CompleteNotesWidget({
@@ -20,12 +21,15 @@ class CompleteNotesWidget extends StatelessWidget {
       valueListenable: boxform,
       builder: (context, Box<Note> box, _) {
         List<int> keys;
+        List<int> keysIncomplete;
+        int keysIncompleteIndex = 0;
 
         if (filterValueComplete == 0) {
           keys = box.keys
               .cast<int>()
               .where((key) => box.get(key).isComplete)
               .toList();
+          keysIncompleteIndex = 0;
         }
         if (filterValueComplete == 1) {
           keys = box.keys
@@ -34,6 +38,12 @@ class CompleteNotesWidget extends StatelessWidget {
                   box.get(key).urgency == "Home" &&
                   box.get(key).isComplete == true)
               .toList();
+
+          keysIncomplete = box.keys
+              .cast<int>()
+              .where((key) => box.get(key).urgency == "Home")
+              .toList();
+          keysIncompleteIndex = 1;
         }
         if (filterValueComplete == 2) {
           keys = box.keys
@@ -42,6 +52,13 @@ class CompleteNotesWidget extends StatelessWidget {
                   box.get(key).urgency == "Job" &&
                   box.get(key).isComplete == true)
               .toList();
+
+          keysIncomplete = box.keys
+              .cast<int>()
+              .where((key) => box.get(key).urgency == "Job")
+              .toList();
+
+          keysIncompleteIndex = 2;
         }
         if (filterValueComplete == 3) {
           keys = box.keys
@@ -50,6 +67,13 @@ class CompleteNotesWidget extends StatelessWidget {
                   box.get(key).urgency == "Urgency" &&
                   box.get(key).isComplete == true)
               .toList();
+
+          keysIncomplete = box.keys
+              .cast<int>()
+              .where((key) => box.get(key).urgency == "Urgency")
+              .toList();
+
+          keysIncompleteIndex = 3;
         }
 
         if (keys.isNotEmpty) {
@@ -58,16 +82,34 @@ class CompleteNotesWidget extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                    child: Text(
-                      "${keys.length} / ${boxform.value.values.length} ",
-                      style: TextStyle(
-                          color: Colors.grey.shade400,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
+                  if (keysIncompleteIndex == 0)
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      child: Text(
+                        "${keys.length} / ${boxform.value.values.length}",
+                        style: TextStyle(
+                            color: keys.length != boxform.value.values.length
+                                ? Colors.grey.shade400
+                                : ColorsTheme.primaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
+                  if (keysIncompleteIndex != 0)
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      child: Text(
+                        "${keys.length} / ${keysIncomplete.length}",
+                        style: TextStyle(
+                            color: keys.length != keysIncomplete.length
+                                ? Colors.grey.shade400
+                                : ColorsTheme.primaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: keys.length,
