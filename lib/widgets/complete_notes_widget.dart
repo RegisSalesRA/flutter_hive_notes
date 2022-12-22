@@ -83,8 +83,7 @@ class CompleteNotesWidget extends StatelessWidget {
               children: [
                 if (keysIncompleteIndex == 0)
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                     child: Text(
                       "${keys.length} / ${boxform.value.values.length}",
                       style: TextStyle(
@@ -97,8 +96,7 @@ class CompleteNotesWidget extends StatelessWidget {
                   ),
                 if (keysIncompleteIndex != 0)
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                     child: Text(
                       "${keys.length} / ${keysIncomplete.length}",
                       style: TextStyle(
@@ -142,9 +140,8 @@ class CompleteNotesWidget extends StatelessWidget {
                                   children: [
                                     Text(
                                       note.name,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6,
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
                                     ),
                                     SizedBox(
                                       width: 5,
@@ -164,8 +161,7 @@ class CompleteNotesWidget extends StatelessWidget {
                                 border:
                                     Border.all(color: Colors.grey.shade400)),
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
                                   children: [
@@ -221,12 +217,9 @@ class CompleteNotesWidget extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.check_circle_outline)
-                                  ],
-                                )
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.check_circle_outline))
                               ],
                             )),
                       ),
