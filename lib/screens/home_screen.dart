@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../config/config.dart';
@@ -15,6 +15,7 @@ class _HomeState extends State<Home> {
   var selectedItem = '';
   bool isTaped = false;
   String search = "";
+  TextEditingController controllerText = TextEditingController();
   int filterValue = 0;
   ValueListenable<Box<Note>> boxform = Hive.box<Note>('notes').listenable();
 
@@ -22,7 +23,6 @@ class _HomeState extends State<Home> {
     setState(() {
       isTaped = !isTaped;
     });
-    print(isTaped);
   }
 
   @override
@@ -54,15 +54,20 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   setState(() {
                     filterValue = 0;
+                    search = "";
+                    controllerText.clear();
                   });
-                  print(filterValue);
+                  FocusScope.of(context).unfocus();
                 },
               ),
               PopupMenuButtonWidget(
                 onSelected: (value) {
                   setState(() {
                     filterValue = value;
+                    search = "";
+                    controllerText.clear();
                   });
+                  FocusScope.of(context).unfocus();
                 },
               )
             ]),
@@ -73,6 +78,7 @@ class _HomeState extends State<Home> {
               padding: EdgeInsets.all(10),
               child: filterValue == 0
                   ? NoteListWidget(
+                      textController: controllerText,
                       onTap: onTap,
                       isTaped: isTaped,
                       boxform: boxform,
@@ -84,6 +90,7 @@ class _HomeState extends State<Home> {
                       },
                     )
                   : NoteListFilterWidget(
+                      textController: controllerText,
                       onTap: onTap,
                       isTaped: isTaped,
                       boxform: boxform,

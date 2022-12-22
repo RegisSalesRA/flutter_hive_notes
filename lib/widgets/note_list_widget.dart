@@ -12,17 +12,18 @@ class NoteListWidget extends StatefulWidget {
   final String search;
   final Function onTap;
   final bool isTaped;
-
+  final TextEditingController textController;
   final void Function(String) onChanged;
 
-  const NoteListWidget({
-    Key key,
-    this.boxform,
-    this.search,
-    this.onTap,
-    this.isTaped,
-    this.onChanged,
-  }) : super(key: key);
+  const NoteListWidget(
+      {Key key,
+      this.boxform,
+      this.search,
+      this.onTap,
+      this.isTaped,
+      this.onChanged,
+      this.textController})
+      : super(key: key);
 
   @override
   State<NoteListWidget> createState() => _NoteListWidgetState();
@@ -40,6 +41,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 5),
                 child: TextField(
+                    controller: widget.textController,
                     onChanged: widget.onChanged,
                     style: const TextStyle(color: ColorsTheme.textInput),
                     decoration: InputDecoration(

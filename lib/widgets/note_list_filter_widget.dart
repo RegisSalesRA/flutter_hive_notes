@@ -13,6 +13,7 @@ class NoteListFilterWidget extends StatefulWidget {
   final Function onTap;
   final bool isTaped;
   final int filterValue;
+  final TextEditingController textController;
   final void Function(String) onChanged;
 
   const NoteListFilterWidget(
@@ -22,6 +23,7 @@ class NoteListFilterWidget extends StatefulWidget {
       this.onTap,
       this.isTaped,
       this.onChanged,
+      this.textController,
       this.filterValue})
       : super(key: key);
 
@@ -61,6 +63,7 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 5),
                 child: TextField(
+                    controller: widget.textController,
                     onChanged: widget.onChanged,
                     style: const TextStyle(color: ColorsTheme.textInput),
                     decoration: InputDecoration(
@@ -113,7 +116,8 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                   border:
                                       Border.all(color: Colors.grey.shade400)),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [

@@ -60,6 +60,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
               },
             )),
         body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Column(children: [
             CompleteNotesWidget(
               boxform: boxform,

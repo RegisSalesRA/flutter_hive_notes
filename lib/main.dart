@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_hive_notes/models/note.dart';
+import 'package:flutter/material.dart'; 
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'config/app_theme.dart';
+import 'models/note.dart';
 
 Future main() async {
   // Voce precisa adicionar isso para que o flutter aceite voce rodar codigo antes do MyApp
