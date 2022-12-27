@@ -16,6 +16,7 @@ class _InputTextState extends State<InputText> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
         validator: widget.validator,
         decoration: InputDecoration(
           prefixIcon: const Icon(
@@ -24,7 +25,8 @@ class _InputTextState extends State<InputText> {
           ),
           labelText: "Name",
         ),
-        maxLength: 25,
+        style: TextStyle(overflow: TextOverflow.ellipsis),
+        maxLength: 35,
         onChanged: widget.onChanged);
   }
 }

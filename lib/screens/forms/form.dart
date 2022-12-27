@@ -4,9 +4,7 @@ import 'package:hive/hive.dart';
 import '../../config/colors.dart';
 import '../../helpers/helpers.dart';
 import '../../models/note.dart';
-import '../../widgets/appbar_widget.dart';
-import '../../widgets/dropdown_widget.dart';
-import '../../widgets/input_text.dart';
+import '../../widgets/widget.dart';
 
 class NoteForm extends StatefulWidget {
   final String nameChange;
@@ -73,6 +71,7 @@ class _NoteFormState extends State<NoteForm> {
                       height: 5,
                     ),
                     InputText(
+                      
                       name: name,
                       validator: (v) {
                         if (v.isEmpty) {

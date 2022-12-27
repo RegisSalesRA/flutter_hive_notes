@@ -134,15 +134,18 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            note.name ?? "default",
-                                            style: note.isComplete != false
-                                                ? Theme.of(context)
-                                                    .textTheme
-                                                    .headline5
-                                                : Theme.of(context)
-                                                    .textTheme
-                                                    .headline2,
+                                          SizedBox(
+                                            width: MediaQuerySize.widthSize(context) * 0.70,
+                                            child: Text(
+                                              note.name ?? "default",
+                                              style: note.isComplete != false
+                                                  ? Theme.of(context)
+                                                      .textTheme
+                                                      .headline5
+                                                  : Theme.of(context)
+                                                      .textTheme
+                                                      .headline2,
+                                            ),
                                           ),
                                           SizedBox(
                                             height: 10,
@@ -152,8 +155,8 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                       ),
                                     ],
                                   ),
-                                  IconButton(
-                                      onPressed: () {
+                                  InkWell(
+                                      onTap: () async {
                                         setState(() {
                                           note.isComplete = !note.isComplete;
                                         });
@@ -162,13 +165,11 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                             urgency: note.urgency,
                                             isComplete: note.isComplete,
                                             createdAt: note.createdAt);
-
-                                        box.put(note.key, noteUpdate);
-
+                     await   box.put(note.key, noteUpdate);
                                         print(note.isComplete);
                                         print(noteUpdate.isComplete);
                                       },
-                                      icon: note.isComplete != false
+                                      child: note.isComplete != false
                                           ? Icon(Icons.check_circle_outline)
                                           : Icon(Icons.circle_outlined))
                                 ],

@@ -201,11 +201,14 @@ class CompleteNotesWidget extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
+                                        SizedBox(
+                                         width: MediaQuerySize.widthSize(context) * 0.70,
+                                          child: Text(
                                           note.name ?? "default",
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline5,
+                                        ),
                                         ),
                                         SizedBox(
                                           height: 10,
@@ -217,9 +220,7 @@ class CompleteNotesWidget extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(Icons.check_circle_outline))
+                             Icon(Icons.check_circle_outline)
                               ],
                             )),
                       ),
