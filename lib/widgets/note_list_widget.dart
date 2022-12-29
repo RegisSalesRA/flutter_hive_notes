@@ -150,7 +150,11 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          Text(dateTimeFormat(note.createdAt)),
+                                          Row(children: [
+  Text("${note.urgency} - "),
+                                              Text(dateTimeFormat(note.createdAt))
+                                         ],
+                                         ),
                                         ],
                                       ),
                                     ],

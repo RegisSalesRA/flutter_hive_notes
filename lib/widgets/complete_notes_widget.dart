@@ -213,9 +213,12 @@ class CompleteNotesWidget extends StatelessWidget {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(dateTimeFormat(box.values
-                                            .toList()[index]
-                                            .createdAt)),
+Row(children: [
+  Text("${note.urgency} - "),
+                                              Text(dateTimeFormat(note.createdAt))
+                                         ],
+                                         ),
+          
                                       ],
                                     ),
                                   ],
