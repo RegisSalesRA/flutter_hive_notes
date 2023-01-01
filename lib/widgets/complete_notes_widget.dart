@@ -179,7 +179,7 @@ class CompleteNotesWidget extends StatelessWidget {
                                         height: 10,
                                         width: 10,
                                         decoration: BoxDecoration(
-                                            color: Colors.yellow,
+                                            color: Colors.orangeAccent,
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
                                       ),
@@ -202,28 +202,30 @@ class CompleteNotesWidget extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
-                                         width: MediaQuerySize.widthSize(context) * 0.70,
+                                          width: MediaQuerySize.widthSize(
+                                                  context) *
+                                              0.70,
                                           child: Text(
-                                          note.name ?? "default",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline5,
-                                        ),
+                                            note.name ?? "default",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5,
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
-Row(children: [
-  Text("${note.urgency} - "),
-                                              Text(dateTimeFormat(note.createdAt))
-                                         ],
-                                         ),
-          
+                                        Row(
+                                          children: [
+                                            Text("${note.urgency} - "),
+                                            Text(dateTimeFormat(note.createdAt))
+                                          ],
+                                        ),
                                       ],
                                     ),
                                   ],
                                 ),
-                             Icon(Icons.check_circle_outline)
+                                Icon(Icons.check_circle_outline)
                               ],
                             )),
                       ),

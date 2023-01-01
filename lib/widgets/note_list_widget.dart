@@ -112,7 +112,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                           height: 10,
                                           width: 10,
                                           decoration: BoxDecoration(
-                                              color: Colors.yellow,
+                                              color: Colors.orangeAccent,
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(10))),
                                         ),
@@ -135,7 +135,9 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(
-                                            width: MediaQuerySize.widthSize(context) * 0.70,
+                                            width: MediaQuerySize.widthSize(
+                                                    context) *
+                                                0.70,
                                             child: Text(
                                               note.name ?? "default",
                                               style: note.isComplete != false
@@ -150,11 +152,36 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          Row(children: [
-  Text("${note.urgency} - "),
-                                              Text(dateTimeFormat(note.createdAt))
-                                         ],
-                                         ),
+                                          Row(
+                                            children: [
+                                              if (note.urgency == "Urgency")
+                                                Text(
+                                                  "${note.urgency} - ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.red),
+                                                ),
+                                              if (note.urgency == "Job")
+                                                Text(
+                                                  "${note.urgency} - ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.orange),
+                                                ),
+                                              if (note.urgency == "Home")
+                                                Text(
+                                                  "${note.urgency} - ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.green),
+                                                ),
+                                              Text(dateTimeFormat(
+                                                  note.createdAt))
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -169,7 +196,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                             urgency: note.urgency,
                                             isComplete: note.isComplete,
                                             createdAt: note.createdAt);
-                     await   box.put(note.key, noteUpdate);
+                                        await box.put(note.key, noteUpdate);
                                         print(note.isComplete);
                                         print(noteUpdate.isComplete);
                                       },
