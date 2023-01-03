@@ -53,7 +53,7 @@ class PopupMenuButtonWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.crisis_alert_rounded,
+                      Icons.assignment_late_outlined,
                     ),
                     SizedBox(
                       width: 5,
