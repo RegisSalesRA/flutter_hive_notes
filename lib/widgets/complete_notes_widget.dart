@@ -83,8 +83,7 @@ class CompleteNotesWidget extends StatelessWidget {
               children: [
                 if (keysIncompleteIndex == 0)
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                     child: Text(
                       "${keys.length} / ${boxform.value.values.length}",
                       style: TextStyle(
@@ -97,8 +96,7 @@ class CompleteNotesWidget extends StatelessWidget {
                   ),
                 if (keysIncompleteIndex != 0)
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                     child: Text(
                       "${keys.length} / ${keysIncomplete.length}",
                       style: TextStyle(
@@ -142,9 +140,8 @@ class CompleteNotesWidget extends StatelessWidget {
                                   children: [
                                     Text(
                                       note.name,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6,
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
                                     ),
                                     SizedBox(
                                       width: 5,
@@ -164,8 +161,7 @@ class CompleteNotesWidget extends StatelessWidget {
                                 border:
                                     Border.all(color: Colors.grey.shade400)),
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
                                   children: [
@@ -206,7 +202,9 @@ class CompleteNotesWidget extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
-                                        width: MediaQuerySize.widthSize(context) * 0.70,
+                                          width: MediaQuerySize.widthSize(
+                                                  context) *
+                                              0.70,
                                           child: Text(
                                             note.name ?? "default",
                                             style: Theme.of(context)
@@ -217,9 +215,34 @@ class CompleteNotesWidget extends StatelessWidget {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(dateTimeFormat(box.values
-                                            .toList()[index]
-                                            .createdAt)),
+                                        Row(
+                                          children: [
+                                            if (note.urgency == "Urgency")
+                                              Text(
+                                                "${note.urgency} - ",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.red),
+                                              ),
+                                            if (note.urgency == "Job")
+                                              Text(
+                                                "${note.urgency} - ",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.orange),
+                                              ),
+                                            if (note.urgency == "Home")
+                                              Text(
+                                                "${note.urgency} - ",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.green),
+                                              ),
+                                            Text(dateTimeFormat(box.values
+                                                .toList()[index]
+                                                .createdAt)),
+                                          ],
+                                        ),
                                       ],
                                     ),
                                   ],

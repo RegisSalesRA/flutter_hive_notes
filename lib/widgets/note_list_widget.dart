@@ -147,7 +147,36 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          Text(dateTimeFormat(note.createdAt)),
+                                          Row(
+                                            children: [
+                                              if (note.urgency == "Urgency")
+                                                Text(
+                                                  "${note.urgency} - ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.red),
+                                                ),
+                                              if (note.urgency == "Job")
+                                                Text(
+                                                  "${note.urgency} - ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.orange),
+                                                ),
+                                              if (note.urgency == "Home")
+                                                Text(
+                                                  "${note.urgency} - ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.green),
+                                                ),
+                                              Text(dateTimeFormat(
+                                                  note.createdAt))
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     ],
