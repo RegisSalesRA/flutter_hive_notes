@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
                       search: search,
                       onChanged: (value) {
                         setState(() {
-                          search = value;
+                          search = value.toLowerCase();
                         });
                       },
                     )
