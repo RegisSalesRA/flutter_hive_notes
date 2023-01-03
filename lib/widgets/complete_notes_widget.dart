@@ -179,7 +179,7 @@ class CompleteNotesWidget extends StatelessWidget {
                                         height: 10,
                                         width: 10,
                                         decoration: BoxDecoration(
-                                            color: Colors.yellow,
+                                            color: Colors.orange,
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
                                       ),
