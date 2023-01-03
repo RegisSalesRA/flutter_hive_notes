@@ -18,6 +18,6 @@ class ColorsTheme {
   );
 
   static const Color primaryColor = Color(0xFFa0aefc);
-  static const Color textColor = Color(0xFFFFFFFF);  
+  static const Color textColor = Color(0xFFFFFFFF);
   static const Color textInput = Color(0xFF000000);
 }
