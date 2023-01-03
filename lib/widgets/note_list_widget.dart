@@ -135,7 +135,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            note.name ?? "default",
+                                            note.name,
                                             style: note.isComplete != false
                                                 ? Theme.of(context)
                                                     .textTheme
@@ -152,8 +152,8 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                       ),
                                     ],
                                   ),
-                                  IconButton(
-                                      onPressed: () {
+                                  GestureDetector(
+                                      onTap: () {
                                         setState(() {
                                           note.isComplete = !note.isComplete;
                                         });
@@ -162,13 +162,11 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                             urgency: note.urgency,
                                             isComplete: note.isComplete,
                                             createdAt: note.createdAt);
-
                                         box.put(note.key, noteUpdate);
-
                                         print(note.isComplete);
                                         print(noteUpdate.isComplete);
                                       },
-                                      icon: note.isComplete != false
+                                      child: note.isComplete != false
                                           ? Icon(Icons.check_circle_outline)
                                           : Icon(Icons.circle_outlined))
                                 ],
