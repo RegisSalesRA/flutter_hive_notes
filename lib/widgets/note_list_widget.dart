@@ -97,37 +97,8 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      if (note.urgency == "Home")
-                                        Container(
-                                          height: 10,
-                                          width: 10,
-                                          decoration: BoxDecoration(
-                                              color: Colors.green,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                        ),
-                                      if (note.urgency == "Job")
-                                        Container(
-                                          height: 10,
-                                          width: 10,
-                                          decoration: BoxDecoration(
-                                              color: Colors.orange,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                        ),
-                                      if (note.urgency == "Urgency")
-                                        Container(
-                                          height: 10,
-                                          width: 10,
-                                          decoration: BoxDecoration(
-                                              color: Colors.red,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                        ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
                                       Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,

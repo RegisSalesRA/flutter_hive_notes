@@ -165,53 +165,19 @@ class CompleteNotesWidget extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    if (note.urgency == "Home")
-                                      Container(
-                                        height: 10,
-                                        width: 10,
-                                        decoration: BoxDecoration(
-                                            color: Colors.green,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                      ),
-                                    if (note.urgency == "Job")
-                                      Container(
-                                        height: 10,
-                                        width: 10,
-                                        decoration: BoxDecoration(
-                                            color: Colors.orange,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                      ),
-                                    if (note.urgency == "Urgency")
-                                      Container(
-                                        height: 10,
-                                        width: 10,
-                                        decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                      ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
+                             
                                     Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        SizedBox(
-                                          width: MediaQuerySize.widthSize(
-                                                  context) *
-                                              0.70,
-                                          child: Text(
+                                       Text(
                                             note.name ?? "default",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline5,
                                           ),
-                                        ),
                                         SizedBox(
                                           height: 10,
                                         ),
