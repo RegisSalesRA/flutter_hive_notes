@@ -75,7 +75,6 @@ class CompleteNotesWidget extends StatelessWidget {
 
           keysIncompleteIndex = 3;
         }
-
         if (keys.isNotEmpty) {
           return Padding(
             padding: const EdgeInsets.all(10),
@@ -165,19 +164,18 @@ class CompleteNotesWidget extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                             
                                     Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                       Text(
-                                            note.name ?? "default",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline5,
-                                          ),
+                                        Text(
+                                          note.name ?? "default",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5,
+                                        ),
                                         SizedBox(
                                           height: 10,
                                         ),

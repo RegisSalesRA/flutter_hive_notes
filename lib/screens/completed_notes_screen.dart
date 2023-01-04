@@ -47,17 +47,31 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
         appBar: AppBarWidget(
             automaticallyImplyLeading: false,
             title: "Complete notes",
-            widgetAction: IconButton(
-              color: ColorsTheme.primaryColor,
-              icon: Icon(
-                Icons.refresh,
-                size: 30,
-              ),
-              onPressed: () {
-                setState(() {
-                  filterValueComplete = 0;
-                });
-              },
+            widgetAction: Row(
+              children: [
+                IconButton(
+                  color: ColorsTheme.primaryColor,
+                  icon: Icon(
+                    Icons.pie_chart_outline,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/chart');
+                  },
+                ),
+                IconButton(
+                  color: ColorsTheme.primaryColor,
+                  icon: Icon(
+                    Icons.refresh,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      filterValueComplete = 0;
+                    });
+                  },
+                )
+              ],
             )),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
