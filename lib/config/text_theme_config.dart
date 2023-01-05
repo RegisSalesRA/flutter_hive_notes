@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hive/config/colors.dart';
 
 TextTheme textThemeConfig() {
   return TextTheme(
@@ -28,8 +29,8 @@ TextTheme textThemeConfig() {
         decoration: TextDecoration.lineThrough),
     headline6: TextStyle(
       overflow: TextOverflow.ellipsis,
-      fontSize: 20,
-      color: Colors.grey.shade400,
+      fontSize: 22,
+      color: ColorsTheme.primaryColor,
     ),
   );
 }
