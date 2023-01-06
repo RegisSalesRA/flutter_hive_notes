@@ -10,20 +10,18 @@ import '../models/note.dart';
 class NoteListFilterWidget extends StatefulWidget {
   final ValueListenable<Box<Note>> boxform;
   final String search;
-  final Function onTap;
-  final bool isTaped;
   final int filterValue;
   final TextEditingController textController;
   final void Function(String) onChanged;
+  final Function resetControllerField;
 
   const NoteListFilterWidget(
       {Key key,
       this.boxform,
       this.search,
-      this.onTap,
-      this.isTaped,
       this.onChanged,
       this.textController,
+      this.resetControllerField,
       this.filterValue})
       : super(key: key);
 
@@ -103,9 +101,7 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                               decoration: BoxDecoration(
                                   boxShadow: [
                                     BoxShadow(
-                                      color: widget.isTaped == false
-                                          ? Colors.transparent
-                                          : Colors.black,
+                                      color: Colors.transparent,
                                       blurRadius: 2.0,
                                       spreadRadius: 0.0,
                                       offset: Offset(2.0, 2.0),

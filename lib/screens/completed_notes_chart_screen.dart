@@ -35,7 +35,7 @@ class CompleteNotesChartScreenState extends State {
       child: Scaffold(
         appBar: AppBarWidget(
           automaticallyImplyLeading: true,
-          title: "Gráfico",
+          title: "Graphic",
           widgetAction: SizedBox(),
         ),
         body: Container(
@@ -75,8 +75,8 @@ class CompleteNotesChartScreenState extends State {
                           box.get(key).isComplete == true)
                       .toList();
                 }
-
                 return SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,

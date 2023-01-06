@@ -10,24 +10,18 @@ import '../models/note.dart';
 class NoteListWidget extends StatefulWidget {
   final ValueListenable<Box<Note>> boxform;
   final String search;
-  final Function onTap;
-  final bool isTaped;
   final TextEditingController textController;
   final void Function(String) onChanged;
 
   const NoteListWidget(
-      {Key key,
-      this.boxform,
-      this.search,
-      this.onTap,
-      this.isTaped,
-      this.onChanged,
-      this.textController})
+      {Key key, this.boxform, this.search, this.onChanged, this.textController})
       : super(key: key);
 
   @override
   State<NoteListWidget> createState() => _NoteListWidgetState();
 }
+
+List<int> keys;
 
 class _NoteListWidgetState extends State<NoteListWidget> {
   @override
@@ -35,7 +29,12 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     return ValueListenableBuilder(
       valueListenable: widget.boxform,
       builder: (context, Box<Note> box, _) {
-        if (box.isNotEmpty) {
+        keys = box.keys
+            .cast<int>()
+            .where((key) => box.get(key).isComplete == false)
+            .toList();
+
+        if (keys.isNotEmpty) {
           return Column(
             children: [
               Padding(
@@ -63,9 +62,10 @@ class _NoteListWidgetState extends State<NoteListWidget> {
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: box.length,
+                  itemCount: keys.length,
                   itemBuilder: (context, index) {
-                    Note note = box.getAt(index);
+                    final int key = keys[index];
+                    Note note = box.get(key);
                     if (note.name
                         .toString()
                         .toLowerCase()
@@ -80,9 +80,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                               decoration: BoxDecoration(
                                   boxShadow: [
                                     BoxShadow(
-                                      color: widget.isTaped == false
-                                          ? Colors.transparent
-                                          : Colors.black,
+                                      color: Colors.transparent,
                                       blurRadius: 2.0,
                                       spreadRadius: 0.0,
                                       offset: Offset(2.0, 2.0),

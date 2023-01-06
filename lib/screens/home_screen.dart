@@ -13,22 +13,16 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var selectedItem = '';
-  bool isTaped = false;
   String search = "";
   TextEditingController controllerText = TextEditingController();
   int filterValue = 0;
   ValueListenable<Box<Note>> boxform = Hive.box<Note>('notes').listenable();
 
-  onTap() {
-    setState(() {
-      isTaped = !isTaped;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
               await Navigator.pushNamed(context, '/form');
@@ -67,7 +61,7 @@ class _HomeState extends State<Home> {
                     search = "";
                     controllerText.clear();
                   });
-                  FocusScope.of(context).unfocus();
+                  FocusScope.of(context).requestFocus(FocusNode());
                 },
               )
             ]),
@@ -79,8 +73,6 @@ class _HomeState extends State<Home> {
               child: filterValue == 0
                   ? NoteListWidget(
                       textController: controllerText,
-                      onTap: onTap,
-                      isTaped: isTaped,
                       boxform: boxform,
                       search: search,
                       onChanged: (value) {
@@ -91,13 +83,11 @@ class _HomeState extends State<Home> {
                     )
                   : NoteListFilterWidget(
                       textController: controllerText,
-                      onTap: onTap,
-                      isTaped: isTaped,
                       boxform: boxform,
                       search: search,
                       onChanged: (value) {
                         setState(() {
-                          search = value;
+                          search = value.toLowerCase();
                         });
                       },
                       filterValue: filterValue,

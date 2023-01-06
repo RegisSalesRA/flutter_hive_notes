@@ -72,8 +72,11 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                                 Icons.pie_chart_outline,
                                 size: 30,
                               ),
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/chart');
+                              onPressed: () async {
+                                setState(() {
+                                  filterValueComplete = 0;
+                                });
+                                await Navigator.pushNamed(context, '/chart');
                               },
                             );
                     }),
