@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hive/config/colors.dart';
 import 'package:flutter_hive/helpers/helpers.dart';
 import 'package:flutter_hive/models/note.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -18,6 +19,7 @@ class CompleteNotesChartScreenState extends State {
   int touchedIndex = -1;
   ValueListenable<Box<Note>> boxform = Hive.box<Note>('notes').listenable();
   List<int> keysComplete;
+  List<int> keysUncompleted;
   List<int> keysHome;
   List<int> keysJob;
   List<int> keysUrgency;
@@ -36,279 +38,324 @@ class CompleteNotesChartScreenState extends State {
           title: "Gráfico",
           widgetAction: SizedBox(),
         ),
-        body: SizedBox(
+        body: Container(
           height: MediaQuerySize.heigthSize(context),
-          width: MediaQuerySize.widthSize(context),
-          child: Stack(children: [
-            ValueListenableBuilder(
-                valueListenable: boxform,
-                builder: (context, Box<Note> box, _) {
-                  if (boxform.value.isNotEmpty) {
-                    keysComplete = box.keys
-                        .cast<int>()
-                        .where((key) => box.get(key).isComplete)
-                        .toList();
+          child: ValueListenableBuilder(
+              valueListenable: boxform,
+              builder: (context, Box<Note> box, _) {
+                if (boxform.value.isNotEmpty) {
+                  keysComplete = box.keys
+                      .cast<int>()
+                      .where((key) => box.get(key).isComplete)
+                      .toList();
 
-                    keysHome = box.keys
-                        .cast<int>()
-                        .where((key) =>
-                            box.get(key).urgency == "Home" &&
-                            box.get(key).isComplete == true)
-                        .toList();
+                  keysUncompleted = box.keys
+                      .cast<int>()
+                      .where((key) => box.get(key).isComplete == false)
+                      .toList();
 
-                    keysJob = box.keys
-                        .cast<int>()
-                        .where((key) =>
-                            box.get(key).urgency == "Job" &&
-                            box.get(key).isComplete == true)
-                        .toList();
+                  keysHome = box.keys
+                      .cast<int>()
+                      .where((key) =>
+                          box.get(key).urgency == "Home" &&
+                          box.get(key).isComplete == true)
+                      .toList();
 
-                    keysUrgency = box.keys
-                        .cast<int>()
-                        .where((key) =>
-                            box.get(key).urgency == "Urgency" &&
-                            box.get(key).isComplete == true)
-                        .toList();
-                  }
+                  keysJob = box.keys
+                      .cast<int>()
+                      .where((key) =>
+                          box.get(key).urgency == "Job" &&
+                          box.get(key).isComplete == true)
+                      .toList();
 
-                  print(keysComplete);
-                  print(keysHome);
-                  print(keysJob);
-                  print(keysUrgency);
+                  keysUrgency = box.keys
+                      .cast<int>()
+                      .where((key) =>
+                          box.get(key).urgency == "Urgency" &&
+                          box.get(key).isComplete == true)
+                      .toList();
+                }
 
-                  return Column(
+                return SingleChildScrollView(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(),
-                      SizedBox(),
-                      SizedBox(
-                        height: MediaQuerySize.heigthSize(context) * 0.30,
-                        child: PieChart(
-                          PieChartData(
-                            pieTouchData: PieTouchData(
-                              touchCallback:
-                                  (FlTouchEvent event, pieTouchResponse) {
-                                setState(() {
-                                  if (!event.isInterestedForInteractions ||
-                                      pieTouchResponse == null ||
-                                      pieTouchResponse.touchedSection == null) {
-                                    touchedIndex = -1;
-                                    return;
-                                  }
-                                  touchedIndex = pieTouchResponse
-                                      .touchedSection.touchedSectionIndex;
-                                });
-                              },
-                            ),
-                            borderData: FlBorderData(
-                              show: false,
-                            ),
-                            sectionsSpace: 5,
-                            centerSpaceRadius: 110,
-                            sections: showingSections(),
-                          ),
-                        ),
-                      ),
                       Container(
-                        height: MediaQuerySize.heigthSize(context) * 0.40,
-                        width: MediaQuerySize.widthSize(context),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
+                        height: 350,
+                        width: double.infinity,
+                        child: Column(children: [
+                          Container(
+                            height: 50,
+                            width: double.infinity,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                    height: 75,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                    decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.transparent,
-                                            blurRadius: 2.0,
-                                            spreadRadius: 0.0,
-                                            offset: Offset(2.0, 2.0),
-                                          ),
-                                        ],
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        color: Colors.white,
-                                        border: Border.all(
-                                            color: Colors.grey.shade400)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'Home ',
-                                            style: TextStyle(
-                                                color: Colors.green,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text: 'notes quantity - ',
-                                                  style: TextStyle(
-                                                      color:
-                                                          Colors.grey.shade400,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              TextSpan(
-                                                  text:
-                                                      '${keysHome.length.toString()}',
-                                                  style: TextStyle(
-                                                      color: Colors.green,
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ],
-                                          ),
+                              children: const [
+                                Indicator(
+                                  color: Colors.green,
+                                  text: 'Home',
+                                  isSquare: true,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Indicator(
+                                  color: Colors.orange,
+                                  text: 'Job',
+                                  isSquare: true,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Indicator(
+                                  color: Colors.red,
+                                  text: 'Urgency',
+                                  isSquare: true,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: PieChart(
+                              PieChartData(
+                                pieTouchData: PieTouchData(
+                                  touchCallback:
+                                      (FlTouchEvent event, pieTouchResponse) {
+                                    setState(() {
+                                      if (!event.isInterestedForInteractions ||
+                                          pieTouchResponse == null ||
+                                          pieTouchResponse.touchedSection ==
+                                              null) {
+                                        touchedIndex = -1;
+                                        return;
+                                      }
+                                      touchedIndex = pieTouchResponse
+                                          .touchedSection.touchedSectionIndex;
+                                    });
+                                  },
+                                ),
+                                borderData: FlBorderData(
+                                  show: false,
+                                ),
+                                sectionsSpace: 5,
+                                centerSpaceRadius: 80,
+                                sections: showingSections(),
+                              ),
+                            ),
+                          ),
+                        ]),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                  height: 75,
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.transparent,
+                                          blurRadius: 2.0,
+                                          spreadRadius: 0.0,
+                                          offset: Offset(2.0, 2.0),
                                         ),
                                       ],
-                                    )),
-                                Container(
-                                    height: 75,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                    decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.transparent,
-                                            blurRadius: 2.0,
-                                            spreadRadius: 0.0,
-                                            offset: Offset(2.0, 2.0),
-                                          ),
-                                        ],
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        color: Colors.white,
-                                        border: Border.all(
-                                            color: Colors.grey.shade400)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'Job ',
-                                            style: TextStyle(
-                                                color: Colors.orange,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text: 'notes quantity - ',
-                                                  style: TextStyle(
-                                                      color:
-                                                          Colors.grey.shade400,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              TextSpan(
-                                                  text:
-                                                      '${keysJob.length.toString()}',
-                                                  style: TextStyle(
-                                                      color: Colors.orange,
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ],
-                                          ),
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: Colors.grey.shade400)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          text: 'Uncompleted ',
+                                          style: TextStyle(
+                                              color: ColorsTheme.primaryColor,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text: 'notes - ',
+                                                style: TextStyle(
+                                                    color: Colors.grey.shade400,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            TextSpan(
+                                                text: keysUncompleted.length
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    color: ColorsTheme
+                                                        .primaryColor,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                  height: 75,
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.transparent,
+                                          blurRadius: 2.0,
+                                          spreadRadius: 0.0,
+                                          offset: Offset(2.0, 2.0),
                                         ),
                                       ],
-                                    )),
-                                Container(
-                                    height: 75,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                    decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.transparent,
-                                            blurRadius: 2.0,
-                                            spreadRadius: 0.0,
-                                            offset: Offset(2.0, 2.0),
-                                          ),
-                                        ],
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        color: Colors.white,
-                                        border: Border.all(
-                                            color: Colors.grey.shade400)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'Urgency ',
-                                            style: TextStyle(
-                                                color: Colors.red,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text: 'notes quantity - ',
-                                                  style: TextStyle(
-                                                      color:
-                                                          Colors.grey.shade400,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              TextSpan(
-                                                  text:
-                                                      '${keysUrgency.length.toString()}',
-                                                  style: TextStyle(
-                                                      color: Colors.red,
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ],
-                                          ),
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: Colors.grey.shade400)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          text: 'Home ',
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text: 'notes completed - ',
+                                                style: TextStyle(
+                                                    color: Colors.grey.shade400,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            TextSpan(
+                                                text:
+                                                    '${keysHome.length.toString()}',
+                                                style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                  height: 75,
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.transparent,
+                                          blurRadius: 2.0,
+                                          spreadRadius: 0.0,
+                                          offset: Offset(2.0, 2.0),
                                         ),
                                       ],
-                                    )),
-                              ]),
-                        ),
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: Colors.grey.shade400)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          text: 'Job ',
+                                          style: TextStyle(
+                                              color: Colors.orange,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text: 'notes completed - ',
+                                                style: TextStyle(
+                                                    color: Colors.grey.shade400,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            TextSpan(
+                                                text:
+                                                    '${keysJob.length.toString()}',
+                                                style: TextStyle(
+                                                    color: Colors.orange,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                  height: 75,
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.transparent,
+                                          blurRadius: 2.0,
+                                          spreadRadius: 0.0,
+                                          offset: Offset(2.0, 2.0),
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: Colors.grey.shade400)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          text: 'Urgency ',
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text: 'notes completed - ',
+                                                style: TextStyle(
+                                                    color: Colors.grey.shade400,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            TextSpan(
+                                                text:
+                                                    '${keysUrgency.length.toString()}',
+                                                style: TextStyle(
+                                                    color: Colors.red,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                            ]),
                       )
                     ],
-                  );
-                }),
-            Positioned(
-                top: MediaQuerySize.heigthSize(context) * 0.02,
-                right: MediaQuerySize.heigthSize(context) * 0.02,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Indicator(
-                      color: Colors.green,
-                      text: 'Home',
-                      isSquare: true,
-                    ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                    Indicator(
-                      color: Colors.orange,
-                      text: 'Job',
-                      isSquare: true,
-                    ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                    Indicator(
-                      color: Colors.red,
-                      text: 'Urgency',
-                      isSquare: true,
-                    ),
-                    SizedBox(
-                      height: 18,
-                    ),
-                  ],
-                )),
-          ]),
+                  ),
+                );
+              }),
         ),
       ),
     );
@@ -323,10 +370,9 @@ class CompleteNotesChartScreenState extends State {
         case 0:
           return PieChartSectionData(
             color: Colors.green,
-            value: percentageCalc(
-                keysHome.length.toInt(), keysComplete.length.toInt()),
+            value: percentageCalc(keysHome.length, keysComplete.length),
             title:
-                '${percentageCalc(keysHome.length.toInt(), keysComplete.length.toInt()).toInt()}%',
+                '${percentageCalc(keysHome.length, keysComplete.length.toInt()).toInt()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -337,10 +383,9 @@ class CompleteNotesChartScreenState extends State {
         case 1:
           return PieChartSectionData(
             color: Colors.orange,
-            value: percentageCalc(
-                keysJob.length.toInt(), keysComplete.length.toInt()),
+            value: percentageCalc(keysJob.length, keysComplete.length),
             title:
-                '${percentageCalc(keysJob.length.toInt(), keysComplete.length.toInt()).toInt()}%',
+                '${percentageCalc(keysJob.length, keysComplete.length).toInt()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -351,10 +396,9 @@ class CompleteNotesChartScreenState extends State {
         case 2:
           return PieChartSectionData(
             color: Colors.red,
-            value: percentageCalc(
-                keysUrgency.length.toInt(), keysComplete.length.toInt()),
+            value: percentageCalc(keysUrgency.length, keysComplete.length),
             title:
-                '${percentageCalc(keysUrgency.length.toInt(), keysComplete.length.toInt()).toInt()}%',
+                '${percentageCalc(keysUrgency.length, keysComplete.length).toInt()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,

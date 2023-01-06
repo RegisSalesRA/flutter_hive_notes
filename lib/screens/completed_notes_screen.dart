@@ -49,16 +49,34 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
             title: "Complete notes",
             widgetAction: Row(
               children: [
-                IconButton(
-                  color: ColorsTheme.primaryColor,
-                  icon: Icon(
-                    Icons.pie_chart_outline,
-                    size: 30,
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/chart');
-                  },
-                ),
+                ValueListenableBuilder(
+                    valueListenable: boxform,
+                    builder: (context, Box<Note> box, _) {
+                      List<int> keys;
+                      keys = box.keys
+                          .cast<int>()
+                          .where((key) => box.get(key).isComplete)
+                          .toList();
+                      return keys.isEmpty
+                          ? IconButton(
+                              color: ColorsTheme.themeColor,
+                              icon: Icon(
+                                Icons.pie_chart_outline,
+                                size: 30,
+                              ),
+                              onPressed: null,
+                            )
+                          : IconButton(
+                              color: ColorsTheme.primaryColor,
+                              icon: Icon(
+                                Icons.pie_chart_outline,
+                                size: 30,
+                              ),
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/chart');
+                              },
+                            );
+                    }),
                 IconButton(
                   color: ColorsTheme.primaryColor,
                   icon: Icon(
