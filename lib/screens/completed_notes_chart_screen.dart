@@ -18,11 +18,11 @@ class CompleteNotesChartScreen extends StatefulWidget {
 class CompleteNotesChartScreenState extends State {
   int touchedIndex = -1;
   ValueListenable<Box<Note>> boxform = Hive.box<Note>('notes').listenable();
-  List<int> keysComplete;
-  List<int> keysUncompleted;
-  List<int> keysHome;
-  List<int> keysJob;
-  List<int> keysUrgency;
+  List<int>? keysComplete;
+  List<int>? keysUncompleted;
+  List<int>? keysHome;
+  List<int>? keysJob;
+  List<int>? keysUrgency;
 
   @override
   void initState() {
@@ -46,33 +46,33 @@ class CompleteNotesChartScreenState extends State {
                 if (boxform.value.isNotEmpty) {
                   keysComplete = box.keys
                       .cast<int>()
-                      .where((key) => box.get(key).isComplete)
+                      .where((key) => box.get(key)!.isComplete)
                       .toList();
 
                   keysUncompleted = box.keys
                       .cast<int>()
-                      .where((key) => box.get(key).isComplete == false)
+                      .where((key) => box.get(key)!.isComplete == false)
                       .toList();
 
                   keysHome = box.keys
                       .cast<int>()
                       .where((key) =>
-                          box.get(key).urgency == "Home" &&
-                          box.get(key).isComplete == true)
+                          box.get(key)!.urgency == "Home" &&
+                          box.get(key)!.isComplete == true)
                       .toList();
 
                   keysJob = box.keys
                       .cast<int>()
                       .where((key) =>
-                          box.get(key).urgency == "Job" &&
-                          box.get(key).isComplete == true)
+                          box.get(key)!.urgency == "Job" &&
+                          box.get(key)!.isComplete == true)
                       .toList();
 
                   keysUrgency = box.keys
                       .cast<int>()
                       .where((key) =>
-                          box.get(key).urgency == "Urgency" &&
-                          box.get(key).isComplete == true)
+                          box.get(key)!.urgency == "Urgency" &&
+                          box.get(key)!.isComplete == true)
                       .toList();
                 }
                 return SingleChildScrollView(
@@ -131,7 +131,7 @@ class CompleteNotesChartScreenState extends State {
                                         return;
                                       }
                                       touchedIndex = pieTouchResponse
-                                          .touchedSection.touchedSectionIndex;
+                                          .touchedSection!.touchedSectionIndex;
                                     });
                                   },
                                 ),
@@ -187,7 +187,7 @@ class CompleteNotesChartScreenState extends State {
                                                     fontWeight:
                                                         FontWeight.bold)),
                                             TextSpan(
-                                                text: keysUncompleted.length
+                                                text: keysUncompleted!.length
                                                     .toString(),
                                                 style: TextStyle(
                                                     color: ColorsTheme
@@ -239,7 +239,7 @@ class CompleteNotesChartScreenState extends State {
                                                         FontWeight.bold)),
                                             TextSpan(
                                                 text:
-                                                    '${keysHome.length.toString()}',
+                                                    '${keysHome!.length.toString()}',
                                                 style: TextStyle(
                                                     color: Colors.green,
                                                     fontSize: 20,
@@ -289,7 +289,7 @@ class CompleteNotesChartScreenState extends State {
                                                         FontWeight.bold)),
                                             TextSpan(
                                                 text:
-                                                    '${keysJob.length.toString()}',
+                                                    '${keysJob!.length.toString()}',
                                                 style: TextStyle(
                                                     color: Colors.orange,
                                                     fontSize: 20,
@@ -339,7 +339,7 @@ class CompleteNotesChartScreenState extends State {
                                                         FontWeight.bold)),
                                             TextSpan(
                                                 text:
-                                                    '${keysUrgency.length.toString()}',
+                                                    '${keysUrgency!.length.toString()}',
                                                 style: TextStyle(
                                                     color: Colors.red,
                                                     fontSize: 20,
@@ -370,9 +370,9 @@ class CompleteNotesChartScreenState extends State {
         case 0:
           return PieChartSectionData(
             color: Colors.green,
-            value: percentageCalc(keysHome.length, keysComplete.length),
+            value: percentageCalc(keysHome!.length, keysComplete!.length),
             title:
-                '${percentageCalc(keysHome.length, keysComplete.length.toInt()).toInt()}%',
+                '${percentageCalc(keysHome!.length, keysComplete!.length.toInt()).toInt()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -383,9 +383,9 @@ class CompleteNotesChartScreenState extends State {
         case 1:
           return PieChartSectionData(
             color: Colors.orange,
-            value: percentageCalc(keysJob.length, keysComplete.length),
+            value: percentageCalc(keysJob!.length, keysComplete!.length),
             title:
-                '${percentageCalc(keysJob.length, keysComplete.length).toInt()}%',
+                '${percentageCalc(keysJob!.length, keysComplete!.length).toInt()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -396,9 +396,9 @@ class CompleteNotesChartScreenState extends State {
         case 2:
           return PieChartSectionData(
             color: Colors.red,
-            value: percentageCalc(keysUrgency.length, keysComplete.length),
+            value: percentageCalc(keysUrgency!.length, keysComplete!.length),
             title:
-                '${percentageCalc(keysUrgency.length, keysComplete.length).toInt()}%',
+                '${percentageCalc(keysUrgency!.length, keysComplete!.length).toInt()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -416,9 +416,9 @@ class CompleteNotesChartScreenState extends State {
 
 class Indicator extends StatelessWidget {
   const Indicator({
-    this.color,
-    this.text,
-    this.isSquare,
+    required this.color,
+    required this.text,
+    required this.isSquare,
     this.size = 16,
     this.textColor = const Color(0xff505050),
   });

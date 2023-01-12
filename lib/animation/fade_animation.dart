@@ -5,7 +5,7 @@ class AnimatedFadedText extends StatefulWidget {
   final Widget child;
   final double direction;
 
-  const AnimatedFadedText({Key key, this.child, this.direction})
+  const AnimatedFadedText({Key? key,required this.child,required this.direction})
       : super(key: key);
 
   @override
@@ -14,7 +14,7 @@ class AnimatedFadedText extends StatefulWidget {
 
 class _AnimatedFadedTextState extends State<AnimatedFadedText>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
 
   @override
   void initState() {

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
  
 
 class CheckBoxWidget extends StatefulWidget {
- final Widget checkedIten;
-  CheckBoxWidget({Key key, this.checkedIten}) : super(key: key);
+ final Widget? checkedIten;
+  CheckBoxWidget({Key? key, this.checkedIten}) : super(key: key);
 
   @override
   State<CheckBoxWidget> createState() => _CheckBoxWidgetState();
@@ -22,7 +22,7 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget> {
               fontWeight: FontWeight.bold,
            ),
         ),
-        widget.checkedIten
+        widget.checkedIten!
       ]),
     );
   }

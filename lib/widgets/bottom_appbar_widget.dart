@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 
 class BottomAppBarWidget extends StatelessWidget {
-  final List<Widget> widgets;
-  const BottomAppBarWidget({Key key, this.widgets}) : super(key: key);
+  final List<Widget>? widgets;
+  const BottomAppBarWidget({Key? key, this.widgets}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class BottomAppBarWidget extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [...widgets],
+          children: [...widgets!],
         ),
       ),
     );

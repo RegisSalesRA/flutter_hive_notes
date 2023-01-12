@@ -14,14 +14,14 @@ class NoteListWidget extends StatefulWidget {
   final void Function(String) onChanged;
 
   const NoteListWidget(
-      {Key key, this.boxform, this.search, this.onChanged, this.textController})
+      {Key? key,required this.boxform,required this.search,required this.onChanged,required this.textController})
       : super(key: key);
 
   @override
   State<NoteListWidget> createState() => _NoteListWidgetState();
 }
 
-List<int> keys;
+List<int>? keys;
 
 class _NoteListWidgetState extends State<NoteListWidget> {
   @override
@@ -31,10 +31,10 @@ class _NoteListWidgetState extends State<NoteListWidget> {
       builder: (context, Box<Note> box, _) {
         keys = box.keys
             .cast<int>()
-            .where((key) => box.get(key).isComplete == false)
+            .where((key) => box.get(key)!.isComplete == false)
             .toList();
 
-        if (keys.isNotEmpty) {
+        if (keys!.isNotEmpty) {
           return Column(
             children: [
               Padding(
@@ -62,11 +62,11 @@ class _NoteListWidgetState extends State<NoteListWidget> {
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: keys.length,
+                  itemCount: keys!.length,
                   itemBuilder: (context, index) {
-                    final int key = keys[index];
-                    Note note = box.get(key);
-                    if (note.name
+                    final int key = keys![index];
+                    Note? note = box.get(key);
+                    if (note!.name
                         .toString()
                         .toLowerCase()
                         .contains(widget.search)) {

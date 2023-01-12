@@ -9,24 +9,24 @@ import '../../widgets/dropdown_widget.dart';
 import '../../widgets/input_text.dart';
 
 class NoteForm extends StatefulWidget {
-  final String nameChange;
+  final String? nameChange;
 
-  NoteForm({Key key, this.nameChange}) : super(key: key);
+  NoteForm({Key? key, this.nameChange}) : super(key: key);
   @override
   _NoteFormState createState() => _NoteFormState();
 }
 
 class _NoteFormState extends State<NoteForm> {
   final noteForm = GlobalKey<FormState>();
-  String name;
-  String urgency;
+  String? name;
+  String? urgency;
 
   void submitData() {
-    if (noteForm.currentState.validate()) {
+    if (noteForm.currentState!.validate()) {
       Box<Note> todoBox = Hive.box<Note>('notes');
       todoBox.add(Note(
-          name: name,
-          urgency: urgency,
+          name: name!,
+          urgency: urgency!,
           isComplete: false,
           createdAt: DateTime.now()));
 
@@ -75,7 +75,7 @@ class _NoteFormState extends State<NoteForm> {
                     InputText(
                       name: name,
                       validator: (v) {
-                        if (v.isEmpty) {
+                        if (v!.isEmpty) {
                           return "Field can not be empty";
                         }
                         return null;
@@ -102,7 +102,7 @@ class _NoteFormState extends State<NoteForm> {
                           : Padding(
                               padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                               child: Text(
-                                urgency,
+                                urgency!,
                                 style: TextStyle(color: ColorsTheme.textColor),
                               ),
                             ),

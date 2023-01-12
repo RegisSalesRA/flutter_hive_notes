@@ -4,7 +4,7 @@ import '../config/config.dart';
 
 class PopupMenuButtonWidget extends StatelessWidget {
   final void Function(int) onSelected;
-  const PopupMenuButtonWidget({Key key, this.onSelected}) : super(key: key);
+  const PopupMenuButtonWidget({Key? key,required this.onSelected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

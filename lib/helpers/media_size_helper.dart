@@ -7,8 +7,8 @@ abstract class MediaQuerySize {
     var heigthSize = MediaQuery.of(context).size.height -
         AppBarWidget(
           widgetAction: SizedBox(),
-          automaticallyImplyLeading: null,
-          title: null,
+          automaticallyImplyLeading: false,
+          title: '',
         ).preferredSize.height -
         MediaQuery.of(context).padding.top;
     return heigthSize;

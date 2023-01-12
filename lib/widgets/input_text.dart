@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class InputText extends StatefulWidget {
-  final String name;
-  final Function validator;
-  final Function onChanged;
+  final String? name;
+  final String? Function(String?)? validator;
+  final Function(String?)? onChanged;
 
-  InputText({Key key, this.name, this.validator, this.onChanged})
+  InputText({Key? key, this.name, required this.validator, this.onChanged})
       : super(key: key);
 
   @override

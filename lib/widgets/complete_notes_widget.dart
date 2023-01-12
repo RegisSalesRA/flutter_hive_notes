@@ -8,9 +8,9 @@ import '../models/note.dart';
 
 class CompleteNotesWidget extends StatelessWidget {
   const CompleteNotesWidget({
-    Key key,
-    @required this.boxform,
-    @required this.filterValueComplete,
+    Key? key,
+    required this.boxform,
+    required this.filterValueComplete,
   }) : super(key: key);
 
   final ValueListenable<Box<Note>> boxform;
@@ -20,14 +20,14 @@ class CompleteNotesWidget extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: boxform,
       builder: (context, Box<Note> box, _) {
-        List<int> keys;
-        List<int> keysIncomplete;
-        int keysIncompleteIndex = 0;
+        List<int>? keys;
+        List<int>? keysIncomplete;
+        int? keysIncompleteIndex = 0;
 
         if (filterValueComplete == 0) {
           keys = box.keys
               .cast<int>()
-              .where((key) => box.get(key).isComplete)
+              .where((key) => box.get(key)!.isComplete)
               .toList();
           keysIncompleteIndex = 0;
         }
@@ -35,13 +35,13 @@ class CompleteNotesWidget extends StatelessWidget {
           keys = box.keys
               .cast<int>()
               .where((key) =>
-                  box.get(key).urgency == "Home" &&
-                  box.get(key).isComplete == true)
+                  box.get(key)!.urgency == "Home" &&
+                  box.get(key)!.isComplete == true)
               .toList();
 
           keysIncomplete = box.keys
               .cast<int>()
-              .where((key) => box.get(key).urgency == "Home")
+              .where((key) => box.get(key)!.urgency == "Home")
               .toList();
           keysIncompleteIndex = 1;
         }
@@ -49,13 +49,13 @@ class CompleteNotesWidget extends StatelessWidget {
           keys = box.keys
               .cast<int>()
               .where((key) =>
-                  box.get(key).urgency == "Job" &&
-                  box.get(key).isComplete == true)
+                  box.get(key)!.urgency == "Job" &&
+                  box.get(key)!.isComplete == true)
               .toList();
 
           keysIncomplete = box.keys
               .cast<int>()
-              .where((key) => box.get(key).urgency == "Job")
+              .where((key) => box.get(key)!.urgency == "Job")
               .toList();
 
           keysIncompleteIndex = 2;
@@ -64,18 +64,18 @@ class CompleteNotesWidget extends StatelessWidget {
           keys = box.keys
               .cast<int>()
               .where((key) =>
-                  box.get(key).urgency == "Urgency" &&
-                  box.get(key).isComplete == true)
+                  box.get(key)!.urgency == "Urgency" &&
+                  box.get(key)!.isComplete == true)
               .toList();
 
           keysIncomplete = box.keys
               .cast<int>()
-              .where((key) => box.get(key).urgency == "Urgency")
+              .where((key) => box.get(key)!.urgency == "Urgency")
               .toList();
 
           keysIncompleteIndex = 3;
         }
-        if (keys.isNotEmpty) {
+        if (keys!.isNotEmpty) {
           return Padding(
             padding: const EdgeInsets.all(10),
             child: Column(
@@ -97,7 +97,7 @@ class CompleteNotesWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                     child: Text(
-                      "${keys.length} / ${keysIncomplete.length}",
+                      "${keys.length} / ${keysIncomplete!.length}",
                       style: TextStyle(
                           color: keys.length != keysIncomplete.length
                               ? Colors.grey.shade400
@@ -114,11 +114,11 @@ class CompleteNotesWidget extends StatelessWidget {
                     context,
                     index,
                   ) {
-                    final int key = keys[index];
-                    final Note note = box.get(key);
+                    final int? key = keys![index];
+                    final Note? note = box.get(key);
                     return Dismissible(
                       direction: DismissDirection.endToStart,
-                      key: Key(note.key.toString()),
+                      key: Key(note!.key.toString()),
                       background: Container(color: Colors.transparent),
                       onDismissed: (direction) async {
                         if (direction == DismissDirection.endToStart) {
@@ -171,7 +171,7 @@ class CompleteNotesWidget extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          note.name ?? "default",
+                                          note.name,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline5,

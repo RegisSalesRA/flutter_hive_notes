@@ -12,17 +12,15 @@ class NoteListFilterWidget extends StatefulWidget {
   final String search;
   final int filterValue;
   final TextEditingController textController;
-  final void Function(String) onChanged;
-  final Function resetControllerField;
+  final void Function(String) onChanged; 
 
   const NoteListFilterWidget(
-      {Key key,
-      this.boxform,
-      this.search,
-      this.onChanged,
-      this.textController,
-      this.resetControllerField,
-      this.filterValue})
+      {Key? key,
+      required this.boxform,
+      required this.search,
+      required this.onChanged,
+      required this.textController, 
+      required this.filterValue})
       : super(key: key);
 
   @override
@@ -35,27 +33,27 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
     return ValueListenableBuilder(
       valueListenable: widget.boxform,
       builder: (context, Box<Note> box, _) {
-        List<int> keys;
+        List<int>? keys;
 
         if (widget.filterValue == 1) {
           keys = box.keys
               .cast<int>()
-              .where((key) => box.get(key).urgency == "Home")
+              .where((key) => box.get(key)!.urgency == "Home")
               .toList();
         }
         if (widget.filterValue == 2) {
           keys = box.keys
               .cast<int>()
-              .where((key) => box.get(key).urgency == "Job")
+              .where((key) => box.get(key)!.urgency == "Job")
               .toList();
         }
         if (widget.filterValue == 3) {
           keys = box.keys
               .cast<int>()
-              .where((key) => box.get(key).urgency == "Urgency")
+              .where((key) => box.get(key)!.urgency == "Urgency")
               .toList();
         }
-        if (keys.isNotEmpty) {
+        if (keys!.isNotEmpty) {
           return Column(
             children: [
               Padding(
@@ -85,9 +83,9 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                   shrinkWrap: true,
                   itemCount: keys.length,
                   itemBuilder: (context, index) {
-                    final int key = keys[index];
-                    Note note = box.get(key);
-                    if (note.name
+                    final int? key = keys![index];
+                    Note? note = box.get(key);
+                    if (note!.name
                         .toString()
                         .toLowerCase()
                         .contains(widget.search)) {
@@ -154,7 +152,7 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            note.name ?? "default",
+                                            note.name,
                                             style: note.isComplete != false
                                                 ? Theme.of(context)
                                                     .textTheme

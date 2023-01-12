@@ -15,5 +15,5 @@ class Note extends HiveObject {
   @HiveField(4)
   DateTime createdAt;
 
-  Note({this.name, this.urgency, this.isComplete, this.createdAt});
+  Note({required this.name,required this.urgency,required this.isComplete,required this.createdAt});
 }

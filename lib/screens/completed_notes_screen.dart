@@ -55,7 +55,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                       List<int> keys;
                       keys = box.keys
                           .cast<int>()
-                          .where((key) => box.get(key).isComplete)
+                          .where((key) => box.get(key)!.isComplete)
                           .toList();
                       return keys.isEmpty
                           ? IconButton(
