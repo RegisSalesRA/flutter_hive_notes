@@ -19,6 +19,7 @@ class _NoteFormState extends State<NoteForm> {
   final noteForm = GlobalKey<FormState>();
   TextEditingController controller = TextEditingController();
   var note;
+  var key;
   Note objectNote =
       Note(name: "", urgency: "", isComplete: false, createdAt: DateTime.now());
 
@@ -33,8 +34,9 @@ class _NoteFormState extends State<NoteForm> {
     if (ModalRoute.of(context)!.settings.arguments != null) {
       setState(() {
         note = ModalRoute.of(context)!.settings.arguments;
+        key = note.key;
         objectNote = Note(
-            name: note.name,
+            name: controller.text,
             urgency: note.urgency,
             isComplete: note.isComplete,
             createdAt: note.createdAt);
@@ -42,6 +44,7 @@ class _NoteFormState extends State<NoteForm> {
       print(note.key);
       print(objectNote);
       print(objectNote.name);
+      print(objectNote.urgency);
     }
     return SafeArea(
       child: Scaffold(
@@ -73,7 +76,9 @@ class _NoteFormState extends State<NoteForm> {
                       },
                       onChanged: (value) {
                         setState(() {
-                          objectNote.name = value!;
+                          controller.text = value!;
+                          print(objectNote.name);
+                          print(objectNote.urgency);
                         });
                       },
                     ),
@@ -108,7 +113,8 @@ class _NoteFormState extends State<NoteForm> {
                         setState(
                           () {
                             objectNote.urgency = val!;
-                            print(val);
+                            print(objectNote.name);
+                            print(objectNote.urgency);
                           },
                         );
                       },
@@ -118,6 +124,13 @@ class _NoteFormState extends State<NoteForm> {
                     ),
                     ElevatedButton(
                         onPressed: () {
+                          setState(() {
+                            NoteService.updateNote(key, objectNote);
+                          });
+                          print(objectNote.name);
+                          print(objectNote.urgency);
+                          Navigator.of(context).pop();
+                          /*
                           if (noteForm.currentState!.validate()) {
                             if (ModalRoute.of(context)!.settings.arguments ==
                                 null) {
@@ -132,6 +145,7 @@ class _NoteFormState extends State<NoteForm> {
                               Navigator.of(context).pop();
                             }
                           }
+                          */
                         },
                         child: Text(
                           note == null ? "Create note" : "Update note",
