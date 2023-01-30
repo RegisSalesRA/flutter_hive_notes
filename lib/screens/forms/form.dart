@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 
 import '../../config/colors.dart';
+import '../../data/note/note_service.dart';
 import '../../helpers/helpers.dart';
 import '../../models/note.dart';
 import '../../widgets/appbar_widget.dart';
@@ -18,21 +18,10 @@ class NoteForm extends StatefulWidget {
 
 class _NoteFormState extends State<NoteForm> {
   final noteForm = GlobalKey<FormState>();
-  String? name;
-  String? urgency;
-
-  void submitData() {
-    if (noteForm.currentState!.validate()) {
-      Box<Note> todoBox = Hive.box<Note>('notes');
-      todoBox.add(Note(
-          name: name!,
-          urgency: urgency!,
-          isComplete: false,
-          createdAt: DateTime.now()));
-
-      Navigator.pushNamed(context, '/');
-    }
-  }
+  TextEditingController controller = TextEditingController();
+  var note;
+  Note objectNote =
+      Note(name: "", urgency: "", isComplete: false, createdAt: DateTime.now());
 
   List<Map<String, dynamic>> noteCategory = [
     {"name": "Home"},
@@ -52,12 +41,18 @@ class _NoteFormState extends State<NoteForm> {
 
   @override
   Widget build(BuildContext context) {
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      setState(() {
+        note = ModalRoute.of(context)!.settings.arguments;
+        controller.text = note.name;
+      });
+    }
     return SafeArea(
       child: Scaffold(
         appBar: AppBarWidget(
           widgetAction: SizedBox(),
           automaticallyImplyLeading: true,
-          title: "Create note",
+          title: note == null ? "Create note" : "Update note",
         ),
         body: Center(
           child: Container(
@@ -73,7 +68,7 @@ class _NoteFormState extends State<NoteForm> {
                       height: 5,
                     ),
                     InputText(
-                      name: name,
+                      controller: controller,
                       validator: (v) {
                         if (v!.isEmpty) {
                           return "Field can not be empty";
@@ -82,7 +77,7 @@ class _NoteFormState extends State<NoteForm> {
                       },
                       onChanged: (value) {
                         setState(() {
-                          name = value;
+                          objectNote.name = value!;
                         });
                       },
                     ),
@@ -90,7 +85,7 @@ class _NoteFormState extends State<NoteForm> {
                       height: 15,
                     ),
                     DropDownWidget(
-                      hint: urgency == null
+                      hint: objectNote.urgency == null
                           ? Padding(
                               padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                               child: Text(
@@ -102,7 +97,7 @@ class _NoteFormState extends State<NoteForm> {
                           : Padding(
                               padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                               child: Text(
-                                urgency!,
+                                objectNote.urgency,
                                 style: TextStyle(color: ColorsTheme.textColor),
                               ),
                             ),
@@ -118,7 +113,7 @@ class _NoteFormState extends State<NoteForm> {
                       onChanged: (val) {
                         setState(
                           () {
-                            urgency = val;
+                            objectNote.urgency = val!;
                           },
                         );
                       },
@@ -127,9 +122,14 @@ class _NoteFormState extends State<NoteForm> {
                       height: 60,
                     ),
                     ElevatedButton(
-                        onPressed: submitData,
+                        onPressed: () {
+                          if (noteForm.currentState!.validate()) {
+                            NoteService.insertNote(objectNote);
+                          }
+                          Navigator.of(context).pop();
+                        },
                         child: Text(
-                          "Create note",
+                          note == null ? "Create note" : "Update note",
                           style: Theme.of(context).textTheme.headline4,
                         )),
                   ],

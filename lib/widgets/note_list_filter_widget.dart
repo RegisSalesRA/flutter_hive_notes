@@ -12,14 +12,14 @@ class NoteListFilterWidget extends StatefulWidget {
   final String search;
   final int filterValue;
   final TextEditingController textController;
-  final void Function(String) onChanged; 
+  final void Function(String) onChanged;
 
   const NoteListFilterWidget(
       {Key? key,
       required this.boxform,
       required this.search,
       required this.onChanged,
-      required this.textController, 
+      required this.textController,
       required this.filterValue})
       : super(key: key);
 
@@ -89,97 +89,102 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                         .toString()
                         .toLowerCase()
                         .contains(widget.search)) {
-                      return AnimatedFadedText(
-                        direction: 1,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Container(
-                              height: 75,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.transparent,
-                                      blurRadius: 2.0,
-                                      spreadRadius: 0.0,
-                                      offset: Offset(2.0, 2.0),
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  color: Colors.white,
-                                  border:
-                                      Border.all(color: Colors.grey.shade400)),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      if (note.urgency == "Home")
-                                        Container(
-                                          height: 10,
-                                          width: 10,
-                                          decoration: BoxDecoration(
-                                              color: Colors.green,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                        ),
-                                      if (note.urgency == "Job")
-                                        Container(
-                                          height: 10,
-                                          width: 10,
-                                          decoration: BoxDecoration(
-                                              color: Colors.orange,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                        ),
-                                      if (note.urgency == "Urgency")
-                                        Container(
-                                          height: 10,
-                                          width: 10,
-                                          decoration: BoxDecoration(
-                                              color: Colors.red,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                        ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            note.name,
-                                            style: note.isComplete != false
-                                                ? Theme.of(context)
-                                                    .textTheme
-                                                    .headline5
-                                                : Theme.of(context)
-                                                    .textTheme
-                                                    .headline2,
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(dateTimeFormat(note.createdAt)),
-                                        ],
+                      return GestureDetector(
+                        onTap: () => Navigator.pushNamed(context, '/form',
+                            arguments: note),
+                        child: AnimatedFadedText(
+                          direction: 1,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5),
+                            child: Container(
+                                height: 75,
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.transparent,
+                                        blurRadius: 2.0,
+                                        spreadRadius: 0.0,
+                                        offset: Offset(2.0, 2.0),
                                       ),
                                     ],
-                                  ),
-                                  IconButton(
-                                      onPressed: () async {
-                                        setState(() {
-                                          note.isComplete = !note.isComplete;
-                                        });
-                                      },
-                                      icon: note.isComplete != false
-                                          ? Icon(Icons.check_circle_outline)
-                                          : Icon(Icons.circle_outlined))
-                                ],
-                              )),
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        color: Colors.grey.shade400)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        if (note.urgency == "Home")
+                                          Container(
+                                            height: 10,
+                                            width: 10,
+                                            decoration: BoxDecoration(
+                                                color: Colors.green,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10))),
+                                          ),
+                                        if (note.urgency == "Job")
+                                          Container(
+                                            height: 10,
+                                            width: 10,
+                                            decoration: BoxDecoration(
+                                                color: Colors.orange,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10))),
+                                          ),
+                                        if (note.urgency == "Urgency")
+                                          Container(
+                                            height: 10,
+                                            width: 10,
+                                            decoration: BoxDecoration(
+                                                color: Colors.red,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10))),
+                                          ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              note.name,
+                                              style: note.isComplete != false
+                                                  ? Theme.of(context)
+                                                      .textTheme
+                                                      .headline5
+                                                  : Theme.of(context)
+                                                      .textTheme
+                                                      .headline2,
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                                dateTimeFormat(note.createdAt)),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    IconButton(
+                                        onPressed: () async {
+                                          setState(() {
+                                            note.isComplete = !note.isComplete;
+                                          });
+                                        },
+                                        icon: note.isComplete != false
+                                            ? Icon(Icons.check_circle_outline)
+                                            : Icon(Icons.circle_outlined))
+                                  ],
+                                )),
+                          ),
                         ),
                       );
                     } else {

@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
           resizeToAvoidBottomInset: false,
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              await Navigator.pushNamed(context, '/form');
+              await Navigator.pushNamed(context, '/form', arguments: null);
               FocusScope.of(context).unfocus();
             },
             child: Icon(
