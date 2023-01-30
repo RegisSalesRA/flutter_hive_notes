@@ -7,7 +7,8 @@ class DropDownWidget extends StatefulWidget {
   final List<DropdownMenuItem<String>>? dropdownItens;
   final Widget? hint;
 
-  DropDownWidget({Key? key, this.onChanged,required this.dropdownItens, this.hint})
+  DropDownWidget(
+      {Key? key, this.onChanged, required this.dropdownItens, this.hint})
       : super(key: key);
 
   @override
@@ -17,9 +18,8 @@ class DropDownWidget extends StatefulWidget {
 class _DropDownWidgetState extends State<DropDownWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: DropdownButtonHideUnderline(
-            child: ButtonTheme(
+    return DropdownButtonHideUnderline(
+        child: ButtonTheme(
       alignedDropdown: true,
       child: DropdownButtonFormField<String>(
           validator: (value) {
@@ -40,6 +40,6 @@ class _DropDownWidgetState extends State<DropDownWidget> {
           ),
           items: widget.dropdownItens,
           onChanged: widget.onChanged),
-    )));
+    ));
   }
 }

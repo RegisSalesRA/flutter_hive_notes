@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 
 import '../animation/animation.dart';
 import '../config/colors.dart';
+import '../data/note/note_service.dart';
 import '../helpers/helpers.dart';
 import '../models/note.dart';
 
@@ -166,13 +167,10 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                               urgency: note.urgency,
                                               isComplete: note.isComplete,
                                               createdAt: note.createdAt);
-                                          box.put(note.key, noteUpdate);
-                                          print(note.isComplete);
-                                          print(noteUpdate.isComplete);
+                                          NoteService.updateNoteChecked(
+                                              note.key, noteUpdate);
                                         },
-                                        child: note.isComplete != false
-                                            ? Icon(Icons.check_circle_outline)
-                                            : Icon(Icons.circle_outlined))
+                                        child: Icon(Icons.circle_outlined))
                                   ],
                                 )),
                           ),

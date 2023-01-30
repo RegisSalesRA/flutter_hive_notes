@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../config/colors.dart';
 import '../../data/note/note_service.dart';
 import '../../helpers/helpers.dart';
 import '../../models/note.dart';
@@ -26,26 +25,23 @@ class _NoteFormState extends State<NoteForm> {
   List<Map<String, dynamic>> noteCategory = [
     {"name": "Home"},
     {"name": "Job"},
-  ];
-  List<Map<String, dynamic>> noteCategory2 = [
     {"name": "Urgency"},
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      noteCategory.addAll(noteCategory2);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     if (ModalRoute.of(context)!.settings.arguments != null) {
       setState(() {
         note = ModalRoute.of(context)!.settings.arguments;
-        controller.text = note.name;
+        objectNote = Note(
+            name: note.name,
+            urgency: note.urgency,
+            isComplete: note.isComplete,
+            createdAt: note.createdAt);
       });
+      print(note.key);
+      print(objectNote);
+      print(objectNote.name);
     }
     return SafeArea(
       child: Scaffold(
@@ -69,8 +65,8 @@ class _NoteFormState extends State<NoteForm> {
                     ),
                     InputText(
                       controller: controller,
-                      validator: (v) {
-                        if (v!.isEmpty) {
+                      validator: (value) {
+                        if (value!.isEmpty) {
                           return "Field can not be empty";
                         }
                         return null;
@@ -85,28 +81,26 @@ class _NoteFormState extends State<NoteForm> {
                       height: 15,
                     ),
                     DropDownWidget(
-                      hint: objectNote.urgency == null
-                          ? Padding(
-                              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: Text(
-                                'Select option',
-                                style: TextStyle(
-                                    fontSize: 18, color: ColorsTheme.textColor),
-                              ),
-                            )
-                          : Padding(
-                              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: Text(
-                                objectNote.urgency,
-                                style: TextStyle(color: ColorsTheme.textColor),
-                              ),
-                            ),
+                      hint: SizedBox(
+                        width: 100,
+                        child: Text(
+                          note == null ? "Select Option" : note.urgency,
+                          style: TextStyle(
+                              fontSize: 18, color: Colors.grey.shade600),
+                        ),
+                      ),
                       dropdownItens: noteCategory.map(
                         (val) {
                           return DropdownMenuItem<String>(
                             value: val["name"],
-                            child:
-                                Container(width: 100, child: Text(val["name"])),
+                            child: SizedBox(
+                                width: 100,
+                                child: Text(
+                                  val["name"],
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.grey.shade600),
+                                )),
                           );
                         },
                       ).toList(),
@@ -114,6 +108,7 @@ class _NoteFormState extends State<NoteForm> {
                         setState(
                           () {
                             objectNote.urgency = val!;
+                            print(val);
                           },
                         );
                       },
@@ -124,9 +119,19 @@ class _NoteFormState extends State<NoteForm> {
                     ElevatedButton(
                         onPressed: () {
                           if (noteForm.currentState!.validate()) {
-                            NoteService.insertNote(objectNote);
+                            if (ModalRoute.of(context)!.settings.arguments ==
+                                null) {
+                              NoteService.insertNote(objectNote);
+                              print(ModalRoute.of(context)!.settings.arguments);
+                              Navigator.of(context).pop();
+                            }
+                            if ((ModalRoute.of(context)!.settings.arguments !=
+                                null)) {
+                              NoteService.updateNote(note.key, objectNote);
+                              print(ModalRoute.of(context)!.settings.arguments);
+                              Navigator.of(context).pop();
+                            }
                           }
-                          Navigator.of(context).pop();
                         },
                         child: Text(
                           note == null ? "Create note" : "Update note",
