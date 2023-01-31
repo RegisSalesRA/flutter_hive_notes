@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hive/routes/routes.dart';
 
-import '../screens/completed_notes_chart_screen.dart';
-import '../screens/completed_notes_screen.dart';
-import '../screens/home_screen.dart';
 import 'config.dart';
 
 class App extends StatelessWidget {
@@ -36,12 +34,8 @@ class App extends StatelessWidget {
             ColorScheme.fromSwatch(primarySwatch: ColorsTheme.themeColor)
                 .copyWith(secondary: ColorsTheme.primaryColor),
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => Home(),
-        '/complete': (context) => CompleteNoteScreen(),
-        '/chart': (context) => CompleteNotesChartScreen(),
-      },
+      initialRoute: Routes.initial,
+      routes: Routes.list,
     );
   }
 }

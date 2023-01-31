@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../config/config.dart';
+import '../data/notification/notification_service.dart';
 import '../models/note.dart';
 import '../widgets/widget.dart';
-import 'forms/note_form.dart';
+import 'note_form.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -18,6 +20,12 @@ class _HomeState extends State<Home> {
   TextEditingController controllerText = TextEditingController();
   int filterValue = 0;
   ValueListenable<Box<Note>> boxform = Hive.box<Note>('notes').listenable();
+
+  @override
+  void initState() {
+    Provider.of<NotificationService>(context, listen: false).loadSchedule();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

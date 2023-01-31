@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 import 'config/app_theme.dart';
+import 'data/notification/notification_service.dart';
 import 'models/note.dart';
 
 Future main() async {
@@ -16,5 +18,10 @@ Future main() async {
   // Aqui criamos a box e colocamos o nome onde vai ser inserido os dados
   await Hive.openBox<Note>('notes');
 
-  runApp(App());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => NotificationService()),
+    ],
+    child: App(),
+  ));
 }

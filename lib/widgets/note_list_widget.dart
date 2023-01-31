@@ -7,7 +7,7 @@ import '../config/colors.dart';
 import '../data/note/note_service.dart';
 import '../helpers/helpers.dart';
 import '../models/note.dart';
-import '../screens/forms/note_form.dart';
+import '../screens/note_form.dart';
 
 class NoteListWidget extends StatefulWidget {
   final ValueListenable<Box<Note>> boxform;
@@ -155,8 +155,12 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                                             FontWeight.bold,
                                                         color: Colors.green),
                                                   ),
-                                                Text(dateTimeFormat(
-                                                    note.createdAt))
+                                                //    Text(dateTimeFormat(
+                                                //      note.createdAt)),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(note.dateTime.toString())
                                               ],
                                             ),
                                           ],

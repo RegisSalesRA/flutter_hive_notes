@@ -6,9 +6,9 @@ TimeOfDay timeOfDayFormat(var value) {
   return timeOfDayObject;
 }
 
-RestorableDateTime dateTimeRestorableFormat(var value) {
-  RestorableDateTime dateTimeObject =
-      RestorableDateTime(DateTime(value.year, value.month, value.day));
+DateTime dateTimeRestorableFormat(var value) {
+  DateTime dateTimeObject =
+      DateTime(value.year, value.month, value.day);
   return dateTimeObject;
 }
 

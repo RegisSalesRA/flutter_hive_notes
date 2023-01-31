@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
-import '../../config/colors.dart';
-import '../../data/note/note_service.dart';
-import '../../helpers/helpers.dart';
-import '../../models/note.dart';
-import '../../widgets/appbar_widget.dart';
-import '../../widgets/dropdown_widget.dart';
-import '../../widgets/input_text.dart';
+import '../config/colors.dart';
+import '../data/note/note_service.dart';
+import '../data/notification/notification_service.dart';
+import '../helpers/helpers.dart';
+import '../models/note.dart';
+import '../widgets/appbar_widget.dart';
+import '../widgets/dropdown_widget.dart';
+import '../widgets/input_text.dart';
 
 class NoteForm extends StatefulWidget {
   final String? restorationId;
@@ -88,6 +90,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
       setState(() {
         _selectedDate.value = newSelectedDate;
       });
+      print(_selectedDate.value);
     }
   }
 
@@ -123,15 +126,15 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
       controllerName.text = widget.noteObject!.name;
       controllerCategory.text = widget.noteObject!.urgency;
       _timeOfDay = timeOfDayFormat(widget.noteObject!.dateTime);
-      _selectedDate = dateTimeRestorableFormat(widget.noteObject!.dateTime);
-      print(_timeOfDay);
-      print(_selectedDate);
+      // _selectedDate.value =
+      //   dateTimeRestorableFormat(widget.noteObject!.dateTime);
     }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<NotificationService>(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBarWidget(
@@ -211,7 +214,9 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text("Chose a date"),
+                            _selectedDate == null
+                                ? Text("Chose a date")
+                                : Text(_selectedDate.value.toString()),
                             IconButton(
                               onPressed: () {
                                 _restorableDatePickerRouteFuture.present();
@@ -226,7 +231,9 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Chose a hour"),
+                            _timeOfDay == null
+                                ? Text("Chose a hour")
+                                : Text(_timeOfDay.toString()),
                             IconButton(
                               onPressed: () {
                                 _showTimePicker();
@@ -241,7 +248,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                       height: 60,
                     ),
                     ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (noteFormKey.currentState!.validate()) {
                             if (widget.noteObject == null) {
                               Note objectNote = Note(
@@ -253,6 +260,13 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                       _selectedDate, _timeOfDay)),
                                   createdAt: DateTime.now());
                               NoteService.insertNote(objectNote);
+                              Provider.of<NotificationService>(context,
+                                      listen: false)
+                                  .loadSchedule();
+                              await Provider.of<NotificationService>(context,
+                                      listen: false)
+                                  .showNotification(
+                                      provider.listScheduleProvider);
                               Navigator.of(context).pop();
                             }
                             if ((widget.noteObject != null)) {

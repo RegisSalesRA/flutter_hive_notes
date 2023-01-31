@@ -6,7 +6,7 @@ import '../animation/animation.dart';
 import '../config/colors.dart';
 import '../helpers/helpers.dart';
 import '../models/note.dart';
-import '../screens/forms/note_form.dart';
+import '../screens/note_form.dart';
 
 class NoteListFilterWidget extends StatefulWidget {
   final ValueListenable<Box<Note>> boxform;
