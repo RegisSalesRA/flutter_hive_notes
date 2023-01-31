@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 import '../config/config.dart';
+import '../data/note/note_service.dart';
 import '../helpers/helpers.dart';
 import '../models/note.dart';
 
@@ -122,7 +123,7 @@ class CompleteNotesWidget extends StatelessWidget {
                       background: Container(color: Colors.transparent),
                       onDismissed: (direction) async {
                         if (direction == DismissDirection.endToStart) {
-                          await box.delete(note.key);
+                          NoteService.deleteNote(key);
                         }
                       },
                       secondaryBackground: Container(

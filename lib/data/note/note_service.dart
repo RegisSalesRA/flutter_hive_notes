@@ -19,5 +19,8 @@ class NoteService extends ChangeNotifier {
     await todoBox.put(key, noteObject);
   }
 
-  static void deleteNote(noteObject) {}
+  static void deleteNote(key) async {
+    Box<Note> todoBox = Hive.box<Note>('notes');
+    await todoBox.delete(key);
+  }
 }

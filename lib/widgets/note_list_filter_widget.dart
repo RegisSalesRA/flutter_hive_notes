@@ -91,15 +91,13 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                         .toLowerCase()
                         .contains(widget.search)) {
                       return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
+                        onTap: () async {
+                          await Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => NoteForm(
                                     noteObject: note,
-                                  )));
-                        
-                         FocusScope.of(context).requestFocus(FocusNode());
-                         
-                         },
+                                  ))); 
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
                         child: AnimatedFadedText(
                           direction: 1,
                           child: Padding(

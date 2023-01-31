@@ -78,12 +78,11 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                       return AnimatedFadedText(
                         direction: 1,
                         child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
+                          onTap: () async {
+                            await Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => NoteForm(
                                       noteObject: note,
-                                    )));
-
+                                    ))); 
                             FocusScope.of(context).requestFocus(FocusNode());
                           },
                           child: Padding(

@@ -1,11 +1,9 @@
-// ignore_for_file: deprecated_member_use
-
+ 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../screens/completed_notes_chart_screen.dart';
-import '../screens/completed_notes_screen.dart';
-import '../screens/forms/note_form.dart';
+import '../screens/completed_notes_screen.dart'; 
 import '../screens/home_screen.dart';
 import 'config.dart';
 
