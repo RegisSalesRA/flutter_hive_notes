@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ColorsTheme {
   static const MaterialColor themeColor = MaterialColor(
-    0xffa0aefc, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
+    0xffa0aefc,
     <int, Color>{
       50: Color(0xFF004999), //10%
       100: Color(0xFF004999), //20%

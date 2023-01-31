@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz;
+import '../../config/colors.dart';
 import '../../data/note/note_service.dart';
 import '../../helpers/helpers.dart';
 import '../../models/note.dart';
@@ -7,16 +11,21 @@ import '../../widgets/dropdown_widget.dart';
 import '../../widgets/input_text.dart';
 
 class NoteForm extends StatefulWidget {
+  final String? restorationId;
   final String? nameChange;
   final Note? noteObject;
 
-  NoteForm({Key? key, this.nameChange, required this.noteObject})
-      : super(key: key);
+  NoteForm({
+    Key? key,
+    this.nameChange,
+    required this.noteObject,
+    this.restorationId,
+  }) : super(key: key);
   @override
   _NoteFormState createState() => _NoteFormState();
 }
 
-class _NoteFormState extends State<NoteForm> {
+class _NoteFormState extends State<NoteForm> with RestorationMixin {
   final noteFormKey = GlobalKey<FormState>();
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCategory = TextEditingController();
@@ -26,8 +35,90 @@ class _NoteFormState extends State<NoteForm> {
     {"name": "Urgency"},
   ];
 
+  Future<void> _setupTimeZone() async {
+    tz.initializeTimeZones();
+    final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZoneName));
+  }
+
+  @override
+  String? get restorationId => widget.restorationId;
+
+  final RestorableDateTime _selectedDate = RestorableDateTime(
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
+  late final RestorableRouteFuture<DateTime?> _restorableDatePickerRouteFuture =
+      RestorableRouteFuture<DateTime?>(
+    onComplete: _selectDate,
+    onPresent: (NavigatorState navigator, Object? arguments) {
+      return navigator.restorablePush(
+        _datePickerRoute,
+        arguments: _selectedDate.value.millisecondsSinceEpoch,
+      );
+    },
+  );
+
+  static Route<DateTime> _datePickerRoute(
+    BuildContext context,
+    Object? arguments,
+  ) {
+    return DialogRoute<DateTime>(
+      context: context,
+      builder: (BuildContext context) {
+        return DatePickerDialog(
+          restorationId: 'date_picker_dialog',
+          initialEntryMode: DatePickerEntryMode.calendarOnly,
+          initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
+          firstDate: DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day),
+          lastDate: DateTime(DateTime.now().year + 1),
+        );
+      },
+    );
+  }
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    registerForRestoration(_selectedDate, 'selected_date');
+    registerForRestoration(
+        _restorableDatePickerRouteFuture, 'date_picker_route_future');
+  }
+
+  void _selectDate(DateTime? newSelectedDate) {
+    if (newSelectedDate != null) {
+      setState(() {
+        _selectedDate.value = newSelectedDate;
+      });
+    }
+  }
+
+  TimeOfDay _timeOfDay =
+      TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
+
+  void _showTimePicker() async {
+    var time = await showTimePicker(
+        context: context,
+        initialTime: _timeOfDay,
+        builder: (BuildContext context, child) {
+          return Theme(
+              data: ThemeData(
+                primaryColor: Theme.of(context).primaryColor,
+                colorScheme: ColorScheme.fromSwatch(
+                        primarySwatch: ColorsTheme.themeColor)
+                    .copyWith(secondary: Theme.of(context).primaryColor),
+              ),
+              child: child!);
+        });
+    if (time != null) {
+      setState(() {
+        _timeOfDay = time;
+      });
+      print(_timeOfDay);
+    }
+  }
+
   @override
   void initState() {
+    _setupTimeZone();
     if (widget.noteObject != null) {
       controllerName.text = widget.noteObject!.name;
       controllerCategory.text = widget.noteObject!.urgency;
@@ -37,15 +128,6 @@ class _NoteFormState extends State<NoteForm> {
 
   @override
   Widget build(BuildContext context) {
-    /*
-    if (ModalRoute.of(context)!.settings.arguments != null) {
-      note = ModalRoute.of(context)!.settings.arguments;
-      setState(() {
-        key = note.key;
-      });
-      widget.noteObject = NoteService.getNote(key);
-    }
-    */
     return SafeArea(
       child: Scaffold(
         appBar: AppBarWidget(
@@ -116,6 +198,40 @@ class _NoteFormState extends State<NoteForm> {
                         }
                         return null;
                       },
+                    ),
+                    SizedBox(
+                      height: 60,
+                    ),
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Chose a date"),
+                            IconButton(
+                              onPressed: () {
+                                _restorableDatePickerRouteFuture.present();
+                              },
+                              icon: Icon(Icons.dataset),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Chose a hour"),
+                            IconButton(
+                              onPressed: () {
+                                _showTimePicker();
+                              },
+                              icon: Icon(Icons.timer),
+                            )
+                          ],
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 60,
