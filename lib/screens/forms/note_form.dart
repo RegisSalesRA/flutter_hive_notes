@@ -44,7 +44,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
   @override
   String? get restorationId => widget.restorationId;
 
-  final RestorableDateTime _selectedDate = RestorableDateTime(
+  RestorableDateTime _selectedDate = RestorableDateTime(
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
   late final RestorableRouteFuture<DateTime?> _restorableDatePickerRouteFuture =
       RestorableRouteFuture<DateTime?>(
@@ -122,6 +122,10 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
     if (widget.noteObject != null) {
       controllerName.text = widget.noteObject!.name;
       controllerCategory.text = widget.noteObject!.urgency;
+      _timeOfDay = timeOfDayFormat(widget.noteObject!.dateTime);
+      _selectedDate = dateTimeRestorableFormat(widget.noteObject!.dateTime);
+      print(_timeOfDay);
+      print(_selectedDate);
     }
     super.initState();
   }
@@ -244,10 +248,10 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                   name: controllerName.text,
                                   urgency: controllerCategory.text,
                                   isComplete: false,
-                                  payload: '',
-                                  dateTime: DateTime.now(),
+                                  payload: '/schdule',
+                                  dateTime: DateTime.parse(dataFormaterInput(
+                                      _selectedDate, _timeOfDay)),
                                   createdAt: DateTime.now());
-
                               NoteService.insertNote(objectNote);
                               Navigator.of(context).pop();
                             }
@@ -256,7 +260,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                   name: controllerName.text,
                                   urgency: controllerCategory.text,
                                   isComplete: false,
-                                  payload: '',
+                                  payload: '/schdule',
                                   dateTime: DateTime.parse(dataFormaterInput(
                                       _selectedDate, _timeOfDay)),
                                   createdAt: widget.noteObject!.createdAt);

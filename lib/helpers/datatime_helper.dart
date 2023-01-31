@@ -1,7 +1,18 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
-dateTimeFormat(data) {
+TimeOfDay timeOfDayFormat(var value) {
+  TimeOfDay timeOfDayObject = TimeOfDay(hour: value.hour, minute: value.minute);
+  return timeOfDayObject;
+}
+
+RestorableDateTime dateTimeRestorableFormat(var value) {
+  RestorableDateTime dateTimeObject =
+      RestorableDateTime(DateTime(value.year, value.month, value.day));
+  return dateTimeObject;
+}
+
+String dateTimeFormat(data) {
   final formattedDate = DateFormat.yMMMd().format(data);
   return formattedDate;
 }
@@ -46,6 +57,6 @@ String secondsFormat(int second) {
   return formatedSsecond;
 }
 
-dataFormaterInput(RestorableDateTime dateTime, TimeOfDay clockTime) {
+String dataFormaterInput(RestorableDateTime dateTime, TimeOfDay clockTime) {
   return "${dateTime.value.year.toString()}-${monthFormat(dateTime.value.month)}-${dayFormat(dateTime.value.day)} ${minutesFormat(clockTime.hour)}:${secondsFormat(clockTime.minute)}";
 }

@@ -1,9 +1,8 @@
- 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../screens/completed_notes_chart_screen.dart';
-import '../screens/completed_notes_screen.dart'; 
+import '../screens/completed_notes_screen.dart';
 import '../screens/home_screen.dart';
 import 'config.dart';
 
@@ -12,7 +11,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsFlutterBinding.ensureInitialized();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
@@ -21,9 +19,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // PrimariColors from App css
-        primarySwatch: ColorsTheme.themeColor,
         primaryColor: Colors.white,
-        accentColor: ColorsTheme.primaryColor,
         backgroundColor: Colors.white,
         // Progress Indicator Css
         progressIndicatorTheme:
@@ -36,6 +32,9 @@ class App extends StatelessWidget {
         buttonTheme: buttonThemeDataConfig(),
         floatingActionButtonTheme: floatingActionButtonThemeData(),
         iconTheme: IconThemeData(color: ColorsTheme.primaryColor),
+        colorScheme:
+            ColorScheme.fromSwatch(primarySwatch: ColorsTheme.themeColor)
+                .copyWith(secondary: ColorsTheme.primaryColor),
       ),
       initialRoute: '/',
       routes: {
