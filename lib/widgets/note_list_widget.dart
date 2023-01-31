@@ -82,7 +82,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                             await Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => NoteForm(
                                       noteObject: note,
-                                    ))); 
+                                    )));
                             FocusScope.of(context).requestFocus(FocusNode());
                           },
                           child: Padding(
@@ -172,6 +172,8 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                               name: note.name,
                                               urgency: note.urgency,
                                               isComplete: note.isComplete,
+                                              payload: note.payload,
+                                              dateTime: note.dateTime,
                                               createdAt: note.createdAt);
                                           NoteService.updateNoteChecked(
                                               note.key, noteUpdate);

@@ -244,6 +244,8 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                   name: controllerName.text,
                                   urgency: controllerCategory.text,
                                   isComplete: false,
+                                  payload: '',
+                                  dateTime: DateTime.now(),
                                   createdAt: DateTime.now());
 
                               NoteService.insertNote(objectNote);
@@ -254,6 +256,9 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                   name: controllerName.text,
                                   urgency: controllerCategory.text,
                                   isComplete: false,
+                                  payload: '',
+                                  dateTime: DateTime.parse(dataFormaterInput(
+                                      _selectedDate, _timeOfDay)),
                                   createdAt: widget.noteObject!.createdAt);
                               NoteService.updateNote(
                                   widget.noteObject!.key, objectNote);

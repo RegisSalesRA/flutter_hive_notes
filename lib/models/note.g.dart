@@ -8,7 +8,7 @@ part of 'note.dart';
 
 class NoteAdapter extends TypeAdapter<Note> {
   @override
-  final int typeId = 1;
+  final int typeId = 0;
 
   @override
   Note read(BinaryReader reader) {
@@ -20,6 +20,8 @@ class NoteAdapter extends TypeAdapter<Note> {
       name: fields[1] as String,
       urgency: fields[2] as String,
       isComplete: fields[3] as bool,
+      payload: fields[5] as String,
+      dateTime: fields[6] as DateTime,
       createdAt: fields[4] as DateTime,
     );
   }
@@ -27,7 +29,7 @@ class NoteAdapter extends TypeAdapter<Note> {
   @override
   void write(BinaryWriter writer, Note obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(6)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
@@ -35,7 +37,11 @@ class NoteAdapter extends TypeAdapter<Note> {
       ..writeByte(3)
       ..write(obj.isComplete)
       ..writeByte(4)
-      ..write(obj.createdAt);
+      ..write(obj.createdAt)
+      ..writeByte(5)
+      ..write(obj.payload)
+      ..writeByte(6)
+      ..write(obj.dateTime);
   }
 
   @override
