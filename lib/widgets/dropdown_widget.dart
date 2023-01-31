@@ -4,11 +4,12 @@ import '../config/colors.dart';
 
 class DropDownWidget extends StatefulWidget {
   final void Function(String?)? onChanged;
+  final String? Function(String?)? validator;
   final List<DropdownMenuItem<String>>? dropdownItens;
   final Widget? hint;
 
   DropDownWidget(
-      {Key? key, this.onChanged, required this.dropdownItens, this.hint})
+      {Key? key, this.onChanged, required this.dropdownItens, this.hint, required this.validator})
       : super(key: key);
 
   @override
@@ -22,12 +23,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
         child: ButtonTheme(
       alignedDropdown: true,
       child: DropdownButtonFormField<String>(
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please select a information';
-            }
-            return null;
-          },
+          validator: widget.validator,
           isDense: true,
           hint: widget.hint,
           elevation: 16,
@@ -38,6 +34,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
           style: TextStyle(
             color: ColorsTheme.textInput,
           ),
+          onSaved: widget.onChanged,
           items: widget.dropdownItens,
           onChanged: widget.onChanged),
     ));

@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../config/config.dart';
 import '../models/note.dart';
 import '../widgets/widget.dart';
+import 'forms/note_form.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -25,8 +26,11 @@ class _HomeState extends State<Home> {
           resizeToAvoidBottomInset: false,
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              await Navigator.pushNamed(context, '/form', arguments: null);
-              FocusScope.of(context).unfocus();
+              await Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => NoteForm(
+                        noteObject: null,
+                      )));
+              FocusScope.of(context).requestFocus(FocusNode());
             },
             child: Icon(
               Icons.add,

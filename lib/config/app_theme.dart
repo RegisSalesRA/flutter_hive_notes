@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../screens/completed_notes_chart_screen.dart';
 import '../screens/completed_notes_screen.dart';
-import '../screens/forms/form.dart';
+import '../screens/forms/note_form.dart';
 import '../screens/home_screen.dart';
 import 'config.dart';
 
@@ -43,7 +43,6 @@ class App extends StatelessWidget {
       routes: {
         '/': (context) => Home(),
         '/complete': (context) => CompleteNoteScreen(),
-        '/form': (context) => NoteForm(),
         '/chart': (context) => CompleteNotesChartScreen(),
       },
     );

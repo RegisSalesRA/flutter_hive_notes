@@ -6,6 +6,7 @@ import '../animation/animation.dart';
 import '../config/colors.dart';
 import '../helpers/helpers.dart';
 import '../models/note.dart';
+import '../screens/forms/note_form.dart';
 
 class NoteListFilterWidget extends StatefulWidget {
   final ValueListenable<Box<Note>> boxform;
@@ -90,8 +91,15 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                         .toLowerCase()
                         .contains(widget.search)) {
                       return GestureDetector(
-                        onTap: () => Navigator.pushNamed(context, '/form',
-                            arguments: note),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => NoteForm(
+                                    noteObject: note,
+                                  )));
+                        
+                         FocusScope.of(context).requestFocus(FocusNode());
+                         
+                         },
                         child: AnimatedFadedText(
                           direction: 1,
                           child: Padding(

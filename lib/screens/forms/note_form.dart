@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../data/note/note_service.dart';
 import '../../helpers/helpers.dart';
 import '../../models/note.dart';
@@ -9,20 +8,18 @@ import '../../widgets/input_text.dart';
 
 class NoteForm extends StatefulWidget {
   final String? nameChange;
+  final Note? noteObject;
 
-  NoteForm({Key? key, this.nameChange}) : super(key: key);
+  NoteForm({Key? key, this.nameChange, required this.noteObject})
+      : super(key: key);
   @override
   _NoteFormState createState() => _NoteFormState();
 }
 
 class _NoteFormState extends State<NoteForm> {
-  final noteForm = GlobalKey<FormState>();
-  TextEditingController controller = TextEditingController();
-  var note;
-  var key;
-  Note objectNote =
-      Note(name: "", urgency: "", isComplete: false, createdAt: DateTime.now());
-
+  final noteFormKey = GlobalKey<FormState>();
+  TextEditingController controllerName = TextEditingController();
+  TextEditingController controllerCategory = TextEditingController();
   List<Map<String, dynamic>> noteCategory = [
     {"name": "Home"},
     {"name": "Job"},
@@ -30,28 +27,31 @@ class _NoteFormState extends State<NoteForm> {
   ];
 
   @override
-  Widget build(BuildContext context) {
-    if (ModalRoute.of(context)!.settings.arguments != null) {
-      setState(() {
-        note = ModalRoute.of(context)!.settings.arguments;
-        key = note.key;
-        objectNote = Note(
-            name: controller.text,
-            urgency: note.urgency,
-            isComplete: note.isComplete,
-            createdAt: note.createdAt);
-      });
-      print(note.key);
-      print(objectNote);
-      print(objectNote.name);
-      print(objectNote.urgency);
+  void initState() {
+    if (widget.noteObject != null) {
+      controllerName.text = widget.noteObject!.name;
+      controllerCategory.text = widget.noteObject!.urgency;
     }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    /*
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      note = ModalRoute.of(context)!.settings.arguments;
+      setState(() {
+        key = note.key;
+      });
+      widget.noteObject = NoteService.getNote(key);
+    }
+    */
     return SafeArea(
       child: Scaffold(
         appBar: AppBarWidget(
           widgetAction: SizedBox(),
           automaticallyImplyLeading: true,
-          title: note == null ? "Create note" : "Update note",
+          title: widget.noteObject == null ? "Create note" : "Update note",
         ),
         body: Center(
           child: Container(
@@ -59,7 +59,7 @@ class _NoteFormState extends State<NoteForm> {
             height: MediaQuerySize.heigthSize(context) * 0.95,
             padding: EdgeInsets.all(5),
             child: Form(
-                key: noteForm,
+                key: noteFormKey,
                 child: ListView(
                   shrinkWrap: true,
                   children: [
@@ -67,19 +67,15 @@ class _NoteFormState extends State<NoteForm> {
                       height: 5,
                     ),
                     InputText(
-                      controller: controller,
+                      controller: controllerName,
                       validator: (value) {
-                        if (value!.isEmpty) {
+                        if (controllerName.text.isEmpty) {
                           return "Field can not be empty";
                         }
                         return null;
                       },
                       onChanged: (value) {
-                        setState(() {
-                          controller.text = value!;
-                          print(objectNote.name);
-                          print(objectNote.urgency);
-                        });
+                        value = controllerName.text;
                       },
                     ),
                     SizedBox(
@@ -89,7 +85,9 @@ class _NoteFormState extends State<NoteForm> {
                       hint: SizedBox(
                         width: 100,
                         child: Text(
-                          note == null ? "Select Option" : note.urgency,
+                          widget.noteObject == null
+                              ? "Select Option"
+                              : widget.noteObject!.urgency,
                           style: TextStyle(
                               fontSize: 18, color: Colors.grey.shade600),
                         ),
@@ -109,14 +107,14 @@ class _NoteFormState extends State<NoteForm> {
                           );
                         },
                       ).toList(),
-                      onChanged: (val) {
-                        setState(
-                          () {
-                            objectNote.urgency = val!;
-                            print(objectNote.name);
-                            print(objectNote.urgency);
-                          },
-                        );
+                      onChanged: (value) {
+                        controllerCategory.text = value!;
+                      },
+                      validator: (value) {
+                        if (controllerCategory.text.isEmpty) {
+                          return "Field can not be empty";
+                        }
+                        return null;
                       },
                     ),
                     SizedBox(
@@ -124,31 +122,33 @@ class _NoteFormState extends State<NoteForm> {
                     ),
                     ElevatedButton(
                         onPressed: () {
-                          setState(() {
-                            NoteService.updateNote(key, objectNote);
-                          });
-                          print(objectNote.name);
-                          print(objectNote.urgency);
-                          Navigator.of(context).pop();
-                          /*
-                          if (noteForm.currentState!.validate()) {
-                            if (ModalRoute.of(context)!.settings.arguments ==
-                                null) {
+                          if (noteFormKey.currentState!.validate()) {
+                            if (widget.noteObject == null) {
+                              Note objectNote = Note(
+                                  name: controllerName.text,
+                                  urgency: controllerCategory.text,
+                                  isComplete: false,
+                                  createdAt: DateTime.now());
+
                               NoteService.insertNote(objectNote);
-                              print(ModalRoute.of(context)!.settings.arguments);
                               Navigator.of(context).pop();
                             }
-                            if ((ModalRoute.of(context)!.settings.arguments !=
-                                null)) {
-                              NoteService.updateNote(note.key, objectNote);
-                              print(ModalRoute.of(context)!.settings.arguments);
+                            if ((widget.noteObject != null)) {
+                              Note objectNote = Note(
+                                  name: controllerName.text,
+                                  urgency: controllerCategory.text,
+                                  isComplete: false,
+                                  createdAt: widget.noteObject!.createdAt);
+                              NoteService.updateNote(
+                                  widget.noteObject!.key, objectNote);
                               Navigator.of(context).pop();
                             }
                           }
-                          */
                         },
                         child: Text(
-                          note == null ? "Create note" : "Update note",
+                          widget.noteObject == null
+                              ? "Create note"
+                              : "Update note",
                           style: Theme.of(context).textTheme.headline4,
                         )),
                   ],
