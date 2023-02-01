@@ -75,116 +75,138 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                         .toString()
                         .toLowerCase()
                         .contains(widget.search)) {
-                      return AnimatedFadedText(
-                        direction: 1,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => NoteForm(
-                                      noteObject: note,
-                                    )));
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 5),
-                            child: Container(
-                                height: 75,
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.transparent,
-                                        blurRadius: 2.0,
-                                        spreadRadius: 0.0,
-                                        offset: Offset(2.0, 2.0),
+                      return Dismissible(
+                        direction: DismissDirection.startToEnd,
+                        key: Key(note.key.toString()),
+                        background: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Icon(Icons.update_sharp),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Complete",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
                                       ),
                                     ],
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    color: Colors.white,
-                                    border: Border.all(
-                                        color: Colors.grey.shade400)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              note.name,
-                                              style: note.isComplete != false
-                                                  ? Theme.of(context)
-                                                      .textTheme
-                                                      .headline5
-                                                  : Theme.of(context)
-                                                      .textTheme
-                                                      .headline2,
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              children: [
-                                                if (note.urgency == "Urgency")
-                                                  Text(
-                                                    "${note.urgency} - ",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.red),
-                                                  ),
-                                                if (note.urgency == "Job")
-                                                  Text(
-                                                    "${note.urgency} - ",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.orange),
-                                                  ),
-                                                if (note.urgency == "Home")
-                                                  Text(
-                                                    "${note.urgency} - ",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.green),
-                                                  ),
-                                                //    Text(dateTimeFormat(
-                                                //      note.createdAt)),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Text(note.dateTime.toString())
-                                              ],
-                                            ),
-                                          ],
+                                  ))),
+                        ),
+                        onDismissed: (direction) async {
+                          if (direction == DismissDirection.startToEnd) {
+                            setState(() {
+                              note.isComplete = !note.isComplete;
+                            });
+                            NoteService.updateNoteChecked(key, note);
+                          }
+                        },
+                        child: AnimatedFadedText(
+                          direction: 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => NoteForm(
+                                        noteObject: note,
+                                      )));
+                              FocusScope.of(context).requestFocus(FocusNode());
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              child: Container(
+                                  height: 75,
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.transparent,
+                                          blurRadius: 2.0,
+                                          spreadRadius: 0.0,
+                                          offset: Offset(2.0, 2.0),
                                         ),
                                       ],
-                                    ),
-                                    GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            note.isComplete = !note.isComplete;
-                                          });
-                                          Note noteUpdate = Note(
-                                              name: note.name,
-                                              urgency: note.urgency,
-                                              isComplete: note.isComplete,
-                                              payload: note.payload,
-                                              dateTime: note.dateTime,
-                                              createdAt: note.createdAt);
-                                          NoteService.updateNoteChecked(
-                                              note.key, noteUpdate);
-                                        },
-                                        child: Icon(Icons.circle_outlined))
-                                  ],
-                                )),
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: Colors.grey.shade400)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                note.name,
+                                                style: note.isComplete != false
+                                                    ? Theme.of(context)
+                                                        .textTheme
+                                                        .headline5
+                                                    : Theme.of(context)
+                                                        .textTheme
+                                                        .headline2,
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  if (note.urgency == "Urgency")
+                                                    Text(
+                                                      "${note.urgency} - ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.red),
+                                                    ),
+                                                  if (note.urgency == "Job")
+                                                    Text(
+                                                      "${note.urgency} - ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.orange),
+                                                    ),
+                                                  if (note.urgency == "Home")
+                                                    Text(
+                                                      "${note.urgency} - ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.green),
+                                                    ),
+                                                  //    Text(dateTimeFormat(
+                                                  //      note.createdAt)),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text(note.dateTime.toString())
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Icon(Icons.alarm_rounded)
+                                    ],
+                                  )),
+                            ),
                           ),
                         ),
                       );

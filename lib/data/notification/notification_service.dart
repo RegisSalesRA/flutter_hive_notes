@@ -28,9 +28,19 @@ class NotificationService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> insertNote(noteObject) async {
-    noteBox.add(noteObject); 
+  insertNote(noteObject) {
+    noteBox.add(noteObject);
+    print("No insert $listScheduleProvider");
     listScheduleProvider.add(noteObject);
+    notifyListeners();
+  }
+
+  updateNote(key, noteObject) async {
+    noteBox.put(key, noteObject);
+    //listScheduleProvider.clear();
+    final loadNotification = await loadNotificationHive();
+    listScheduleProvider = [...loadNotification];
+    print("No update $listScheduleProvider");
     notifyListeners();
   }
 
@@ -64,7 +74,7 @@ class NotificationService extends ChangeNotifier {
           .pushReplacementNamed(payload);
     }
   }
-  
+
   showNotification(List<Note> listScheduleProvider) async {
     androidDetails = const AndroidNotificationDetails(
         'lembretes_notifications', 'Lembretes',
@@ -79,9 +89,6 @@ class NotificationService extends ChangeNotifier {
 
     print("Não Filtrados ${listScheduleProvider.length}");
     print("Filtrados ${filtrados.length}");
-    print("Filtrados Teste hora sem Timezone ${DateTime.now()}");
-    print(
-        "Filtrados Teste hora Timezone ${tz.TZDateTime.from(DateTime.now(), tz.local)}");
     if (filtrados.isNotEmpty) {
       for (var schedule in filtrados.toList()) {
         localNotificationsPlugin.zonedSchedule(

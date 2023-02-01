@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
 import '../config/colors.dart';
-import '../data/note/note_service.dart';
 import '../data/notification/notification_service.dart';
 import '../helpers/helpers.dart';
 import '../models/note.dart';
@@ -279,8 +278,17 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                   dateTime: DateTime.parse(dataFormaterInput(
                                       _selectedDate, _timeOfDay)),
                                   createdAt: widget.noteObject!.createdAt);
-                              NoteService.updateNote(
-                                  widget.noteObject!.key, objectNote);
+
+                              Provider.of<NotificationService>(context,
+                                      listen: false)
+                                  .updateNote(
+                                      widget.noteObject!.key, objectNote);
+                              Provider.of<NotificationService>(context,
+                                      listen: false)
+                                  .showNotification(
+                                      provider.listScheduleProvider);
+                              //   NoteService.updateNote(
+                              //     widget.noteObject!.key, objectNote);
                               Navigator.of(context).pop();
                             }
                           }

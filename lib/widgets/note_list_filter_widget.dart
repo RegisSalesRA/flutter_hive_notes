@@ -4,9 +4,9 @@ import 'package:hive/hive.dart';
 
 import '../animation/animation.dart';
 import '../config/colors.dart';
+import '../data/note/note_service.dart';
 import '../helpers/helpers.dart';
 import '../models/note.dart';
-import '../routes/routes.dart';
 import '../screens/note_form.dart';
 
 class NoteListFilterWidget extends StatefulWidget {
@@ -40,19 +40,25 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
         if (widget.filterValue == 1) {
           keys = box.keys
               .cast<int>()
-              .where((key) => box.get(key)!.urgency == "Home")
+              .where((key) =>
+                  box.get(key)!.urgency == "Home" &&
+                  box.get(key)!.isComplete == false)
               .toList();
         }
         if (widget.filterValue == 2) {
           keys = box.keys
               .cast<int>()
-              .where((key) => box.get(key)!.urgency == "Job")
+              .where((key) =>
+                  box.get(key)!.urgency == "Job" &&
+                  box.get(key)!.isComplete == false)
               .toList();
         }
         if (widget.filterValue == 3) {
           keys = box.keys
               .cast<int>()
-              .where((key) => box.get(key)!.urgency == "Urgency")
+              .where((key) =>
+                  box.get(key)!.urgency == "Urgency" &&
+                  box.get(key)!.isComplete == false)
               .toList();
         }
         if (keys!.isNotEmpty) {
@@ -100,98 +106,140 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
 
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
-                        child: AnimatedFadedText(
-                          direction: 1,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 5),
-                            child: Container(
-                                height: 75,
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.transparent,
-                                        blurRadius: 2.0,
-                                        spreadRadius: 0.0,
-                                        offset: Offset(2.0, 2.0),
-                                      ),
-                                    ],
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    color: Colors.white,
-                                    border: Border.all(
-                                        color: Colors.grey.shade400)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
+                        child: Dismissible(
+                          direction: DismissDirection.startToEnd,
+                          key: Key(note.key.toString()),
+                          background: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
-                                        if (note.urgency == "Home")
-                                          Container(
-                                            height: 10,
-                                            width: 10,
-                                            decoration: BoxDecoration(
-                                                color: Colors.green,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                          ),
-                                        if (note.urgency == "Job")
-                                          Container(
-                                            height: 10,
-                                            width: 10,
-                                            decoration: BoxDecoration(
-                                                color: Colors.orange,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                          ),
-                                        if (note.urgency == "Urgency")
-                                          Container(
-                                            height: 10,
-                                            width: 10,
-                                            decoration: BoxDecoration(
-                                                color: Colors.red,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                          ),
+                                        Icon(Icons.update_sharp),
                                         SizedBox(
-                                          width: 10,
+                                          width: 5,
                                         ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              note.name,
-                                              style: note.isComplete != false
-                                                  ? Theme.of(context)
-                                                      .textTheme
-                                                      .headline5
-                                                  : Theme.of(context)
-                                                      .textTheme
-                                                      .headline2,
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                                dateTimeFormat(note.createdAt)),
-                                          ],
+                                        Text(
+                                          "Complete",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline6,
                                         ),
                                       ],
-                                    ),
-                                    IconButton(
-                                        onPressed: () async {
-                                          setState(() {
-                                            note.isComplete = !note.isComplete;
-                                          });
-                                        },
-                                        icon: note.isComplete != false
-                                            ? Icon(Icons.check_circle_outline)
-                                            : Icon(Icons.circle_outlined))
-                                  ],
-                                )),
+                                    ))),
+                          ),
+                          onDismissed: (direction) async {
+                            if (direction == DismissDirection.startToEnd) {
+                              setState(() {
+                                note.isComplete = !note.isComplete;
+                              });
+                              NoteService.updateNoteChecked(key, note);
+                            }
+                          },
+                          child: AnimatedFadedText(
+                            direction: 1,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              child: Container(
+                                  height: 75,
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.transparent,
+                                          blurRadius: 2.0,
+                                          spreadRadius: 0.0,
+                                          offset: Offset(2.0, 2.0),
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: Colors.grey.shade400)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          if (note.urgency == "Home")
+                                            Container(
+                                              height: 10,
+                                              width: 10,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.green,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(10))),
+                                            ),
+                                          if (note.urgency == "Job")
+                                            Container(
+                                              height: 10,
+                                              width: 10,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.orange,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(10))),
+                                            ),
+                                          if (note.urgency == "Urgency")
+                                            Container(
+                                              height: 10,
+                                              width: 10,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.red,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(10))),
+                                            ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                note.name,
+                                                style: note.isComplete != false
+                                                    ? Theme.of(context)
+                                                        .textTheme
+                                                        .headline5
+                                                    : Theme.of(context)
+                                                        .textTheme
+                                                        .headline2,
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(dateTimeFormat(
+                                                  note.createdAt)),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      IconButton(
+                                          onPressed: () async {
+                                            setState(() {
+                                              note.isComplete =
+                                                  !note.isComplete;
+                                            });
+                                          },
+                                          icon: note.isComplete != false
+                                              ? Icon(Icons.check_circle_outline)
+                                              : Icon(Icons.circle_outlined))
+                                    ],
+                                  )),
+                            ),
                           ),
                         ),
                       );
