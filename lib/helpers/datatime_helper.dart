@@ -1,5 +1,17 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:timezone/timezone.dart' as tz;
+
+Color timeDataExpired(dateTime) {
+  var color;
+  if (dateTime.isAfter(tz.TZDateTime.from(DateTime.now(), tz.local))) {
+    color = Color(0xFFa0aefc);
+  }
+  if (dateTime.isBefore(tz.TZDateTime.from(DateTime.now(), tz.local))) {
+    color = Colors.grey.shade300;
+  }
+  return color;
+}
 
 TimeOfDay timeOfDayFormat(var value) {
   TimeOfDay timeOfDayObject = TimeOfDay(hour: value.hour, minute: value.minute);
@@ -7,8 +19,7 @@ TimeOfDay timeOfDayFormat(var value) {
 }
 
 DateTime dateTimeRestorableFormat(var value) {
-  DateTime dateTimeObject =
-      DateTime(value.year, value.month, value.day);
+  DateTime dateTimeObject = DateTime(value.year, value.month, value.day);
   return dateTimeObject;
 }
 

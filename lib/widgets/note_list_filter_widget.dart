@@ -36,7 +36,6 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
       valueListenable: widget.boxform,
       builder: (context, Box<Note> box, _) {
         List<int>? keys;
-
         if (widget.filterValue == 1) {
           keys = box.keys
               .cast<int>()
@@ -227,16 +226,10 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                           ),
                                         ],
                                       ),
-                                      IconButton(
-                                          onPressed: () async {
-                                            setState(() {
-                                              note.isComplete =
-                                                  !note.isComplete;
-                                            });
-                                          },
-                                          icon: note.isComplete != false
-                                              ? Icon(Icons.check_circle_outline)
-                                              : Icon(Icons.circle_outlined))
+                                      Icon(
+                                        Icons.alarm_rounded,
+                                        color: timeDataExpired(note.dateTime),
+                                      )
                                     ],
                                   )),
                             ),

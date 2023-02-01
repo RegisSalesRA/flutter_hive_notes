@@ -75,51 +75,52 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                         .toString()
                         .toLowerCase()
                         .contains(widget.search)) {
-                      return Dismissible(
-                        direction: DismissDirection.startToEnd,
-                        key: Key(note.key.toString()),
-                        background: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                  padding: EdgeInsets.only(left: 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Icon(Icons.update_sharp),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        "Complete",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6,
-                                      ),
-                                    ],
-                                  ))),
-                        ),
-                        onDismissed: (direction) async {
-                          if (direction == DismissDirection.startToEnd) {
-                            setState(() {
-                              note.isComplete = !note.isComplete;
-                            });
-                            NoteService.updateNoteChecked(key, note);
-                          }
-                        },
-                        child: AnimatedFadedText(
-                          direction: 1,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => NoteForm(
-                                        noteObject: note,
-                                      )));
-                              FocusScope.of(context).requestFocus(FocusNode());
+                      return AnimatedFadedText(
+                        direction: 1,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => NoteForm(
+                                      noteObject: note,
+                                    )));
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          },
+                          child: Dismissible(
+                            direction: DismissDirection.startToEnd,
+                            key: Key(note.key.toString()),
+                            background: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Icon(Icons.update_sharp),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            "Complete",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6,
+                                          ),
+                                        ],
+                                      ))),
+                            ),
+                            onDismissed: (direction) async {
+                              if (direction == DismissDirection.startToEnd) {
+                                setState(() {
+                                  note.isComplete = !note.isComplete;
+                                });
+                                NoteService.updateNoteChecked(key, note);
+                              }
                             },
                             child: Padding(
                               padding: EdgeInsets.symmetric(vertical: 5),
@@ -191,8 +192,6 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                                               FontWeight.bold,
                                                           color: Colors.green),
                                                     ),
-                                                  //    Text(dateTimeFormat(
-                                                  //      note.createdAt)),
                                                   SizedBox(
                                                     width: 10,
                                                   ),
@@ -203,7 +202,10 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                           ),
                                         ],
                                       ),
-                                      Icon(Icons.alarm_rounded)
+                                      Icon(
+                                        Icons.alarm_rounded,
+                                        color: timeDataExpired(note.dateTime),
+                                      )
                                     ],
                                   )),
                             ),
