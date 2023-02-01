@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class InputText extends StatefulWidget { 
+class InputText extends StatefulWidget {
   final String? Function(String?)? validator;
   final TextEditingController controller;
   final Function(String?)? onChanged;
 
   InputText(
-      {Key? key, 
+      {Key? key,
       required this.validator,
       this.onChanged,
       required this.controller})

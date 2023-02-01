@@ -4,33 +4,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/note.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:hive/hive.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
-
 import '../../routes/routes.dart';
-import '../note/note_service.dart';
 
 class NotificationService extends ChangeNotifier {
   late FlutterLocalNotificationsPlugin localNotificationsPlugin;
   late AndroidNotificationDetails androidDetails;
 
-  setupNotifications() async {
-    await _setupTimeZone();
-    await _initalizeNotifications();
-  }
-
   List<Note> listScheduleProvider = [];
 
+  Box<Note> noteBox = Hive.box<Note>('notes');
+
   Future<List<Note>> loadNotificationHive() {
-    final List<Note> schdules = NoteService.loadNotes().values.toList().cast();
-    // print("Load loadNotificationHive $listScheduleProvider");
+    final List<Note> schdules = noteBox.values.toList().cast();
     return Future.value(schdules);
   }
 
   void loadSchedule() async {
     final loadNotification = await loadNotificationHive();
     listScheduleProvider = [...loadNotification];
-    // print("Load Schedule $listScheduleProvider");
+    notifyListeners();
+  }
+
+  Future<void> insertNote(noteObject) async {
+    noteBox.add(noteObject); 
+    listScheduleProvider.add(noteObject);
     notifyListeners();
   }
 
@@ -38,6 +38,11 @@ class NotificationService extends ChangeNotifier {
     localNotificationsPlugin = FlutterLocalNotificationsPlugin();
     loadNotificationHive().then((_) => loadSchedule());
     setupNotifications();
+  }
+
+  setupNotifications() async {
+    await _setupTimeZone();
+    await _initalizeNotifications();
   }
 
   Future<void> _setupTimeZone() async {
@@ -59,9 +64,7 @@ class NotificationService extends ChangeNotifier {
           .pushReplacementNamed(payload);
     }
   }
-
-  ///listScheduleProvider.where((element) => element.datTime.is )
-  ///DateTime (2023-01-31 15:03:00.000)
+  
   showNotification(List<Note> listScheduleProvider) async {
     androidDetails = const AndroidNotificationDetails(
         'lembretes_notifications', 'Lembretes',

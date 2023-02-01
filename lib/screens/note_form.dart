@@ -31,6 +31,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
   final noteFormKey = GlobalKey<FormState>();
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCategory = TextEditingController();
+  String name = "";
   List<Map<String, dynamic>> noteCategory = [
     {"name": "Home"},
     {"name": "Job"},
@@ -164,7 +165,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                         return null;
                       },
                       onChanged: (value) {
-                        value = controllerName.text;
+                        name = value!;
                       },
                     ),
                     SizedBox(
@@ -248,27 +249,27 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                       height: 60,
                     ),
                     ElevatedButton(
-                        onPressed: () async {
+                        onPressed: () {
                           if (noteFormKey.currentState!.validate()) {
                             if (widget.noteObject == null) {
                               Note objectNote = Note(
-                                  name: controllerName.text,
+                                  name: name,
                                   urgency: controllerCategory.text,
                                   isComplete: false,
                                   payload: '/schdule',
                                   dateTime: DateTime.parse(dataFormaterInput(
                                       _selectedDate, _timeOfDay)),
                                   createdAt: DateTime.now());
-                              NoteService.insertNote(objectNote);
                               Provider.of<NotificationService>(context,
                                       listen: false)
-                                  .loadSchedule();
-                              await Provider.of<NotificationService>(context,
+                                  .insertNote(objectNote);
+                              Provider.of<NotificationService>(context,
                                       listen: false)
                                   .showNotification(
                                       provider.listScheduleProvider);
                               Navigator.of(context).pop();
                             }
+
                             if ((widget.noteObject != null)) {
                               Note objectNote = Note(
                                   name: controllerName.text,

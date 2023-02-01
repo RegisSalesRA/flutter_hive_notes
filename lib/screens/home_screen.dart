@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../config/config.dart';
 import '../data/notification/notification_service.dart';
 import '../models/note.dart';
+import '../routes/routes.dart';
 import '../widgets/widget.dart';
 import 'note_form.dart';
 
@@ -33,11 +34,10 @@ class _HomeState extends State<Home> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              await Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => NoteForm(
-                        noteObject: null,
-                      )));
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => NoteForm(noteObject: null,)));
+              //Navigator.of(context).pushNamed(Routes.form);
               FocusScope.of(context).requestFocus(FocusNode());
             },
             child: Icon(

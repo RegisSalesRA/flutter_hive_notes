@@ -1,14 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 
 import '../../models/note.dart';
 
-class NoteService extends ChangeNotifier {
-  static Box<Note> loadNotes() {
-    Box<Note> todoBox = Hive.box<Note>('notes');
-    return todoBox;
-  }
-
+class NoteService {
   static void insertNote(noteObject) async {
     Box<Note> todoBox = Hive.box<Note>('notes');
     await todoBox.add(noteObject);
