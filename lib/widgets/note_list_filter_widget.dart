@@ -105,45 +105,45 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
 
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
-                        child: Dismissible(
-                          direction: DismissDirection.startToEnd,
-                          key: Key(note.key.toString()),
-                          background: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Icon(Icons.update_sharp),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          "Complete",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline6,
-                                        ),
-                                      ],
-                                    ))),
-                          ),
-                          onDismissed: (direction) async {
-                            if (direction == DismissDirection.startToEnd) {
-                              setState(() {
-                                note.isComplete = !note.isComplete;
-                              });
-                              NoteService.updateNoteChecked(key, note);
-                            }
-                          },
-                          child: AnimatedFadedText(
-                            direction: 1,
+                        child: AnimatedFadedText(
+                          direction: 1,
+                          child: Dismissible(
+                            direction: DismissDirection.startToEnd,
+                            key: Key(note.key.toString()),
+                            background: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Icon(Icons.update_sharp),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            "Complete",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6,
+                                          ),
+                                        ],
+                                      ))),
+                            ),
+                            onDismissed: (direction) async {
+                              if (direction == DismissDirection.startToEnd) {
+                                setState(() {
+                                  note.isComplete = !note.isComplete;
+                                });
+                                NoteService.updateNoteChecked(key, note);
+                              }
+                            },
                             child: Padding(
                               padding: EdgeInsets.symmetric(vertical: 5),
                               child: Container(
