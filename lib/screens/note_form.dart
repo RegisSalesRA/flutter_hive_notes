@@ -7,18 +7,21 @@ import '../config/colors.dart';
 import '../data/notification/notification_service.dart';
 import '../helpers/helpers.dart';
 import '../models/note.dart';
+import '../routes/routes.dart';
 import '../widgets/appbar_widget.dart';
 import '../widgets/dropdown_widget.dart';
 import '../widgets/input_text.dart';
 
 class NoteForm extends StatefulWidget {
   final String? restorationId;
+  final int? indexValue;
   final String? nameChange;
   final Note? noteObject;
 
   NoteForm({
     Key? key,
     this.nameChange,
+    required this.indexValue,
     required this.noteObject,
     this.restorationId,
   }) : super(key: key);
@@ -247,6 +250,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                     SizedBox(
                       height: 60,
                     ),
+                    Text(widget.indexValue.toString()),
                     ElevatedButton(
                         onPressed: () {
                           if (noteFormKey.currentState!.validate()) {
@@ -266,9 +270,8 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                       listen: false)
                                   .showNotification(
                                       provider.listScheduleProvider);
-                              Navigator.of(context).pop();
+                              Navigator.of(context).pushNamed(Routes.initial);
                             }
-
                             if ((widget.noteObject != null)) {
                               Note objectNote = Note(
                                   name: controllerName.text,
@@ -278,18 +281,15 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                   dateTime: DateTime.parse(dataFormaterInput(
                                       _selectedDate, _timeOfDay)),
                                   createdAt: widget.noteObject!.createdAt);
-
                               Provider.of<NotificationService>(context,
                                       listen: false)
-                                  .updateNote(
+                                  .updateNote(widget.indexValue,
                                       widget.noteObject!.key, objectNote);
                               Provider.of<NotificationService>(context,
                                       listen: false)
                                   .showNotification(
                                       provider.listScheduleProvider);
-                              //   NoteService.updateNote(
-                              //     widget.noteObject!.key, objectNote);
-                              Navigator.of(context).pop();
+                              Navigator.of(context).pushNamed(Routes.initial);
                             }
                           }
                         },

@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => NoteForm(noteObject: null,)));
+                  .push(MaterialPageRoute(builder: (context) => NoteForm(noteObject: null, indexValue: null,)));
               //Navigator.of(context).pushNamed(Routes.form);
               FocusScope.of(context).requestFocus(FocusNode());
             },

@@ -81,8 +81,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => NoteForm(
-                                      noteObject: note,
-                                    )));
+                                    noteObject: note, indexValue: index)));
                             FocusScope.of(context).requestFocus(FocusNode());
                           },
                           child: Dismissible(

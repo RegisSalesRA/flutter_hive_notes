@@ -101,8 +101,8 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => NoteForm(
                                     noteObject: note,
+                                    indexValue: index,
                                   )));
-
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
                         child: AnimatedFadedText(

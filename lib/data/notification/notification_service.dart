@@ -35,11 +35,15 @@ class NotificationService extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateNote(key, noteObject) async {
-    noteBox.put(key, noteObject);
-    //listScheduleProvider.clear();
-    final loadNotification = await loadNotificationHive();
-    listScheduleProvider = [...loadNotification];
+  updateNoteTest(key, noteObject) async {
+    await noteBox.put(key, noteObject);
+    notifyListeners();
+    return noteObject;
+  }
+
+  updateNote(index, key, noteObject) async {
+    final noteObjectUpdated = await updateNoteTest(key, noteObject);
+    listScheduleProvider[index] = noteObjectUpdated;
     print("No update $listScheduleProvider");
     notifyListeners();
   }
@@ -104,6 +108,7 @@ class NotificationService extends ChangeNotifier {
             uiLocalNotificationDateInterpretation:
                 UILocalNotificationDateInterpretation.absoluteTime);
       }
+      print("Cumprimento da lista de itens ${filtrados.length} ");
     }
   }
 
