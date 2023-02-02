@@ -28,6 +28,11 @@ String dateTimeFormat(data) {
   return formattedDate;
 }
 
+String hourTimeFormat(TimeOfDay value) {
+  String newValue = "${hoursFormat(value.hour)}:${minutesFormat(value.minute)}";
+  return newValue;
+}
+
 String monthFormat(int month) {
   late String formatedMonth;
   if (month < 10) {
@@ -46,6 +51,16 @@ String dayFormat(int day) {
     formatedDay = '$day';
   }
   return formatedDay;
+}
+
+String hoursFormat(int minute) {
+  late String formatedMinute;
+  if (minute < 10) {
+    formatedMinute = '0$minute';
+  } else {
+    formatedMinute = '$minute';
+  }
+  return formatedMinute;
 }
 
 String minutesFormat(int minute) {

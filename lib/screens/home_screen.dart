@@ -23,7 +23,8 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    Provider.of<NotificationService>(context, listen: false).setupNotifications();
+    Provider.of<NotificationService>(context, listen: false)
+        .setupNotifications();
     super.initState();
   }
 
@@ -37,7 +38,6 @@ class _HomeState extends State<Home> {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => NoteForm(
                         noteObject: null,
-                     
                       )));
 
               FocusScope.of(context).requestFocus(FocusNode());

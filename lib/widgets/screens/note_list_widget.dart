@@ -60,7 +60,6 @@ class _NoteListWidgetState extends State<NoteListWidget> {
             .cast<int>()
             .where((key) => box.get(key)!.isComplete == false)
             .toList();
-        print(_timer);
         if (keys!.isNotEmpty) {
           return Column(
             children: [

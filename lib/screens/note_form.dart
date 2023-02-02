@@ -27,6 +27,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCategory = TextEditingController();
   String name = "";
+  bool notificationSchedule = false;
   List<Map<String, dynamic>> noteCategory = [
     {"name": "Home"},
     {"name": "Job"},
@@ -114,7 +115,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
     if (widget.noteObject != null) {
       controllerName.text = widget.noteObject!.name;
       controllerCategory.text = widget.noteObject!.urgency;
-      _timeOfDay = timeOfDayFormat(widget.noteObject!.dateTime); 
+      _timeOfDay = timeOfDayFormat(widget.noteObject!.dateTime);
     }
     super.initState();
   }
@@ -193,16 +194,100 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                       },
                     ),
                     SizedBox(
-                      height: 60,
+                      height: 25,
                     ),
-                    Column(
-                      children: [
-                        Row(
+                    //Switch Button
+                    Center(
+                        child: Text(
+                      "Deseja agendar uma notificação?",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey.shade500,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      InkWell(
+                        onTap: () => setState(() {
+                          notificationSchedule = !notificationSchedule;
+                        }),
+                        child: Container(
+                            height: 50,
+                            width: 140,
+                            decoration: BoxDecoration(
+                                color: notificationSchedule == true
+                                    ? ColorsTheme.primaryColor
+                                    : Colors.grey.shade400,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    bottomLeft: Radius.circular(20))),
+                            child: Center(
+                                child: Text(
+                              "Sim",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ))),
+                      ),
+                      InkWell(
+                        onTap: () => setState(() {
+                          notificationSchedule = !notificationSchedule;
+                        }),
+                        child: Container(
+                            height: 50,
+                            width: 140,
+                            decoration: BoxDecoration(
+                                color: notificationSchedule == false
+                                    ? ColorsTheme.primaryColor
+                                    : Colors.grey.shade400,
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(20),
+                                    bottomRight: Radius.circular(20))),
+                            child: Center(
+                                child: Text(
+                              "Nao",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ))),
+                      ),
+                    ]),
+
+                    if (!notificationSchedule == false) ...{
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          border:
+                              Border.all(color: Colors.grey.shade200, width: 2),
+                        ),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _selectedDate == null
-                                ? Text("Chose a date")
-                                : Text(_selectedDate.value.toString()),
+                            if (_selectedDate == null)
+                              Padding(
+                                  padding: EdgeInsets.only(left: 15),
+                                  child: Text("Chose a date",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.grey.shade600)))
+                            else
+                              Padding(
+                                  padding: EdgeInsets.only(left: 15),
+                                  child: Text(
+                                      dateTimeFormat(_selectedDate.value),
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.grey.shade600))),
                             IconButton(
                               onPressed: () {
                                 _restorableDatePickerRouteFuture.present();
@@ -211,15 +296,38 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                             )
                           ],
                         ),
-                        const SizedBox(
-                          height: 25,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          border:
+                              Border.all(color: Colors.grey.shade200, width: 2),
                         ),
-                        Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _timeOfDay == null
-                                ? Text("Chose a hour")
-                                : Text(_timeOfDay.toString()),
+                            if (_timeOfDay == null)
+                              Padding(
+                                  padding: EdgeInsets.only(left: 15),
+                                  child: Text("Chose a hour",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.grey.shade600)))
+                            else
+                              Padding(
+                                padding: EdgeInsets.only(left: 15),
+                                child: Text(hourTimeFormat(_timeOfDay),
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.grey.shade600)),
+                              ),
                             IconButton(
                               onPressed: () {
                                 _showTimePicker();
@@ -228,8 +336,9 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                             )
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                    },
+
                     SizedBox(
                       height: 60,
                     ),
