@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 import '../animation/animation.dart';
 import '../config/colors.dart';
@@ -28,8 +31,26 @@ class NoteListWidget extends StatefulWidget {
 }
 
 List<int>? keys;
+final ValueNotifier<DateTime> dateTime =
+    ValueNotifier<DateTime>(DateTime.now());
+String formattedTime = DateFormat('kk:mm').format(DateTime.now());
+String hour = DateFormat('a').format(DateTime.now());
+late Timer _timer;
 
 class _NoteListWidgetState extends State<NoteListWidget> {
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(
+        const Duration(milliseconds: 500), (timer) => setState(() {}));
+  } 
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -39,6 +60,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
             .cast<int>()
             .where((key) => box.get(key)!.isComplete == false)
             .toList();
+        print(_timer);
         if (keys!.isNotEmpty) {
           return Column(
             children: [
@@ -81,7 +103,8 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => NoteForm(
-                                    noteObject: note, )));
+                                      noteObject: note,
+                                    )));
                             FocusScope.of(context).requestFocus(FocusNode());
                           },
                           child: Dismissible(
