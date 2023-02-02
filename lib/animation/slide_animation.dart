@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-class AnimatedFadedText extends StatefulWidget {
+class AnimatedSlideText extends StatefulWidget {
   final Widget child;
   final double direction;
 
-  const AnimatedFadedText({Key? key,required this.child,required this.direction})
+  const AnimatedSlideText({Key? key,required this.child,required this.direction})
       : super(key: key);
 
   @override
-  State<AnimatedFadedText> createState() => _AnimatedFadedTextState();
+  State<AnimatedSlideText> createState() => _AnimatedSlideTextState();
 }
 
-class _AnimatedFadedTextState extends State<AnimatedFadedText>
+class _AnimatedSlideTextState extends State<AnimatedSlideText>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
 

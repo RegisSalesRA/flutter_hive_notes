@@ -14,6 +14,8 @@ Future<void> setupTimeZone() async {
   tz.setLocalLocation(tz.getLocation(timeZoneName!));
 }
 
+
+
 Future main() async {
   // Voce precisa adicionar isso para que o flutter aceite voce rodar codigo antes do MyApp
   // O codigo do hive fica sendo chamado antes do Myapp

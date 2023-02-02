@@ -96,7 +96,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                         .toString()
                         .toLowerCase()
                         .contains(widget.search)) {
-                      return AnimatedFadedText(
+                      return AnimatedSlideText(
                         direction: 1,
                         child: GestureDetector(
                           onTap: () {

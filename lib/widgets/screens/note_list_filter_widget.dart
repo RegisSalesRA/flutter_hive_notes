@@ -104,7 +104,7 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                   )));
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
-                        child: AnimatedFadedText(
+                        child: AnimatedSlideText(
                           direction: 1,
                           child: Dismissible(
                             direction: DismissDirection.startToEnd,
