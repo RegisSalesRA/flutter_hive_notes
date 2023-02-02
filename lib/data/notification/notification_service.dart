@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/note.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:hive/hive.dart'; 
-import 'package:timezone/timezone.dart' as tz; 
+import 'package:hive/hive.dart';
+import 'package:timezone/timezone.dart' as tz;
 import '../../routes/routes.dart';
 
 class NotificationService extends ChangeNotifier {
@@ -18,7 +18,8 @@ class NotificationService extends ChangeNotifier {
 
   setupNotifications() async {
     await _initalizeNotifications();
-  } 
+  }
+
   _initalizeNotifications() async {
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
     await localNotificationsPlugin.initialize(
@@ -91,5 +92,6 @@ class NotificationService extends ChangeNotifier {
     if (details != null && details.didNotificationLaunchApp) {
       _onSelectNotification(details.payload);
     }
+    
   }
 }

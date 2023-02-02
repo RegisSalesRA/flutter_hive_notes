@@ -5,9 +5,7 @@ import '../data/notification/notification_service.dart';
 import '../helpers/helpers.dart';
 import '../models/note.dart';
 import '../routes/routes.dart';
-import '../widgets/appbar_widget.dart';
-import '../widgets/dropdown_widget.dart';
-import '../widgets/input_text.dart';
+import '../widgets/widget.dart';
 
 class NoteForm extends StatefulWidget {
   final String? restorationId;

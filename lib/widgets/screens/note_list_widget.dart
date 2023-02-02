@@ -1,65 +1,66 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
-import '../animation/animation.dart';
-import '../config/colors.dart';
-import '../data/note/note_service.dart';
-import '../helpers/helpers.dart';
-import '../models/note.dart';
-import '../screens/note_form.dart';
+import '../../animation/animation.dart';
+import '../../config/config.dart';
+import '../../data/note/note_service.dart';
+import '../../helpers/helpers.dart';
+import '../../models/note.dart';
+import '../../screens/note_form.dart';
 
-class NoteListFilterWidget extends StatefulWidget {
+class NoteListWidget extends StatefulWidget {
   final ValueListenable<Box<Note>> boxform;
   final String search;
-  final int filterValue;
   final TextEditingController textController;
   final void Function(String) onChanged;
 
-  const NoteListFilterWidget(
+  const NoteListWidget(
       {Key? key,
       required this.boxform,
       required this.search,
       required this.onChanged,
-      required this.textController,
-      required this.filterValue})
+      required this.textController})
       : super(key: key);
 
   @override
-  State<NoteListFilterWidget> createState() => _NoteListFilterWidgetState();
+  State<NoteListWidget> createState() => _NoteListWidgetState();
 }
 
-class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
+List<int>? keys;
+final ValueNotifier<DateTime> dateTime =
+    ValueNotifier<DateTime>(DateTime.now());
+String formattedTime = DateFormat('kk:mm').format(DateTime.now());
+String hour = DateFormat('a').format(DateTime.now());
+late Timer _timer;
+
+class _NoteListWidgetState extends State<NoteListWidget> {
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(
+        const Duration(milliseconds: 500), (timer) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.boxform,
       builder: (context, Box<Note> box, _) {
-        List<int>? keys;
-        if (widget.filterValue == 1) {
-          keys = box.keys
-              .cast<int>()
-              .where((key) =>
-                  box.get(key)!.urgency == "Home" &&
-                  box.get(key)!.isComplete == false)
-              .toList();
-        }
-        if (widget.filterValue == 2) {
-          keys = box.keys
-              .cast<int>()
-              .where((key) =>
-                  box.get(key)!.urgency == "Job" &&
-                  box.get(key)!.isComplete == false)
-              .toList();
-        }
-        if (widget.filterValue == 3) {
-          keys = box.keys
-              .cast<int>()
-              .where((key) =>
-                  box.get(key)!.urgency == "Urgency" &&
-                  box.get(key)!.isComplete == false)
-              .toList();
-        }
+        keys = box.keys
+            .cast<int>()
+            .where((key) => box.get(key)!.isComplete == false)
+            .toList();
+        print(_timer);
         if (keys!.isNotEmpty) {
           return Column(
             children: [
@@ -88,24 +89,24 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: keys.length,
+                  itemCount: keys!.length,
                   itemBuilder: (context, index) {
-                    final int? key = keys![index];
+                    final int key = keys![index];
                     Note? note = box.get(key);
                     if (note!.name
                         .toString()
                         .toLowerCase()
                         .contains(widget.search)) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => NoteForm(
-                                    noteObject: note,
-                                  )));
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: AnimatedFadedText(
-                          direction: 1,
+                      return AnimatedFadedText(
+                        direction: 1,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => NoteForm(
+                                      noteObject: note,
+                                    )));
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          },
                           child: Dismissible(
                             direction: DismissDirection.startToEnd,
                             key: Key(note.key.toString()),
@@ -166,40 +167,8 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          if (note.urgency == "Home")
-                                            Container(
-                                              height: 10,
-                                              width: 10,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.green,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10))),
-                                            ),
-                                          if (note.urgency == "Job")
-                                            Container(
-                                              height: 10,
-                                              width: 10,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.orange,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10))),
-                                            ),
-                                          if (note.urgency == "Urgency")
-                                            Container(
-                                              height: 10,
-                                              width: 10,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10))),
-                                            ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
                                           Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -219,8 +188,38 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              Text(dateTimeFormat(
-                                                  note.createdAt)),
+                                              Row(
+                                                children: [
+                                                  if (note.urgency == "Urgency")
+                                                    Text(
+                                                      "${note.urgency} - ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.red),
+                                                    ),
+                                                  if (note.urgency == "Job")
+                                                    Text(
+                                                      "${note.urgency} - ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.orange),
+                                                    ),
+                                                  if (note.urgency == "Home")
+                                                    Text(
+                                                      "${note.urgency} - ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.green),
+                                                    ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text(note.dateTime.toString())
+                                                ],
+                                              ),
                                             ],
                                           ),
                                         ],
@@ -228,7 +227,7 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                       Icon(
                                         Icons.alarm_rounded,
                                         color: timeDataExpired(note.dateTime),
-                                      )
+                                      ),
                                     ],
                                   )),
                             ),

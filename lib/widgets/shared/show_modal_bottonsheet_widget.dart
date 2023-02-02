@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../config/config.dart';
+import '../../config/config.dart';
 
 Future<void> showModalBottonSheetWidget(
     BuildContext context,

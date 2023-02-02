@@ -1,10 +1,14 @@
-export './appbar_widget.dart';
-export './checkbox_widget.dart';
-export './dropdown_widget.dart';
-export './input_text.dart';
-export 'note_list_widget.dart';
-export './complete_notes_widget.dart';
-export './note_list_filter_widget.dart';
-export './bottom_appbar_widget.dart';
-export './popup_menu_button_widget.dart';
-export './show_modal_bottonsheet_widget.dart';
+// Shared
+export './shared/appbar_widget.dart';
+export './shared/bottom_appbar_widget.dart';
+export './shared/checkbox_widget.dart';
+export './shared/dropdown_widget.dart';
+export './shared/input_text.dart';
+export './shared/popup_menu_button_widget.dart';
+export './shared/show_modal_bottonsheet_widget.dart';
+
+// Screens
+
+export './screens/complete_notes_widget.dart';
+export './screens/note_list_filter_widget.dart';
+export './screens/note_list_widget.dart';

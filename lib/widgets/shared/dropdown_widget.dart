@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../config/colors.dart';
+import '../../config/colors.dart';
 
 class DropDownWidget extends StatefulWidget {
   final void Function(String?)? onChanged;
