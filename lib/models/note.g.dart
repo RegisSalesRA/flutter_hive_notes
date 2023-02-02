@@ -17,6 +17,7 @@ class NoteAdapter extends TypeAdapter<Note> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Note(
+      id: fields[0] as int?,
       name: fields[1] as String,
       urgency: fields[2] as String,
       isComplete: fields[3] as bool,
@@ -29,7 +30,9 @@ class NoteAdapter extends TypeAdapter<Note> {
   @override
   void write(BinaryWriter writer, Note obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
+      ..writeByte(0)
+      ..write(obj.id)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)

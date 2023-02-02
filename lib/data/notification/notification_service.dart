@@ -1,70 +1,24 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/note.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
-import 'package:hive/hive.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:hive/hive.dart'; 
+import 'package:timezone/timezone.dart' as tz; 
 import '../../routes/routes.dart';
 
 class NotificationService extends ChangeNotifier {
   late FlutterLocalNotificationsPlugin localNotificationsPlugin;
   late AndroidNotificationDetails androidDetails;
 
-  List<Note> listScheduleProvider = [];
-
   Box<Note> noteBox = Hive.box<Note>('notes');
-
-  Future<List<Note>> loadNotificationHive() {
-    final List<Note> schdules = noteBox.values.toList().cast();
-    return Future.value(schdules);
-  }
-
-  void loadSchedule() async {
-    final loadNotification = await loadNotificationHive();
-    listScheduleProvider = [...loadNotification];
-    notifyListeners();
-  }
-
-  insertNote(noteObject) {
-    noteBox.add(noteObject);
-    print("No insert $listScheduleProvider");
-    listScheduleProvider.add(noteObject);
-    notifyListeners();
-  }
-
-  updateNoteTest(key, noteObject) async {
-    await noteBox.put(key, noteObject);
-    notifyListeners();
-    return noteObject;
-  }
-
-  updateNote(index, key, noteObject) async {
-    final noteObjectUpdated = await updateNoteTest(key, noteObject);
-    listScheduleProvider[index] = noteObjectUpdated;
-    print("No update $listScheduleProvider");
-    notifyListeners();
-  }
 
   NotificationService() {
     localNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    loadNotificationHive().then((_) => loadSchedule());
     setupNotifications();
   }
 
   setupNotifications() async {
-    await _setupTimeZone();
     await _initalizeNotifications();
-  }
-
-  Future<void> _setupTimeZone() async {
-    tz.initializeTimeZones();
-    final String? timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(timeZoneName!));
-  }
-
+  } 
   _initalizeNotifications() async {
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
     await localNotificationsPlugin.initialize(
@@ -79,36 +33,55 @@ class NotificationService extends ChangeNotifier {
     }
   }
 
-  showNotification(List<Note> listScheduleProvider) async {
+  insertNote(noteObject) {
+    noteBox.add(noteObject);
+    showNotification(noteObject);
+  }
+
+  updateNote(key, noteObject) async {
+    await noteBox.put(key, noteObject);
+    await removeScheduledAlarm(noteObject);
+    await showNotification(noteObject);
+  }
+
+  showNotification(schedule) {
     androidDetails = const AndroidNotificationDetails(
         'lembretes_notifications', 'Lembretes',
         channelDescription: "Este canal é para estudos de lembretes",
-        importance: Importance.high,
+        importance: Importance.max,
         priority: Priority.max,
         enableLights: true,
         enableVibration: true);
 
-    Iterable<Note> filtrados = listScheduleProvider.where((Note element) =>
-        element.dateTime.isAfter(tz.TZDateTime.from(DateTime.now(), tz.local)));
+    if (schedule.dateTime
+        .isAfter(tz.TZDateTime.from(DateTime.now(), tz.local))) {
+      localNotificationsPlugin.zonedSchedule(
+          schedule.id,
+          schedule.name,
+          schedule.urgency,
+          tz.TZDateTime.from(schedule.dateTime, tz.local),
+          NotificationDetails(
+            android: androidDetails,
+          ),
+          payload: schedule.payload,
+          androidAllowWhileIdle: true,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.absoluteTime);
+    }
+  }
 
-    print("Não Filtrados ${listScheduleProvider.length}");
-    print("Filtrados ${filtrados.length}");
-    if (filtrados.isNotEmpty) {
-      for (var schedule in filtrados.toList()) {
-        localNotificationsPlugin.zonedSchedule(
-            Random.secure().nextInt(10000 - 1000) + 1000,
-            schedule.name,
-            schedule.urgency,
-            tz.TZDateTime.from(schedule.dateTime, tz.local),
-            NotificationDetails(
-              android: androidDetails,
-            ),
-            payload: schedule.payload,
-            androidAllowWhileIdle: true,
-            uiLocalNotificationDateInterpretation:
-                UILocalNotificationDateInterpretation.absoluteTime);
-      }
-      print("Cumprimento da lista de itens ${filtrados.length} ");
+  Future<void> removeScheduledAlarm(var schedule) async {
+    try {
+      final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+          FlutterLocalNotificationsPlugin();
+
+      final List<PendingNotificationRequest> pendingNotificationRequests =
+          await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+
+      await flutterLocalNotificationsPlugin.cancel(schedule.id);
+      print("Sucesso ${schedule.dateTime}");
+    } catch (e) {
+      print("Erro ${schedule.dateTime}");
     }
   }
 

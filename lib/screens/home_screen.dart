@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../config/config.dart';
 import '../data/notification/notification_service.dart';
 import '../models/note.dart';
-import '../routes/routes.dart';
 import '../widgets/widget.dart';
 import 'note_form.dart';
 
@@ -24,7 +23,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    Provider.of<NotificationService>(context, listen: false).loadSchedule();
+    Provider.of<NotificationService>(context, listen: false).setupNotifications();
     super.initState();
   }
 
@@ -35,9 +34,12 @@ class _HomeState extends State<Home> {
           resizeToAvoidBottomInset: false,
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => NoteForm(noteObject: null, indexValue: null,)));
-              //Navigator.of(context).pushNamed(Routes.form);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => NoteForm(
+                        noteObject: null,
+                     
+                      )));
+
               FocusScope.of(context).requestFocus(FocusNode());
             },
             child: Icon(

@@ -1,8 +1,13 @@
+import 'dart:math';
+
 import 'package:hive/hive.dart';
 part 'note.g.dart';
 
 @HiveType(typeId: 0)
 class Note extends HiveObject {
+  @HiveField(0)
+  late int id;
+
   @HiveField(1)
   String name;
 
@@ -22,10 +27,13 @@ class Note extends HiveObject {
   DateTime dateTime;
 
   Note(
-      {required this.name,
+      {int? id,
+      required this.name,
       required this.urgency,
       required this.isComplete,
       required this.payload,
       required this.dateTime,
-      required this.createdAt});
+      required this.createdAt}) {
+    this.id = id ?? Random.secure().nextInt(10000 - 1000) + 1000;
+  }
 }

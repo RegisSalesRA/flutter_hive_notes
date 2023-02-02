@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest_all.dart' as tz;
 import '../config/colors.dart';
 import '../data/notification/notification_service.dart';
 import '../helpers/helpers.dart';
@@ -14,14 +11,12 @@ import '../widgets/input_text.dart';
 
 class NoteForm extends StatefulWidget {
   final String? restorationId;
-  final int? indexValue;
   final String? nameChange;
   final Note? noteObject;
 
   NoteForm({
     Key? key,
     this.nameChange,
-    required this.indexValue,
     required this.noteObject,
     this.restorationId,
   }) : super(key: key);
@@ -39,12 +34,6 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
     {"name": "Job"},
     {"name": "Urgency"},
   ];
-
-  Future<void> _setupTimeZone() async {
-    tz.initializeTimeZones();
-    final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(timeZoneName));
-  }
 
   @override
   String? get restorationId => widget.restorationId;
@@ -124,20 +113,16 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
 
   @override
   void initState() {
-    _setupTimeZone();
     if (widget.noteObject != null) {
       controllerName.text = widget.noteObject!.name;
       controllerCategory.text = widget.noteObject!.urgency;
-      _timeOfDay = timeOfDayFormat(widget.noteObject!.dateTime);
-      // _selectedDate.value =
-      //   dateTimeRestorableFormat(widget.noteObject!.dateTime);
+      _timeOfDay = timeOfDayFormat(widget.noteObject!.dateTime); 
     }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<NotificationService>(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBarWidget(
@@ -250,7 +235,6 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                     SizedBox(
                       height: 60,
                     ),
-                    Text(widget.indexValue.toString()),
                     ElevatedButton(
                         onPressed: () {
                           if (noteFormKey.currentState!.validate()) {
@@ -266,10 +250,8 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                               Provider.of<NotificationService>(context,
                                       listen: false)
                                   .insertNote(objectNote);
-                              Provider.of<NotificationService>(context,
-                                      listen: false)
-                                  .showNotification(
-                                      provider.listScheduleProvider);
+
+                              print("aqui oh");
                               Navigator.of(context).pushNamed(Routes.initial);
                             }
                             if ((widget.noteObject != null)) {
@@ -283,12 +265,8 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                   createdAt: widget.noteObject!.createdAt);
                               Provider.of<NotificationService>(context,
                                       listen: false)
-                                  .updateNote(widget.indexValue,
+                                  .updateNote(
                                       widget.noteObject!.key, objectNote);
-                              Provider.of<NotificationService>(context,
-                                      listen: false)
-                                  .showNotification(
-                                      provider.listScheduleProvider);
                               Navigator.of(context).pushNamed(Routes.initial);
                             }
                           }
