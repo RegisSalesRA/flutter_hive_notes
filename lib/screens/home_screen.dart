@@ -1,10 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:provider/provider.dart';
 
 import '../config/config.dart';
-import '../data/notification/notification_service.dart';
 import '../models/note.dart';
 import '../widgets/widget.dart';
 import 'note_form.dart';
@@ -16,6 +16,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var selectedItem = '';
+  late Timer _timer;
   String search = "";
   TextEditingController controllerText = TextEditingController();
   int filterValue = 0;
@@ -23,9 +24,16 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    Provider.of<NotificationService>(context, listen: false)
-        .setupNotifications();
+    _timer =
+        Timer.periodic(const Duration(seconds: 1), (timer) => setState(() {}));
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override

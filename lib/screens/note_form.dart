@@ -25,7 +25,7 @@ class NoteForm extends StatefulWidget {
 }
 
 class _NoteFormState extends State<NoteForm> with RestorationMixin {
-  late Timer _timer;
+
   final noteFormKey = GlobalKey<FormState>();
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCategory = TextEditingController();
@@ -114,9 +114,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
   }
 
   @override
-  void initState() {
-    _timer = Timer.periodic(
-        const Duration(milliseconds: 500), (timer) => setState(() {}));
+  void initState() { 
     if (widget.noteObject != null) {
       controllerName.text = widget.noteObject!.name;
       controllerCategory.text = widget.noteObject!.urgency;
@@ -125,11 +123,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {
