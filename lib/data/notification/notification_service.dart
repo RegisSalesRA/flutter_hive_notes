@@ -7,9 +7,7 @@ import '../../routes/routes.dart';
 
 class NotificationService extends ChangeNotifier {
   late FlutterLocalNotificationsPlugin localNotificationsPlugin;
-  late AndroidNotificationDetails androidDetails;
-
-  Box<Note> noteBox = Hive.box<Note>('notes');
+  late AndroidNotificationDetails androidDetails; 
 
   NotificationService() {
     localNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -28,11 +26,26 @@ class NotificationService extends ChangeNotifier {
   }
 
   _onSelectNotification(String? payload) {
+    print("On selectNotification $payload");
     if (payload != null && payload.isNotEmpty) {
       Navigator.of(Routes.navigatorKey!.currentContext!)
           .pushReplacementNamed(payload);
     }
   }
+
+   checkForNotifications() async {
+    final details =
+        await localNotificationsPlugin.getNotificationAppLaunchDetails();
+    if (details != null && details.didNotificationLaunchApp) {
+      _onSelectNotification(details.payload);
+    }
+    print(details);
+  }
+ 
+
+ // Service
+  Box<Note> noteBox = Hive.box<Note>('notes');
+
 
   insertNote(noteObject) {
     noteBox.add(noteObject);
@@ -53,7 +66,7 @@ class NotificationService extends ChangeNotifier {
         priority: Priority.max,
         enableLights: true,
         enableVibration: true);
-
+    print(schedule.payload);
     if (schedule.dateTime
         .isAfter(tz.TZDateTime.from(DateTime.now(), tz.local))) {
       localNotificationsPlugin.zonedSchedule(
@@ -76,22 +89,10 @@ class NotificationService extends ChangeNotifier {
       final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
           FlutterLocalNotificationsPlugin();
 
-      final List<PendingNotificationRequest> pendingNotificationRequests =
-          await flutterLocalNotificationsPlugin.pendingNotificationRequests();
-
       await flutterLocalNotificationsPlugin.cancel(schedule.id);
       print("Sucesso ${schedule.dateTime}");
     } catch (e) {
       print("Erro ${schedule.dateTime}");
     }
-  }
-
-  checkForNotifications() async {
-    final details =
-        await localNotificationsPlugin.getNotificationAppLaunchDetails();
-    if (details != null && details.didNotificationLaunchApp) {
-      _onSelectNotification(details.payload);
-    }
-    
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../config/colors.dart';
@@ -23,6 +25,7 @@ class NoteForm extends StatefulWidget {
 }
 
 class _NoteFormState extends State<NoteForm> with RestorationMixin {
+  late Timer _timer;
   final noteFormKey = GlobalKey<FormState>();
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCategory = TextEditingController();
@@ -112,12 +115,20 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
 
   @override
   void initState() {
+    _timer = Timer.periodic(
+        const Duration(milliseconds: 500), (timer) => setState(() {}));
     if (widget.noteObject != null) {
       controllerName.text = widget.noteObject!.name;
       controllerCategory.text = widget.noteObject!.urgency;
       _timeOfDay = timeOfDayFormat(widget.noteObject!.dateTime);
     }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -350,9 +361,9 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                   name: name,
                                   urgency: controllerCategory.text,
                                   isComplete: false,
-                                  payload: '/schdule',
                                   dateTime: DateTime.parse(dataFormaterInput(
                                       _selectedDate, _timeOfDay)),
+                                  payload: '/notificacao',
                                   createdAt: DateTime.now());
                               Provider.of<NotificationService>(context,
                                       listen: false)
@@ -366,9 +377,9 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                   name: controllerName.text,
                                   urgency: controllerCategory.text,
                                   isComplete: false,
-                                  payload: '/schdule',
                                   dateTime: DateTime.parse(dataFormaterInput(
                                       _selectedDate, _timeOfDay)),
+                                  payload: '/notificacao',
                                   createdAt: widget.noteObject!.createdAt);
                               Provider.of<NotificationService>(context,
                                       listen: false)

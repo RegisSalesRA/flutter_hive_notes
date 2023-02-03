@@ -35,21 +35,9 @@ final ValueNotifier<DateTime> dateTime =
     ValueNotifier<DateTime>(DateTime.now());
 String formattedTime = DateFormat('kk:mm').format(DateTime.now());
 String hour = DateFormat('a').format(DateTime.now());
-late Timer _timer;
 
 class _NoteListWidgetState extends State<NoteListWidget> {
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer.periodic(
-        const Duration(milliseconds: 500), (timer) => setState(() {}));
-  }
 
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
