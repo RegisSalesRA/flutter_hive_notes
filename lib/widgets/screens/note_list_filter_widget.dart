@@ -7,7 +7,7 @@ import '../../config/config.dart';
 import '../../services/note_hive/note_hive_service.dart';
 import '../../helpers/helpers.dart';
 import '../../models/note.dart';
-import '../../screens/note_form.dart'; 
+import '../../screens/note_form.dart';
 
 class NoteListFilterWidget extends StatefulWidget {
   final ValueListenable<Box<Note>> boxform;
@@ -36,6 +36,7 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
       valueListenable: widget.boxform,
       builder: (context, Box<Note> box, _) {
         List<int>? keys;
+        List<int>? keysSort;
         if (widget.filterValue == 1) {
           keys = box.keys
               .cast<int>()
@@ -43,6 +44,7 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                   box.get(key)!.urgency == "Home" &&
                   box.get(key)!.isComplete == false)
               .toList();
+          List<int> keysSort = keys.reversed.toList();
         }
         if (widget.filterValue == 2) {
           keys = box.keys
@@ -51,6 +53,7 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                   box.get(key)!.urgency == "Job" &&
                   box.get(key)!.isComplete == false)
               .toList();
+          List<int> keysSort = keys.reversed.toList();
         }
         if (widget.filterValue == 3) {
           keys = box.keys
@@ -59,6 +62,7 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                   box.get(key)!.urgency == "Urgency" &&
                   box.get(key)!.isComplete == false)
               .toList();
+          List<int> keysSort = keys.reversed.toList();
         }
         if (keys!.isNotEmpty) {
           return Column(
@@ -88,9 +92,9 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: keys.length,
+                  itemCount: keysSort!.length,
                   itemBuilder: (context, index) {
-                    final int? key = keys![index];
+                    final int? key = keysSort[index];
                     Note? note = box.get(key);
                     if (note!.name
                         .toString()
@@ -219,8 +223,9 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              Text(dateTimeFormat(
-                                                  note.createdAt)),
+                                              Text(dateTimeFormat(box.values
+                                                  .toList()[index]
+                                                  .createdAt)),
                                             ],
                                           ),
                                         ],

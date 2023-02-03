@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -31,24 +29,26 @@ class NoteListWidget extends StatefulWidget {
 }
 
 List<int>? keys;
+List<int>? keysSort;
+
 final ValueNotifier<DateTime> dateTime =
     ValueNotifier<DateTime>(DateTime.now());
 String formattedTime = DateFormat('kk:mm').format(DateTime.now());
 String hour = DateFormat('a').format(DateTime.now());
 
 class _NoteListWidgetState extends State<NoteListWidget> {
-
-
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.boxform,
       builder: (context, Box<Note> box, _) {
-        keys = box.keys
+        List<int> keys = box.keys
             .cast<int>()
             .where((key) => box.get(key)!.isComplete == false)
             .toList();
-        if (keys!.isNotEmpty) {
+        List<int> keysSort = keys.reversed.toList();
+
+        if (keys.isNotEmpty) {
           return Column(
             children: [
               Padding(
@@ -76,9 +76,9 @@ class _NoteListWidgetState extends State<NoteListWidget> {
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: keys!.length,
+                  itemCount: keysSort.length,
                   itemBuilder: (context, index) {
-                    final int key = keys![index];
+                    int key = keysSort[index];
                     Note? note = box.get(key);
                     if (note!.name
                         .toString()
@@ -204,7 +204,9 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                                   SizedBox(
                                                     width: 10,
                                                   ),
-                                                  Text(note.dateTime.toString())
+                                                  Text(dateTimeFormat(box.values
+                                                      .toList()[index]
+                                                      .createdAt)),
                                                 ],
                                               ),
                                             ],

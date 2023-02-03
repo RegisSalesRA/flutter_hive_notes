@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     _timer =
-        Timer.periodic(const Duration(seconds: 1), (timer) => setState(() {}));
+        Timer.periodic(const Duration(seconds: 5), (timer) => setState(() {}));
     super.initState();
   }
 
