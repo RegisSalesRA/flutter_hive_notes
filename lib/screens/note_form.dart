@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../config/colors.dart';
-import '../data/notification/notification_service.dart';
+import '../services/notification/notification_service.dart';
 import '../helpers/helpers.dart';
 import '../models/note.dart';
 import '../routes/routes.dart';
@@ -361,9 +361,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                   createdAt: DateTime.now());
                               Provider.of<NotificationService>(context,
                                       listen: false)
-                                  .insertNote(objectNote);
-
-                              print("aqui oh");
+                                  .insertNote(objectNote); 
                               Navigator.of(context).pushNamed(Routes.initial);
                             }
                             if ((widget.noteObject != null)) {

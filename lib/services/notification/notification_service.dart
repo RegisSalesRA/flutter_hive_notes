@@ -5,7 +5,6 @@ import 'package:hive/hive.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService extends ChangeNotifier {
-  // Service
   Box<Note> noteBox = Hive.box<Note>('notes');
 
   insertNote(noteObject) {
@@ -24,8 +23,8 @@ class NotificationService extends ChangeNotifier {
         FlutterLocalNotificationsPlugin();
 
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails('lembretes_notifications', 'Lembretes',
-            channelDescription: "Este canal é para estudos de lembretes",
+        AndroidNotificationDetails('schedule', 'schedule',
+            channelDescription: "Channel schedule",
             importance: Importance.max,
             priority: Priority.max,
             enableLights: true,
@@ -33,7 +32,6 @@ class NotificationService extends ChangeNotifier {
 
     const IOSNotificationDetails iOSPlatformChannelSpecifics =
         IOSNotificationDetails(
-      sound: 'alarm.aiff',
       presentSound: true,
       presentAlert: true,
       presentBadge: true,
@@ -43,7 +41,6 @@ class NotificationService extends ChangeNotifier {
       iOS: iOSPlatformChannelSpecifics,
     );
 
-    print(schedule.payload);
     if (schedule.dateTime
         .isAfter(tz.TZDateTime.from(DateTime.now(), tz.local))) {
       flutterLocalNotificationsPlugin.zonedSchedule(

@@ -25,7 +25,7 @@ class _AppState extends State<App> {
   _initalizeNotifications() async {
     await setupTimeZone();
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@mipmap/launcher_icon');
 
     final IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(

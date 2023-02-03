@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'config/app_theme.dart';
-import 'data/notification/notification_service.dart';
+import 'services/notification/notification_service.dart';
 import 'models/note.dart';
 
 Future main() async {

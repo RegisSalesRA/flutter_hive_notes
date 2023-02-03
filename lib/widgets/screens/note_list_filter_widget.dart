@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 
 import '../../animation/animation.dart';
 import '../../config/config.dart';
-import '../../data/note/note_service.dart';
+import '../../services/note_hive/note_hive_service.dart';
 import '../../helpers/helpers.dart';
 import '../../models/note.dart';
 import '../../screens/note_form.dart'; 
