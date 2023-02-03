@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hive/routes/routes.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import '../config/config.dart';
@@ -76,7 +77,8 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                                 setState(() {
                                   filterValueComplete = 0;
                                 });
-                                await Navigator.pushNamed(context, '/chart');
+                                await Navigator.pushNamed(
+                                    context, Routes.chart);
                               },
                             );
                     }),
@@ -111,7 +113,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                 color: Colors.grey.shade300,
               ),
               onPressed: () {
-                Navigator.pushNamed(context, '/');
+                Navigator.pushNamed(context, Routes.initial);
               },
             ),
             SizedBox(),

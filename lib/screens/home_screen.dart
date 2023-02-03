@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hive/routes/routes.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../config/config.dart';
@@ -133,7 +134,7 @@ class _HomeState extends State<Home> {
                   color: Colors.grey.shade300,
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/complete');
+                  Navigator.pushNamed(context, Routes.complete);
                 },
               ),
             ],

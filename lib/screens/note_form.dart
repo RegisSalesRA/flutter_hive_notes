@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../config/colors.dart';
@@ -25,7 +23,6 @@ class NoteForm extends StatefulWidget {
 }
 
 class _NoteFormState extends State<NoteForm> with RestorationMixin {
-
   final noteFormKey = GlobalKey<FormState>();
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCategory = TextEditingController();
@@ -114,7 +111,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
   }
 
   @override
-  void initState() { 
+  void initState() {
     if (widget.noteObject != null) {
       controllerName.text = widget.noteObject!.name;
       controllerCategory.text = widget.noteObject!.urgency;
@@ -122,8 +119,6 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
     }
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -357,11 +352,11 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                   isComplete: false,
                                   dateTime: DateTime.parse(dataFormaterInput(
                                       _selectedDate, _timeOfDay)),
-                                  payload: '/notificacao',
+                                  payload: Routes.initial,
                                   createdAt: DateTime.now());
                               Provider.of<NotificationService>(context,
                                       listen: false)
-                                  .insertNote(objectNote); 
+                                  .insertNote(objectNote);
                               Navigator.of(context).pushNamed(Routes.initial);
                             }
                             if ((widget.noteObject != null)) {
@@ -371,7 +366,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                   isComplete: false,
                                   dateTime: DateTime.parse(dataFormaterInput(
                                       _selectedDate, _timeOfDay)),
-                                  payload: '/notificacao',
+                                  payload: Routes.initial,
                                   createdAt: widget.noteObject!.createdAt);
                               Provider.of<NotificationService>(context,
                                       listen: false)
