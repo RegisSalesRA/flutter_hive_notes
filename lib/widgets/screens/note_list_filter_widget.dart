@@ -29,42 +29,45 @@ class NoteListFilterWidget extends StatefulWidget {
   State<NoteListFilterWidget> createState() => _NoteListFilterWidgetState();
 }
 
+  List<int>? keysFilter;
+        List<int>? keysSortFilter;
+
 class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.boxform,
       builder: (context, Box<Note> box, _) {
-        List<int>? keys;
-        List<int>? keysSort;
+      
         if (widget.filterValue == 1) {
-          keys = box.keys
+          keysFilter = box.keys
               .cast<int>()
               .where((key) =>
                   box.get(key)!.urgency == "Home" &&
                   box.get(key)!.isComplete == false)
               .toList();
-          List<int> keysSort = keys.reversed.toList();
+          
         }
         if (widget.filterValue == 2) {
-          keys = box.keys
+          keysFilter = box.keys
               .cast<int>()
               .where((key) =>
                   box.get(key)!.urgency == "Job" &&
                   box.get(key)!.isComplete == false)
               .toList();
-          List<int> keysSort = keys.reversed.toList();
+          
         }
         if (widget.filterValue == 3) {
-          keys = box.keys
+          keysFilter = box.keys
               .cast<int>()
               .where((key) =>
                   box.get(key)!.urgency == "Urgency" &&
                   box.get(key)!.isComplete == false)
               .toList();
-          List<int> keysSort = keys.reversed.toList();
+          
         }
-        if (keys!.isNotEmpty) {
+        List<int> keysSortFilter = keysFilter!.reversed.toList();
+        if (keysFilter!.isNotEmpty) {
           return Column(
             children: [
               Padding(
@@ -92,9 +95,9 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: keysSort!.length,
+                  itemCount: keysSortFilter.length,
                   itemBuilder: (context, index) {
-                    final int? key = keysSort[index];
+                    final int? key = keysSortFilter[index];
                     Note? note = box.get(key);
                     if (note!.name
                         .toString()
