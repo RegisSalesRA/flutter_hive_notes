@@ -209,53 +209,17 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                     SizedBox(
                       height: 25,
                     ),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      InkWell(
-                        onTap: () => setState(() {
+                    ToogleWidget(
+                      notificationSchedule: notificationSchedule,
+                      onTap1: () => setState(
+                        () {
                           notificationSchedule = !notificationSchedule;
-                        }),
-                        child: Container(
-                            height: 50,
-                            width: 140,
-                            decoration: BoxDecoration(
-                                color: notificationSchedule == true
-                                    ? ColorsTheme.primaryColor
-                                    : Colors.grey.shade400,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    bottomLeft: Radius.circular(20))),
-                            child: Center(
-                                child: Text(
-                              "Sim",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ))),
+                        },
                       ),
-                      InkWell(
-                        onTap: () => setState(() {
-                          notificationSchedule = !notificationSchedule;
-                        }),
-                        child: Container(
-                            height: 50,
-                            width: 140,
-                            decoration: BoxDecoration(
-                                color: notificationSchedule == false
-                                    ? ColorsTheme.primaryColor
-                                    : Colors.grey.shade400,
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(20),
-                                    bottomRight: Radius.circular(20))),
-                            child: Center(
-                                child: Text(
-                              "Nao",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ))),
-                      ),
-                    ]),
-
+                      onTap2: () => setState(() {
+                        notificationSchedule = !notificationSchedule;
+                      }),
+                    ),
                     if (!notificationSchedule == false) ...{
                       SizedBox(
                         height: 20,

@@ -19,15 +19,10 @@ class CompleteNotesChartScreenState extends State {
   int touchedIndex = -1;
   ValueListenable<Box<Note>> boxform = Hive.box<Note>('notes').listenable();
   List<int>? keysComplete;
-  List<int>? keysUncompleted;
+  List<int>? keysIncomplete;
   List<int>? keysHome;
   List<int>? keysJob;
   List<int>? keysUrgency;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +44,7 @@ class CompleteNotesChartScreenState extends State {
                       .where((key) => box.get(key)!.isComplete)
                       .toList();
 
-                  keysUncompleted = box.keys
+                  keysIncomplete = box.keys
                       .cast<int>()
                       .where((key) => box.get(key)!.isComplete == false)
                       .toList();
@@ -140,7 +135,12 @@ class CompleteNotesChartScreenState extends State {
                                 ),
                                 sectionsSpace: 5,
                                 centerSpaceRadius: 80,
-                                sections: showingSections(),
+                                sections: showingSections(
+                                    touchedIndex,
+                                    keysHome,
+                                    keysComplete,
+                                    keysJob,
+                                    keysUrgency),
                               ),
                             ),
                           ),
@@ -152,204 +152,42 @@ class CompleteNotesChartScreenState extends State {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Container(
-                                  height: 75,
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.transparent,
-                                          blurRadius: 2.0,
-                                          spreadRadius: 0.0,
-                                          offset: Offset(2.0, 2.0),
-                                        ),
-                                      ],
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      color: Colors.white,
-                                      border: Border.all(
-                                          color: Colors.grey.shade400)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      RichText(
-                                        text: TextSpan(
-                                          text: 'Uncompleted ',
-                                          style: TextStyle(
-                                              color: ColorsTheme.primaryColor,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                                text: 'notes - ',
-                                                style: TextStyle(
-                                                    color: Colors.grey.shade400,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            TextSpan(
-                                                text: keysUncompleted!.length
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    color: ColorsTheme
-                                                        .primaryColor,
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  )),
                               SizedBox(
                                 height: 10,
                               ),
-                              Container(
-                                  height: 75,
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.transparent,
-                                          blurRadius: 2.0,
-                                          spreadRadius: 0.0,
-                                          offset: Offset(2.0, 2.0),
-                                        ),
-                                      ],
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      color: Colors.white,
-                                      border: Border.all(
-                                          color: Colors.grey.shade400)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      RichText(
-                                        text: TextSpan(
-                                          text: 'Home ',
-                                          style: TextStyle(
-                                              color: Colors.green,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                                text: 'notes completed - ',
-                                                style: TextStyle(
-                                                    color: Colors.grey.shade400,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            TextSpan(
-                                                text:
-                                                    '${keysHome!.length.toString()}',
-                                                style: TextStyle(
-                                                    color: Colors.green,
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  )),
+                              RickTextChart(
+                                keys: keysIncomplete,
+                                color: ColorsTheme.primaryColor,
+                                urgency: 'Uncompleted ',
+                                title: 'notes - ',
+                              ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Container(
-                                  height: 75,
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.transparent,
-                                          blurRadius: 2.0,
-                                          spreadRadius: 0.0,
-                                          offset: Offset(2.0, 2.0),
-                                        ),
-                                      ],
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      color: Colors.white,
-                                      border: Border.all(
-                                          color: Colors.grey.shade400)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      RichText(
-                                        text: TextSpan(
-                                          text: 'Job ',
-                                          style: TextStyle(
-                                              color: Colors.orange,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                                text: 'notes completed - ',
-                                                style: TextStyle(
-                                                    color: Colors.grey.shade400,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            TextSpan(
-                                                text:
-                                                    '${keysJob!.length.toString()}',
-                                                style: TextStyle(
-                                                    color: Colors.orange,
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  )),
+                              RickTextChart(
+                                keys: keysHome,
+                                color: Colors.green,
+                                urgency: 'Home ',
+                                title: 'notes completed - ',
+                              ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Container(
-                                  height: 75,
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.transparent,
-                                          blurRadius: 2.0,
-                                          spreadRadius: 0.0,
-                                          offset: Offset(2.0, 2.0),
-                                        ),
-                                      ],
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      color: Colors.white,
-                                      border: Border.all(
-                                          color: Colors.grey.shade400)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      RichText(
-                                        text: TextSpan(
-                                          text: 'Urgency ',
-                                          style: TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                                text: 'notes completed - ',
-                                                style: TextStyle(
-                                                    color: Colors.grey.shade400,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            TextSpan(
-                                                text:
-                                                    '${keysUrgency!.length.toString()}',
-                                                style: TextStyle(
-                                                    color: Colors.red,
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  )),
+                              RickTextChart(
+                                keys: keysJob,
+                                color: Colors.orange,
+                                urgency: 'Job ',
+                                title: 'notes completed - ',
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              RickTextChart(
+                                keys: keysUrgency,
+                                color: Colors.red,
+                                urgency: 'Urgency ',
+                                title: 'notes completed - ',
+                              ),
                             ]),
                       )
                     ],
@@ -358,100 +196,6 @@ class CompleteNotesChartScreenState extends State {
               }),
         ),
       ),
-    );
-  }
-
-  List<PieChartSectionData> showingSections() {
-    return List.generate(3, (i) {
-      final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 25.0 : 16.0;
-      final radius = isTouched ? 60.0 : 50.0;
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: Colors.green,
-            value: percentageCalc(keysHome!.length, keysComplete!.length),
-            title:
-                '${percentageCalc(keysHome!.length, keysComplete!.length.toInt()).toInt()}%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-            ),
-          );
-        case 1:
-          return PieChartSectionData(
-            color: Colors.orange,
-            value: percentageCalc(keysJob!.length, keysComplete!.length),
-            title:
-                '${percentageCalc(keysJob!.length, keysComplete!.length).toInt()}%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-            ),
-          );
-        case 2:
-          return PieChartSectionData(
-            color: Colors.red,
-            value: percentageCalc(keysUrgency!.length, keysComplete!.length),
-            title:
-                '${percentageCalc(keysUrgency!.length, keysComplete!.length).toInt()}%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-            ),
-          );
-
-        default:
-          throw Error();
-      }
-    });
-  }
-}
-
-class Indicator extends StatelessWidget {
-  const Indicator({
-    required this.color,
-    required this.text,
-    required this.isSquare,
-    this.size = 16,
-    this.textColor = const Color(0xff505050),
-  });
-  final Color color;
-  final String text;
-  final bool isSquare;
-  final double size;
-  final Color textColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            shape: isSquare ? BoxShape.rectangle : BoxShape.circle,
-            color: color,
-          ),
-        ),
-        const SizedBox(
-          width: 4,
-        ),
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: textColor,
-          ),
-        )
-      ],
     );
   }
 }
