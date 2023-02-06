@@ -8,6 +8,7 @@ export './shared/popup_menu_button_widget.dart';
 export './shared/show_modal_bottonsheet_widget.dart';
 export './shared/rich_text_chart_widget.dart';
 export './shared/toogle_widget.dart';
+export './shared/empty_list_widget.dart';
 // Screens
 
 export './screens/complete_notes_widget.dart';

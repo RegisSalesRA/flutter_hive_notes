@@ -93,7 +93,7 @@ class _AppState extends State<App> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
     return MaterialApp(
-      title: 'Flutter Sqflite',
+      title: 'Notes',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // PrimariColors from App css
