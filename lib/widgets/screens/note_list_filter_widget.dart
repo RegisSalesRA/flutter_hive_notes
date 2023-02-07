@@ -30,8 +30,8 @@ class NoteListFilterWidget extends StatefulWidget {
   State<NoteListFilterWidget> createState() => _NoteListFilterWidgetState();
 }
 
-  List<int>? keysFilter;
-        List<int>? keysSortFilter;
+List<int>? keysFilter;
+List<int>? keysSortFilter;
 
 class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
   @override
@@ -39,7 +39,6 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
     return ValueListenableBuilder(
       valueListenable: widget.boxform,
       builder: (context, Box<Note> box, _) {
-      
         if (widget.filterValue == 1) {
           keysFilter = box.keys
               .cast<int>()
@@ -47,7 +46,6 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                   box.get(key)!.urgency == "Home" &&
                   box.get(key)!.isComplete == false)
               .toList();
-          
         }
         if (widget.filterValue == 2) {
           keysFilter = box.keys
@@ -56,7 +54,6 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                   box.get(key)!.urgency == "Job" &&
                   box.get(key)!.isComplete == false)
               .toList();
-          
         }
         if (widget.filterValue == 3) {
           keysFilter = box.keys
@@ -65,7 +62,6 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                   box.get(key)!.urgency == "Urgency" &&
                   box.get(key)!.isComplete == false)
               .toList();
-          
         }
         List<int> keysSortFilter = keysFilter!.reversed.toList();
         if (keysFilter!.isNotEmpty) {
@@ -174,40 +170,8 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          if (note.urgency == "Home")
-                                            Container(
-                                              height: 10,
-                                              width: 10,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.green,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10))),
-                                            ),
-                                          if (note.urgency == "Job")
-                                            Container(
-                                              height: 10,
-                                              width: 10,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.orange,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10))),
-                                            ),
-                                          if (note.urgency == "Urgency")
-                                            Container(
-                                              height: 10,
-                                              width: 10,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10))),
-                                            ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
                                           Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -227,9 +191,17 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              Text(dateTimeFormat(box.values
-                                                  .toList()[index]
-                                                  .createdAt)),
+                                              Row(
+                                                children: [
+                                                  colorHelperText(note.urgency),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(dateTimeFormat(box.values
+                                                      .toList()[index]
+                                                      .createdAt)),
+                                                ],
+                                              ),
                                             ],
                                           ),
                                         ],

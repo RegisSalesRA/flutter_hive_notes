@@ -178,32 +178,9 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                               ),
                                               Row(
                                                 children: [
-                                                  if (note.urgency == "Urgency")
-                                                    Text(
-                                                      "${note.urgency} - ",
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.red),
-                                                    ),
-                                                  if (note.urgency == "Job")
-                                                    Text(
-                                                      "${note.urgency} - ",
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.orange),
-                                                    ),
-                                                  if (note.urgency == "Home")
-                                                    Text(
-                                                      "${note.urgency} - ",
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.green),
-                                                    ),
+                                                  colorHelperText(note.urgency),
                                                   SizedBox(
-                                                    width: 10,
+                                                    width: 5,
                                                   ),
                                                   Text(dateTimeFormat(box.values
                                                       .toList()[index]

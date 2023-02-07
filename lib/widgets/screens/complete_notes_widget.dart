@@ -183,27 +183,7 @@ class CompleteNotesWidget extends StatelessWidget {
                                         ),
                                         Row(
                                           children: [
-                                            if (note.urgency == "Urgency")
-                                              Text(
-                                                "${note.urgency} - ",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red),
-                                              ),
-                                            if (note.urgency == "Job")
-                                              Text(
-                                                "${note.urgency} - ",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.orange),
-                                              ),
-                                            if (note.urgency == "Home")
-                                              Text(
-                                                "${note.urgency} - ",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.green),
-                                              ),
+                                            colorHelperText(note.urgency),
                                             Text(dateTimeFormat(box.values
                                                 .toList()[index]
                                                 .createdAt)),

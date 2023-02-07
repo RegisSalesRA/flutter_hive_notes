@@ -16,3 +16,5 @@ export './screens/note_list_filter_widget.dart';
 export './screens/note_list_widget.dart';
 export './screens/indicator_widget.dart';
 export './screens/section_chart_widget.dart';
+export './screens/create_note_button_widget.dart';
+export './screens/update_note_button_widget.dart';

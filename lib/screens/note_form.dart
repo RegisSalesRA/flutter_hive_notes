@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../config/colors.dart';
-import '../services/notification/notification_service.dart';
 import '../helpers/helpers.dart';
 import '../models/note.dart';
-import '../routes/routes.dart';
 import '../widgets/widget.dart';
 
 class NoteForm extends StatefulWidget {
@@ -224,128 +221,102 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                       SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          border:
-                              Border.all(color: Colors.grey.shade200, width: 2),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            if (_selectedDate == null)
-                              Padding(
-                                  padding: EdgeInsets.only(left: 15),
-                                  child: Text("Chose a date",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.grey.shade600)))
-                            else
-                              Padding(
-                                  padding: EdgeInsets.only(left: 15),
-                                  child: Text(
-                                      dateTimeFormat(_selectedDate.value),
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.grey.shade600))),
-                            IconButton(
-                              onPressed: () {
-                                _restorableDatePickerRouteFuture.present();
-                              },
-                              icon: Icon(Icons.dataset),
-                            )
-                          ],
+                      GestureDetector(
+                        onTap: () => _restorableDatePickerRouteFuture.present(),
+                        child: Container(
+                          height: 60,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            border: Border.all(
+                                color: Colors.grey.shade200, width: 2),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              if (_selectedDate == null)
+                                Padding(
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: Text("Chose a date",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.grey.shade600)))
+                              else
+                                Padding(
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: Text(
+                                        dateTimeFormat(_selectedDate.value),
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.grey.shade600))),
+                              Icon(Icons.dataset),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          border:
-                              Border.all(color: Colors.grey.shade200, width: 2),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            if (_timeOfDay == null)
-                              Padding(
+                      GestureDetector(
+                        onTap: () => _showTimePicker(),
+                        child: Container(
+                          height: 60,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            border: Border.all(
+                                color: Colors.grey.shade200, width: 2),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              if (_timeOfDay == null)
+                                Padding(
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: Text("Chose a hour",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.grey.shade600)))
+                              else
+                                Padding(
                                   padding: EdgeInsets.only(left: 15),
-                                  child: Text("Chose a hour",
+                                  child: Text(hourTimeFormat(_timeOfDay),
                                       style: TextStyle(
                                           fontSize: 18,
-                                          color: Colors.grey.shade600)))
-                            else
-                              Padding(
-                                padding: EdgeInsets.only(left: 15),
-                                child: Text(hourTimeFormat(_timeOfDay),
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.grey.shade600)),
-                              ),
-                            IconButton(
-                              onPressed: () {
-                                _showTimePicker();
-                              },
-                              icon: Icon(Icons.timer),
-                            )
-                          ],
+                                          color: Colors.grey.shade600)),
+                                ),
+                              Icon(Icons.timer),
+                            ],
+                          ),
                         ),
-                      ),
+                      )
                     },
-
                     SizedBox(
                       height: 60,
                     ),
-                    ElevatedButton(
-                        onPressed: () {
-                          if (noteFormKey.currentState!.validate()) {
-                            if (widget.noteObject == null) {
-                              Note objectNote = Note(
-                                  name: name,
-                                  urgency: controllerCategory.text,
-                                  isComplete: false,
-                                  dateTime: DateTime.parse(dataFormaterInput(
-                                      _selectedDate, _timeOfDay)),
-                                  payload: Routes.initial,
-                                  createdAt: DateTime.now());
-                              Provider.of<NotificationService>(context,
-                                      listen: false)
-                                  .insertNote(objectNote);
-                              Navigator.of(context).pushNamed(Routes.initial);
-                            }
-                            if ((widget.noteObject != null)) {
-                              Note objectNote = Note(
-                                  name: controllerName.text,
-                                  urgency: controllerCategory.text,
-                                  isComplete: false,
-                                  dateTime: DateTime.parse(dataFormaterInput(
-                                      _selectedDate, _timeOfDay)),
-                                  payload: Routes.initial,
-                                  createdAt: widget.noteObject!.createdAt);
-                              Provider.of<NotificationService>(context,
-                                      listen: false)
-                                  .updateNote(
-                                      widget.noteObject!.key, objectNote);
-                              Navigator.of(context).pushNamed(Routes.initial);
-                            }
-                          }
-                        },
-                        child: Text(
-                          widget.noteObject == null
-                              ? "Create note"
-                              : "Update note",
-                          style: Theme.of(context).textTheme.headline4,
-                        )),
+                    if (widget.noteObject == null)
+                      CreateNoteButtonWidget(
+                          selectedDate: _selectedDate,
+                          timeOfDay: _timeOfDay,
+                          noteFormKey: noteFormKey,
+                          notificationSchedule: notificationSchedule,
+                          name: name,
+                          controllerCategory: controllerCategory),
+                    if (widget.noteObject != null)
+                      UpdateNotebuttonWidget(
+                          selectedDate: _selectedDate,
+                          timeOfDay: _timeOfDay,
+                          noteFormKey: noteFormKey,
+                          notificationSchedule: notificationSchedule,
+                          controllerName: controllerName,
+                          controllerCategory: controllerCategory,
+                          noteObject: widget.noteObject!),
                   ],
                 )),
           ),
