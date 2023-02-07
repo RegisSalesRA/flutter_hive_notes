@@ -182,9 +182,16 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                                   SizedBox(
                                                     width: 5,
                                                   ),
-                                                  Text(dateTimeFormat(box.values
-                                                      .toList()[index]
-                                                      .createdAt)),
+                                                  Text(
+                                                    dataFormaterDateTimeHour(
+                                                      box.values
+                                                          .toList()[index]
+                                                          .dateTime,
+                                                    ),
+                                                    style: TextStyle(
+                                                        color: timeDataExpired(
+                                                            note.dateTime)),
+                                                  ),
                                                 ],
                                               ),
                                             ],

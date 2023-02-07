@@ -13,7 +13,7 @@ class CreateNoteButtonWidget extends StatelessWidget {
     required TimeOfDay timeOfDay,
     required this.noteFormKey,
     required this.notificationSchedule,
-    required this.name,
+    required this.controllerName,
     required this.controllerCategory,
   })  : _selectedDate = selectedDate,
         _timeOfDay = timeOfDay,
@@ -23,20 +23,21 @@ class CreateNoteButtonWidget extends StatelessWidget {
   final TimeOfDay _timeOfDay;
   final GlobalKey<FormState> noteFormKey;
   final bool notificationSchedule;
-  final String name;
+  final TextEditingController controllerName;
   final TextEditingController controllerCategory;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: () {
+          print(controllerName.text);
           var atualDate = DateTime.now();
           var dataChose =
               DateTime.parse(dataFormaterInput(_selectedDate, _timeOfDay));
           if (noteFormKey.currentState!.validate()) {
             if (notificationSchedule == false) {
               Note objectNote = Note(
-                  name: name,
+                  name: controllerName.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(
@@ -50,7 +51,7 @@ class CreateNoteButtonWidget extends StatelessWidget {
             }
             if (notificationSchedule == true && dataChose.isAfter(atualDate)) {
               Note objectNote = Note(
-                  name: name,
+                  name: controllerName.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(
@@ -62,10 +63,8 @@ class CreateNoteButtonWidget extends StatelessWidget {
               Navigator.of(context).pushNamed(Routes.initial);
               return;
             } else {
-              const snackBar = SnackBar(
-                content: Text('Need to chose date before actual date'),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text('Need to chose date before actual date')));
               return;
             }
           }

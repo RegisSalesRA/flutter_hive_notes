@@ -306,8 +306,9 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                           timeOfDay: _timeOfDay,
                           noteFormKey: noteFormKey,
                           notificationSchedule: notificationSchedule,
-                          name: name,
+                          controllerName: controllerName,
                           controllerCategory: controllerCategory),
+
                     if (widget.noteObject != null)
                       UpdateNotebuttonWidget(
                           selectedDate: _selectedDate,

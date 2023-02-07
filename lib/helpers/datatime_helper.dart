@@ -24,7 +24,7 @@ DateTime dateTimeRestorableFormat(var value) {
 }
 
 String dateTimeFormat(data) {
-  final formattedDate = DateFormat.yMMMd().format(data);
+  final formattedDate = DateFormat.yMMMEd().format(data);
   return formattedDate;
 }
 
@@ -85,4 +85,8 @@ String secondsFormat(int second) {
 
 String dataFormaterInput(RestorableDateTime dateTime, TimeOfDay clockTime) {
   return "${dateTime.value.year.toString()}-${monthFormat(dateTime.value.month)}-${dayFormat(dateTime.value.day)} ${minutesFormat(clockTime.hour)}:${secondsFormat(clockTime.minute)}";
+}
+
+String dataFormaterDateTimeHour(DateTime dateTime) {
+  return "${dateTime.year.toString()}-${monthFormat(dateTime.month)}-${dayFormat(dateTime.day)}-${minutesFormat(dateTime.hour)}:${secondsFormat(dateTime.minute)}";
 }
