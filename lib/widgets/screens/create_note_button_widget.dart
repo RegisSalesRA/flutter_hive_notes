@@ -61,7 +61,6 @@ class CreateNoteButtonWidget extends StatelessWidget {
                   createdAt: DateTime.now());
               Provider.of<NotificationService>(context, listen: false)
                   .insertNote(objectNote);
-              snackBarWidget(context, 'Note created with success');
               Navigator.of(context).pushNamed(Routes.initial);
               return;
             } else {
