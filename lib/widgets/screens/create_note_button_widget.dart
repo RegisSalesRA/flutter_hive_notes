@@ -47,8 +47,6 @@ class CreateNoteButtonWidget extends StatelessWidget {
                   createdAt: DateTime.now());
               Provider.of<NotificationService>(context, listen: false)
                   .insertNote(objectNote);
-                  snackBarWidget(
-                  context, 'Note created with success');
               Navigator.of(context).pushNamed(Routes.initial);
               return;
             }
@@ -62,13 +60,13 @@ class CreateNoteButtonWidget extends StatelessWidget {
                   payload: Routes.initial,
                   createdAt: DateTime.now());
               Provider.of<NotificationService>(context, listen: false)
-                  .insertNote(objectNote);snackBarWidget(
-                  context, 'Note created with success');
-              Navigator.of(context).pushNamed(Routes.initial); 
+                  .insertNote(objectNote);
+              snackBarWidget(context, 'Note created with success');
+              Navigator.of(context).pushNamed(Routes.initial);
               return;
             } else {
               snackBarWidget(
-                  context, 'You need to choose a time above the current one');
+                  context, 'you need to choose a time above the current one');
               return;
             }
           }

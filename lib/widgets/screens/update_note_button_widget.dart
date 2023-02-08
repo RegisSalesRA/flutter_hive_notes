@@ -48,8 +48,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
                   createdAt: noteObject!.createdAt);
               Provider.of<NotificationService>(context, listen: false)
                   .updateNote(noteObject!.key, objectNote);
-              Navigator.of(context).pushNamed(Routes.initial);
-              snackBarWidget(context, 'Note updated with success');
+              Navigator.of(context).pushNamed(Routes.initial); 
               return;
             }
 
@@ -65,7 +64,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
               Provider.of<NotificationService>(context, listen: false)
                   .updateNote(noteObject!.key, objectNote);
               Navigator.of(context).pushNamed(Routes.initial);
-              snackBarWidget(context, 'Note updated with success');
+             
               return;
             } else {
               snackBarWidget(

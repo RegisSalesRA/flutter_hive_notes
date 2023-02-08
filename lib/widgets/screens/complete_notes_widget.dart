@@ -108,6 +108,16 @@ class CompleteNotesWidget extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
+                Container(
+                  height: 50,
+                  child: Center(
+                      child: Text(
+                    "Drag the card to the left to delete it",
+                    style: TextStyle(
+                        color: Colors.grey.shade300,
+                        fontWeight: FontWeight.bold),
+                  )),
+                ),
                 ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: keys.length,

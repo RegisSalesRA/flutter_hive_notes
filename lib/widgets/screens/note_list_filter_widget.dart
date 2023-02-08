@@ -89,6 +89,15 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                       ),
                     )),
               ),
+              Container(
+                height: 50,
+                child: Center(
+                    child: Text(
+                  "Drag the card to the right to mark it complete",
+                  style: TextStyle(
+                      color: Colors.grey.shade300, fontWeight: FontWeight.bold),
+                )),
+              ),
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
