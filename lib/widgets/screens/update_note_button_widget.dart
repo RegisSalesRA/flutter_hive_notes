@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../helpers/datatime_helper.dart';
 import '../../models/note.dart';
 import '../../services/notification/notification_service.dart';
+import '../widget.dart';
 
 class UpdateNotebuttonWidget extends StatelessWidget {
   const UpdateNotebuttonWidget(
@@ -48,6 +49,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
               Provider.of<NotificationService>(context, listen: false)
                   .updateNote(noteObject!.key, objectNote);
               Navigator.of(context).pushNamed(Routes.initial);
+              snackBarWidget(context, 'Note updated with success');
               return;
             }
 
@@ -63,13 +65,11 @@ class UpdateNotebuttonWidget extends StatelessWidget {
               Provider.of<NotificationService>(context, listen: false)
                   .updateNote(noteObject!.key, objectNote);
               Navigator.of(context).pushNamed(Routes.initial);
+              snackBarWidget(context, 'Note updated with success');
               return;
             } else {
-              const snackBar = SnackBar(
-                content: Text('Need to chose date before actual date'),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              return;
+              snackBarWidget(
+                  context, 'You need to choose a time above the current one');
             }
           }
         },
