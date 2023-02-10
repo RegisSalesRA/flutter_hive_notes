@@ -188,14 +188,9 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                               Row(
                                                 children: [
                                                   colorHelperText(note.urgency),
-                                                  SizedBox(
-                                                    width: 5,
-                                                  ),
                                                   Text(
                                                     dataFormaterDateTimeHour(
-                                                      box.values
-                                                          .toList()[index]
-                                                          .dateTime,
+                                                      note.dateTime,
                                                     ),
                                                     style: TextStyle(
                                                         color: timeDataExpired(
