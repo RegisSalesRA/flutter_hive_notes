@@ -200,7 +200,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                     //Switch Button
                     Center(
                         child: Text(
-                      "Deseja agendar uma notificação?",
+                      "Want to schedule a notification?",
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey.shade500,
