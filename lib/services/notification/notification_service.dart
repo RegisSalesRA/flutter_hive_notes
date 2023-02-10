@@ -62,9 +62,9 @@ class NotificationService extends ChangeNotifier {
           FlutterLocalNotificationsPlugin();
 
       await flutterLocalNotificationsPlugin.cancel(schedule.id);
-      print("Sucesso ${schedule.dateTime}");
+      //print("Sucesso ${schedule.dateTime}");
     } catch (e) {
-      print("Erro ${schedule.dateTime}");
+      //print("Erro ${schedule.dateTime}");
     }
   }
 }
