@@ -15,6 +15,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
       required this.noteFormKey,
       required this.notificationSchedule,
       required this.controllerName,
+      required this.dataRecive,
       required this.controllerCategory,
       required this.noteObject})
       : _selectedDate = selectedDate,
@@ -28,6 +29,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
   final TextEditingController controllerName;
   final TextEditingController controllerCategory;
   final Note? noteObject;
+  final DateTime? dataRecive;
 
   @override
   Widget build(BuildContext context) {
@@ -37,34 +39,41 @@ class UpdateNotebuttonWidget extends StatelessWidget {
           var dataChose =
               DateTime.parse(dataFormaterInput(_selectedDate, _timeOfDay));
           if (noteFormKey.currentState!.validate()) {
+            print('Data - ${_selectedDate.value}');
+            print('Hora - ${_timeOfDay.hour}:${_timeOfDay.minute}');
             if (notificationSchedule == false) {
               Note objectNote = Note(
                   name: controllerName.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(
-                      dataFormaterInput(_selectedDate, _timeOfDay)),
+                      dataFormaterInputUpdate(dataRecive!, _timeOfDay)),
                   payload: Routes.initial,
                   createdAt: noteObject!.createdAt);
+              print(objectNote.dateTime);
               Provider.of<NotificationService>(context, listen: false)
                   .updateNote(noteObject!.key, objectNote);
-              Navigator.of(context).pushNamed(Routes.initial); 
+              print(objectNote);
+              Navigator.of(context).pushNamed(Routes.initial);
               return;
             }
 
             if (notificationSchedule == true && dataChose.isAfter(atualDate)) {
+              print('Data - ${_selectedDate.value}');
+              print('Hora - ${_timeOfDay.hour}:${_timeOfDay.minute}');
               Note objectNote = Note(
                   name: controllerName.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(
-                      dataFormaterInput(_selectedDate, _timeOfDay)),
+                      dataFormaterInputUpdate(dataRecive!, _timeOfDay)),
                   payload: Routes.initial,
                   createdAt: noteObject!.createdAt);
+              print(objectNote.dateTime);
               Provider.of<NotificationService>(context, listen: false)
                   .updateNote(noteObject!.key, objectNote);
+              print(objectNote);
               Navigator.of(context).pushNamed(Routes.initial);
-             
               return;
             } else {
               snackBarWidget(

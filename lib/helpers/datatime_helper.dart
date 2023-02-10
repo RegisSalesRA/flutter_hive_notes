@@ -87,6 +87,10 @@ String dataFormaterInput(RestorableDateTime dateTime, TimeOfDay clockTime) {
   return "${dateTime.value.year.toString()}-${monthFormat(dateTime.value.month)}-${dayFormat(dateTime.value.day)} ${minutesFormat(clockTime.hour)}:${secondsFormat(clockTime.minute)}";
 }
 
+String dataFormaterInputUpdate(DateTime dateTime, TimeOfDay clockTime) {
+  return "${dateTime.year.toString()}-${monthFormat(dateTime.month)}-${dayFormat(dateTime.day)} ${minutesFormat(clockTime.hour)}:${secondsFormat(clockTime.minute)}";
+}
+
 String dataFormaterDateTimeHour(DateTime dateTime) {
-  return "${dateTime.year}-${monthFormat(dateTime.month)}-${dayFormat(dateTime.day)}/${minutesFormat(dateTime.hour)}:${secondsFormat(dateTime.minute)}";
+  return "${dateTime.year}/${monthFormat(dateTime.month)}/${dayFormat(dateTime.day)}-${minutesFormat(dateTime.hour)}:${secondsFormat(dateTime.minute)}";
 }

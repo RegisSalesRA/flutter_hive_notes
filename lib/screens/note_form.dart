@@ -24,6 +24,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCategory = TextEditingController();
   String name = "";
+  DateTime? dataRecive;
   bool notificationSchedule = false;
   List<Map<String, dynamic>> noteCategory = [
     {"name": "Home"},
@@ -77,7 +78,9 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
     if (newSelectedDate != null) {
       setState(() {
         _selectedDate.value = newSelectedDate;
+        dataRecive = _selectedDate.value;
       });
+      print(dataRecive);
       print(_selectedDate.value);
     }
   }
@@ -113,6 +116,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
       controllerName.text = widget.noteObject!.name;
       controllerCategory.text = widget.noteObject!.urgency;
       _timeOfDay = timeOfDayFormat(widget.noteObject!.dateTime);
+      dataRecive = widget.noteObject!.dateTime;
     }
     super.initState();
   }
@@ -308,11 +312,11 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                           notificationSchedule: notificationSchedule,
                           controllerName: controllerName,
                           controllerCategory: controllerCategory),
-
                     if (widget.noteObject != null)
                       UpdateNotebuttonWidget(
                           selectedDate: _selectedDate,
                           timeOfDay: _timeOfDay,
+                          dataRecive: dataRecive,
                           noteFormKey: noteFormKey,
                           notificationSchedule: notificationSchedule,
                           controllerName: controllerName,
