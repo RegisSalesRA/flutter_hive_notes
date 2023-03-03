@@ -203,9 +203,14 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                               Row(
                                                 children: [
                                                   colorHelperText(note.urgency),
-                                               
-                                                  Text(dataFormaterDateTimeHour(
-                                                      note.dateTime)),
+                                                  Text(
+                                                    dataFormaterDateTimeHour(
+                                                      note.dateTime,
+                                                    ),
+                                                    style: TextStyle(
+                                                        color: timeDataExpired(
+                                                            note.dateTime)),
+                                                  ),
                                                 ],
                                               ),
                                             ],

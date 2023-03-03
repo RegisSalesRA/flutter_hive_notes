@@ -12,6 +12,7 @@ class NotificationService extends ChangeNotifier {
     showNotification(noteObject);
   }
 
+  //8344
   updateNote(key, noteObject) async {
     await noteBox.put(key, noteObject);
     await removeScheduledAlarm(noteObject);

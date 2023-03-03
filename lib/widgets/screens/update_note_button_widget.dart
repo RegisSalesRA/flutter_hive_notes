@@ -43,6 +43,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
             print('Hora - ${_timeOfDay.hour}:${_timeOfDay.minute}');
             if (notificationSchedule == false) {
               Note objectNote = Note(
+                  id: noteObject!.id,
                   name: controllerName.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
@@ -62,6 +63,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
               print('Data - ${_selectedDate.value}');
               print('Hora - ${_timeOfDay.hour}:${_timeOfDay.minute}');
               Note objectNote = Note(
+                  id: noteObject!.id,
                   name: controllerName.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
