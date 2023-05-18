@@ -197,7 +197,6 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                     SizedBox(
                       height: 25,
                     ),
-                    //Switch Button
                     Center(
                         child: Text(
                       "Want to schedule a notification?",

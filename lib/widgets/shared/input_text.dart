@@ -20,6 +20,7 @@ class _InputTextState extends State<InputText> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        maxLength: 255,
         controller: widget.controller,
         validator: widget.validator,
         decoration: InputDecoration(
@@ -29,7 +30,6 @@ class _InputTextState extends State<InputText> {
           ),
           labelText: "Name",
         ),
-        maxLength: 25,
         onChanged: widget.onChanged);
   }
 }
