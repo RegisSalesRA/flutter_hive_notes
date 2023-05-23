@@ -22,7 +22,7 @@ I had a idea to share my knowledge flutter and hive native database, i hope help
 
 <h2>Screenshots</h2>
 
-<img src="https://github.com/RegisSalesRA/Flutter_Hive/blob/master/assets/readme/1.gif" width="250"> <img src="https://github.com/RegisSalesRA/flutter_hive/blob/master/assets/readme/2.gif" width="250"> <img src="https://github.com/RegisSalesRA/flutter_hive/blob/master/assets/readme/3.gif" width="250"> 
+<img src="https://github.com/RegisSalesRA/Flutter_Hive/blob/master/assets/readme/splash.png" width="250"> <img src="https://github.com/RegisSalesRA/flutter_hive/blob/master/assets/readme/gif1.gif" width="250"> <img src="https://github.com/RegisSalesRA/flutter_hive/blob/master/assets/readme/gif2.gif" width="250"> 
 
 <p>
 </p>
