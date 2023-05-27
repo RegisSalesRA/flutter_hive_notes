@@ -182,11 +182,18 @@ class CompleteNotesWidget extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          note.name,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline5,
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.75,
+                                          child: Text(
+                                            overflow: TextOverflow.ellipsis,
+                                            note.name,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5,
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 10,
