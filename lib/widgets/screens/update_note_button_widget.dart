@@ -34,6 +34,12 @@ class UpdateNotebuttonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+                20.0),  
+          ),
+        ),
         onPressed: () {
           var atualDate = DateTime.now();
           var dataChose =
@@ -85,7 +91,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
         },
         child: Text(
           "Update note",
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineMedium,
         ));
   }
 }

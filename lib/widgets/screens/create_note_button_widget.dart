@@ -30,6 +30,11 @@ class CreateNoteButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+        ),
         onPressed: () {
           print(controllerName.text);
           var atualDate = DateTime.now();
@@ -72,7 +77,7 @@ class CreateNoteButtonWidget extends StatelessWidget {
         },
         child: Text(
           "Create note",
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineMedium,
         ));
   }
 }
