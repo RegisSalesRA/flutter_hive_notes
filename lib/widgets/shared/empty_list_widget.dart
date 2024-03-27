@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../helpers/helpers.dart';
@@ -10,14 +9,14 @@ class EmptyListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: MediaQuerySize.heigthSize(context) * 0.85,
       width: MediaQuerySize.widthSize(context),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.assignment_outlined,
               size: 50,
             ),

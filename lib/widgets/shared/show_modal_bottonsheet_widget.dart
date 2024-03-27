@@ -16,18 +16,18 @@ Future<void> showModalBottonSheetWidget(
     builder: (BuildContext context) {
       return Container(
         height: 250,
-        decoration: new BoxDecoration(
+        decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: new BorderRadius.only(
-                topLeft: const Radius.circular(15.0),
-                topRight: const Radius.circular(15.0))),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0))),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -35,19 +35,20 @@ Future<void> showModalBottonSheetWidget(
                     width: 70,
                     decoration: BoxDecoration(
                         color: Colors.grey.shade400,
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15))),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
                     "Sort by",
-                    style: Theme.of(context).textTheme.headline3,
+                    style: Theme.of(context).textTheme.displaySmall,
                   )
                 ],
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -56,89 +57,92 @@ Future<void> showModalBottonSheetWidget(
                     InkWell(
                       onTap: onTap,
                       child: Container(
-                        padding: EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
                             color: filterValueComplete == 1
                                 ? ColorsTheme.primaryColor
                                 : Colors.grey.shade400,
                             borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                                const BorderRadius.all(Radius.circular(10))),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.home,
                                 color: Colors.white,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
                                 "Home notes",
-                                style: Theme.of(context).textTheme.headline4,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
                               )
                             ]),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     InkWell(
                       onTap: onTap2,
                       child: Container(
-                        padding: EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
                             color: filterValueComplete == 2
                                 ? ColorsTheme.primaryColor
                                 : Colors.grey.shade400,
                             borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                                const BorderRadius.all(Radius.circular(10))),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.work_outlined,
                                 color: Colors.white,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
                                 "Job notes",
-                                style: Theme.of(context).textTheme.headline4,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
                               )
                             ]),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     InkWell(
                       onTap: onTap3,
                       child: Container(
-                        padding: EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
                             color: filterValueComplete == 3
                                 ? ColorsTheme.primaryColor
                                 : Colors.grey.shade400,
                             borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                                const BorderRadius.all(Radius.circular(10))),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.assignment_late_outlined,
                                 color: Colors.white,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
                                 "Urgency notes",
-                                style: Theme.of(context).textTheme.headline4,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
                               )
                             ]),
                       ),
@@ -146,7 +150,7 @@ Future<void> showModalBottonSheetWidget(
                   ],
                 ),
               ),
-              SizedBox()
+              const SizedBox()
             ],
           ),
         ),

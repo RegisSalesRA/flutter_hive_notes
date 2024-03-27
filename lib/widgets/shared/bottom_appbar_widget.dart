@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class BottomAppBarWidget extends StatelessWidget {
@@ -10,10 +8,10 @@ class BottomAppBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       color: Theme.of(context).colorScheme.primary,
-      shape: CircularNotchedRectangle(),
+      shape: const CircularNotchedRectangle(),
       notchMargin: 5,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [...widgets!],

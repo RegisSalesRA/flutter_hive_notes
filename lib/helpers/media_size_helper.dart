@@ -5,7 +5,7 @@ import '../widgets/widget.dart';
 abstract class MediaQuerySize {
   static double heigthSize(context) {
     var heigthSize = MediaQuery.of(context).size.height -
-        AppBarWidget(
+        const AppBarWidget(
           widgetAction: SizedBox(),
           automaticallyImplyLeading: false,
           title: '',

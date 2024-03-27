@@ -5,7 +5,7 @@ class InputText extends StatefulWidget {
   final TextEditingController controller;
   final Function(String?)? onChanged;
 
-  InputText(
+  const InputText(
       {Key? key,
       required this.validator,
       this.onChanged,
@@ -23,8 +23,8 @@ class _InputTextState extends State<InputText> {
         maxLength: 255,
         controller: widget.controller,
         validator: widget.validator,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(
+        decoration: const InputDecoration(
+          prefixIcon: Icon(
             Icons.app_registration,
             size: 25.0,
           ),

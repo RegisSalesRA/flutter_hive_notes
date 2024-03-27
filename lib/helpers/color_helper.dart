@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
 Widget colorHelperText(String note) {
-  if (note == "Urgency")
+  if (note == "Urgency") {
     return Text(
       "$note - ",
-      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+      style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
     );
-  if (note == "Job")
+  }
+  if (note == "Job") {
     return Text(
       "$note - ",
-      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+      style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
     );
-  if (note == "Home")
+  }
+  if (note == "Home") {
     return Text(
       "$note - ",
-      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+      style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
     );
+  }
   return Container();
 }

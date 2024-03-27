@@ -22,6 +22,6 @@ Future main() async {
     providers: [
       ChangeNotifierProvider(create: (context) => NotificationService()),
     ],
-    child: App(),
+    child: const App(),
   ));
 }

@@ -6,9 +6,9 @@ import '../screens/home_screen.dart';
 class Routes {
   static Map<String, Widget Function(BuildContext)> list =
       <String, WidgetBuilder>{
-    '/': (context) => Home(),
-    '/complete': (context) => CompleteNoteScreen(),
-    '/chart': (context) => CompleteNotesChartScreen(),
+    '/': (context) => const Home(),
+    '/complete': (context) => const CompleteNoteScreen(),
+    '/chart': (context) => const CompleteNotesChartScreen(),
   };
 
   static String initial = '/';

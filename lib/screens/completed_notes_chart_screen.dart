@@ -9,7 +9,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../widgets/widget.dart';
 
 class CompleteNotesChartScreen extends StatefulWidget {
-  const CompleteNotesChartScreen();
+  const CompleteNotesChartScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => CompleteNotesChartScreenState();
@@ -28,12 +28,12 @@ class CompleteNotesChartScreenState extends State {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBarWidget(
+        appBar: const AppBarWidget(
           automaticallyImplyLeading: true,
           title: "Graphic",
           widgetAction: SizedBox(),
         ),
-        body: Container(
+        body: SizedBox(
           height: MediaQuerySize.heigthSize(context),
           child: ValueListenableBuilder(
               valueListenable: boxform,
@@ -71,22 +71,22 @@ class CompleteNotesChartScreenState extends State {
                       .toList();
                 }
                 return SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         height: 350,
                         width: double.infinity,
                         child: Column(children: [
-                          Container(
+                          const SizedBox(
                             height: 50,
                             width: double.infinity,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Indicator(
                                   color: Colors.green,
                                   text: 'Home',
@@ -147,12 +147,12 @@ class CompleteNotesChartScreenState extends State {
                         ]),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               RickTextChart(
@@ -161,7 +161,7 @@ class CompleteNotesChartScreenState extends State {
                                 urgency: 'Uncompleted ',
                                 title: 'notes - ',
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               RickTextChart(
@@ -170,7 +170,7 @@ class CompleteNotesChartScreenState extends State {
                                 urgency: 'Home ',
                                 title: 'notes completed - ',
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               RickTextChart(
@@ -179,7 +179,7 @@ class CompleteNotesChartScreenState extends State {
                                 urgency: 'Job ',
                                 title: 'notes completed - ',
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               RickTextChart(

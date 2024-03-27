@@ -8,6 +8,8 @@ import '../models/note.dart';
 import '../widgets/widget.dart';
 
 class CompleteNoteScreen extends StatefulWidget {
+  const CompleteNoteScreen({super.key});
+
   @override
   State<CompleteNoteScreen> createState() => _NoteListWidgetTestState();
 }
@@ -39,7 +41,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
               Navigator.of(context).pop();
             }, filterValueComplete);
           },
-          child: Icon(
+          child: const Icon(
             Icons.filter_alt,
             color: Colors.white,
           ),
@@ -59,7 +61,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                           .where((key) => box.get(key)!.isComplete)
                           .toList();
                       return keys.isEmpty
-                          ? IconButton(
+                          ? const IconButton(
                               color: ColorsTheme.themeColor,
                               icon: Icon(
                                 Icons.pie_chart_outline,
@@ -69,7 +71,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                             )
                           : IconButton(
                               color: ColorsTheme.primaryColor,
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.pie_chart_outline,
                                 size: 30,
                               ),
@@ -84,7 +86,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                     }),
                 IconButton(
                   color: ColorsTheme.primaryColor,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.refresh,
                     size: 30,
                   ),
@@ -97,7 +99,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
               ],
             )),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(children: [
             CompleteNotesWidget(
               boxform: boxform,
@@ -116,14 +118,14 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                 Navigator.pushNamed(context, Routes.initial);
               },
             ),
-            SizedBox(),
+            const SizedBox(),
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.assignment_turned_in_outlined,
                 color: Colors.white,
               ),
               onPressed: () {
-                return null;
+                return;
               },
             ),
           ],

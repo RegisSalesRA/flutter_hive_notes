@@ -53,7 +53,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
           return Column(
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 5),
+                padding: const EdgeInsets.symmetric(vertical: 5),
                 child: TextField(
                     controller: widget.textController,
                     onChanged: widget.onChanged,
@@ -74,7 +74,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                       ),
                     )),
               ),
-              Container(
+              SizedBox(
                 height: 50,
                 child: Center(
                     child: Text(
@@ -100,27 +100,27 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                             direction: DismissDirection.startToEnd,
                             key: Key(note.key.toString()),
                             background: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   color: Colors.transparent,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20))),
                               child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Padding(
-                                      padding: EdgeInsets.only(left: 10),
+                                      padding: const EdgeInsets.only(left: 10),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.update_sharp),
-                                          SizedBox(
+                                          const Icon(Icons.update_sharp),
+                                          const SizedBox(
                                             width: 5,
                                           ),
                                           Text(
                                             "Complete",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline6,
+                                                .titleLarge,
                                           ),
                                         ],
                                       ))),
@@ -134,7 +134,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                               }
                             },
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 5),
+                              padding: const EdgeInsets.symmetric(vertical: 5),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20.0),
                                 child: Theme(
@@ -142,13 +142,13 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                       dividerColor: Colors.transparent),
                                   child: Material(
                                     child: Ink(
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                           color: Colors.transparent),
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             horizontal: 10),
                                         decoration: BoxDecoration(
-                                            boxShadow: [
+                                            boxShadow: const [
                                               BoxShadow(
                                                 color: Colors.transparent,
                                                 blurRadius: 2.0,
@@ -163,17 +163,18 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                                 color: Colors.grey.shade400)),
                                         child: ExpansionTile(
                                           title: Padding(
-                                            padding: EdgeInsets.only(bottom: 5),
+                                            padding: const EdgeInsets.only(
+                                                bottom: 5),
                                             child: Text(
                                               overflow: TextOverflow.ellipsis,
                                               note.name,
                                               style: note.isComplete != false
                                                   ? Theme.of(context)
                                                       .textTheme
-                                                      .headline5
+                                                      .headlineSmall
                                                   : Theme.of(context)
                                                       .textTheme
-                                                      .headline2,
+                                                      .displayMedium,
                                             ),
                                           ),
                                           subtitle: Row(
@@ -196,11 +197,14 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                             color:
                                                 timeDataExpired(note.dateTime),
                                           ),
+                                          tilePadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
                                           children: <Widget>[
                                             ListTile(title: Text(note.name)),
                                             Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 10),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 10),
                                                 child: GestureDetector(
                                                   onTap: () {
                                                     Navigator.of(context).push(
@@ -215,7 +219,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                                         .requestFocus(
                                                             FocusNode());
                                                   },
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Editar",
                                                     style: TextStyle(
                                                         color: ColorsTheme
@@ -225,8 +229,6 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                                   ),
                                                 ))
                                           ],
-                                          tilePadding: EdgeInsets.zero,
-                                          backgroundColor: Colors.transparent,
                                         ),
                                       ),
                                     ),
@@ -236,13 +238,13 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                             )),
                       );
                     } else {
-                      return SizedBox();
+                      return const SizedBox();
                     }
                   })
             ],
           );
         } else {
-          return EmptyListWidget();
+          return const EmptyListWidget();
         }
       },
     );

@@ -36,7 +36,6 @@ class CreateNoteButtonWidget extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          print(controllerName.text);
           var atualDate = DateTime.now();
           var dataChose =
               DateTime.parse(dataFormaterInput(_selectedDate, _timeOfDay));

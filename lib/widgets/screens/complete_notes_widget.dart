@@ -84,7 +84,8 @@ class CompleteNotesWidget extends StatelessWidget {
               children: [
                 if (keysIncompleteIndex == 0)
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 20),
                     child: Text(
                       "${keys.length} / ${boxform.value.values.length}",
                       style: TextStyle(
@@ -97,7 +98,8 @@ class CompleteNotesWidget extends StatelessWidget {
                   ),
                 if (keysIncompleteIndex != 0)
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 20),
                     child: Text(
                       "${keys.length} / ${keysIncomplete!.length}",
                       style: TextStyle(
@@ -108,7 +110,7 @@ class CompleteNotesWidget extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                Container(
+                SizedBox(
                   height: 50,
                   child: Center(
                       child: Text(
@@ -119,14 +121,14 @@ class CompleteNotesWidget extends StatelessWidget {
                   )),
                 ),
                 ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: keys.length,
                   shrinkWrap: true,
                   itemBuilder: (
                     context,
                     index,
                   ) {
-                    final int? key = keys![index];
+                    final int key = keys![index];
                     final Note? note = box.get(key);
                     return Dismissible(
                       direction: DismissDirection.endToStart,
@@ -138,34 +140,35 @@ class CompleteNotesWidget extends StatelessWidget {
                         }
                       },
                       secondaryBackground: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: Colors.transparent,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
                         child: Align(
                             alignment: Alignment.centerRight,
                             child: Padding(
-                                padding: EdgeInsets.only(right: 10),
+                                padding: const EdgeInsets.only(right: 10),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
                                       note.name,
-                                      style:
-                                          Theme.of(context).textTheme.headline6,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
-                                    Icon(Icons.delete)
+                                    const Icon(Icons.delete)
                                   ],
                                 ))),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
+                        padding: const EdgeInsets.symmetric(vertical: 5),
                         child: Container(
                             height: 75,
-                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.0),
                                 color: Colors.white,
@@ -182,7 +185,7 @@ class CompleteNotesWidget extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Container(
+                                        SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
@@ -192,10 +195,10 @@ class CompleteNotesWidget extends StatelessWidget {
                                             note.name,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline5,
+                                                .headlineSmall,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
                                         ),
                                         Row(
@@ -210,7 +213,7 @@ class CompleteNotesWidget extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                Icon(Icons.check_circle_outline)
+                                const Icon(Icons.check_circle_outline)
                               ],
                             )),
                       ),
@@ -221,7 +224,7 @@ class CompleteNotesWidget extends StatelessWidget {
             ),
           );
         } else {
-          return EmptyListWidget();
+          return const EmptyListWidget();
         }
       },
     );

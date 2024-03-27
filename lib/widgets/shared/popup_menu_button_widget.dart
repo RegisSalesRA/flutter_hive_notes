@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 
-import '../../config/colors.dart'; 
+import '../../config/colors.dart';
 
 class PopupMenuButtonWidget extends StatelessWidget {
   final void Function(int) onSelected;
-  const PopupMenuButtonWidget({Key? key,required this.onSelected}) : super(key: key);
+  const PopupMenuButtonWidget({Key? key, required this.onSelected})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
         iconSize: 30,
-        icon: Icon(
+        icon: const Icon(
           Icons.more_vert,
           color: ColorsTheme.primaryColor,
         ),
         onSelected: onSelected,
         itemBuilder: (BuildContext bc) {
           return [
-            PopupMenuItem(
+            const PopupMenuItem(
+              value: 1,
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,9 +32,9 @@ class PopupMenuButtonWidget extends StatelessWidget {
                     ),
                     Text("Home notes")
                   ]),
-              value: 1,
             ),
-            PopupMenuItem(
+            const PopupMenuItem(
+              value: 2,
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,9 +47,9 @@ class PopupMenuButtonWidget extends StatelessWidget {
                     ),
                     Text("Job notes")
                   ]),
-              value: 2,
             ),
-            PopupMenuItem(
+            const PopupMenuItem(
+              value: 3,
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,7 +62,6 @@ class PopupMenuButtonWidget extends StatelessWidget {
                     ),
                     Text("Urgency notes")
                   ]),
-              value: 3,
             )
           ];
         });

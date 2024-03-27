@@ -4,7 +4,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final bool? automaticallyImplyLeading;
   final Widget? widgetAction;
-  AppBarWidget(
+  const AppBarWidget(
       {Key? key, this.title, this.automaticallyImplyLeading, this.widgetAction})
       : super(key: key);
 
@@ -21,7 +21,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Text(
         title!,
-        style: Theme.of(context).textTheme.headline1,
+        style: Theme.of(context).textTheme.displayLarge,
       ),
       actions: [widgetAction!],
     );

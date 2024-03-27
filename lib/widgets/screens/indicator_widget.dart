@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class Indicator extends StatelessWidget {
   const Indicator({
+    super.key,
     required this.color,
     required this.text,
     required this.isSquare,

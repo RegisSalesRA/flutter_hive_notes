@@ -1,9 +1,9 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'config.dart';
 
 FloatingActionButtonThemeData floatingActionButtonThemeData() {
-    return FloatingActionButtonThemeData(
-        backgroundColor: ColorsTheme.primaryColor,
-      );
-  }
+  return const FloatingActionButtonThemeData(
+    backgroundColor: ColorsTheme.primaryColor,
+  );
+}

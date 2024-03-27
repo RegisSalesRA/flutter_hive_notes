@@ -11,6 +11,8 @@ import '../widgets/widget.dart';
 import 'note_form.dart';
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -44,13 +46,13 @@ class _HomeState extends State<Home> {
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => NoteForm(
+                  builder: (context) => const NoteForm(
                         noteObject: null,
                       )));
 
               FocusScope.of(context).requestFocus(FocusNode());
             },
-            child: Icon(
+            child: const Icon(
               Icons.add,
               color: Colors.white,
             ),
@@ -63,7 +65,7 @@ class _HomeState extends State<Home> {
             widgetAction: Row(children: [
               IconButton(
                 color: ColorsTheme.primaryColor,
-                icon: Icon(
+                icon: const Icon(
                   Icons.refresh,
                   size: 30,
                 ),
@@ -89,9 +91,9 @@ class _HomeState extends State<Home> {
             ]),
           ),
           body: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: filterValue == 0
                   ? NoteListWidget(
                       textController: controllerText,
@@ -119,15 +121,15 @@ class _HomeState extends State<Home> {
           bottomNavigationBar: BottomAppBarWidget(
             widgets: [
               IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.assignment_outlined,
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  return null;
+                  return;
                 },
               ),
-              SizedBox(),
+              const SizedBox(),
               IconButton(
                 icon: Icon(
                   Icons.assignment_turned_in_outlined,

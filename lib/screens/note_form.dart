@@ -9,7 +9,7 @@ class NoteForm extends StatefulWidget {
   final String? nameChange;
   final Note? noteObject;
 
-  NoteForm({
+  const NoteForm({
     Key? key,
     this.nameChange,
     required this.noteObject,
@@ -35,7 +35,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
   @override
   String? get restorationId => widget.restorationId;
 
-  RestorableDateTime _selectedDate = RestorableDateTime(
+  final RestorableDateTime _selectedDate = RestorableDateTime(
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
   late final RestorableRouteFuture<DateTime?> _restorableDatePickerRouteFuture =
       RestorableRouteFuture<DateTime?>(
@@ -80,8 +80,6 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
         _selectedDate.value = newSelectedDate;
         dataRecive = _selectedDate.value;
       });
-      print(dataRecive);
-      print(_selectedDate.value);
     }
   }
 
@@ -106,7 +104,6 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
       setState(() {
         _timeOfDay = time;
       });
-      print(_timeOfDay);
     }
   }
 
@@ -126,7 +123,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
     return SafeArea(
       child: Scaffold(
         appBar: AppBarWidget(
-          widgetAction: SizedBox(),
+          widgetAction: const SizedBox(),
           automaticallyImplyLeading: true,
           title: widget.noteObject == null ? "Create note" : "Update note",
         ),
@@ -134,13 +131,13 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
           child: Container(
             width: MediaQuerySize.widthSize(context) * 0.95,
             height: MediaQuerySize.heigthSize(context) * 0.95,
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
             child: Form(
                 key: noteFormKey,
                 child: ListView(
                   shrinkWrap: true,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     InputText(
@@ -155,7 +152,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                         name = value!;
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     DropDownWidget(
@@ -194,7 +191,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                         return null;
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
                     Center(
@@ -206,7 +203,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                         fontWeight: FontWeight.bold,
                       ),
                     )),
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
                     ToogleWidget(
@@ -221,86 +218,69 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                       }),
                     ),
                     if (!notificationSchedule == false) ...{
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       GestureDetector(
                         onTap: () => _restorableDatePickerRouteFuture.present(),
                         child: Container(
                           height: 60,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 3),
                           width: 100,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
                             border: Border.all(
                                 color: Colors.grey.shade200, width: 2),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              if (_selectedDate == null)
-                                Padding(
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: Text("Chose a date",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.grey.shade600)))
-                              else
-                                Padding(
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: Text(
-                                        dateTimeFormat(_selectedDate.value),
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.grey.shade600))),
-                              Icon(Icons.dataset),
+                              Padding(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  child: Text(
+                                      dateTimeFormat(_selectedDate.value),
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.grey.shade600))),
+                              const Icon(Icons.dataset),
                             ],
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
                       ),
                       GestureDetector(
                         onTap: () => _showTimePicker(),
                         child: Container(
                           height: 60,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 3),
                           width: 100,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
                             border: Border.all(
                                 color: Colors.grey.shade200, width: 2),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              if (_timeOfDay == null)
-                                Padding(
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: Text("Chose a hour",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.grey.shade600)))
-                              else
-                                Padding(
-                                  padding: EdgeInsets.only(left: 15),
-                                  child: Text(hourTimeFormat(_timeOfDay),
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.grey.shade600)),
-                                ),
-                              Icon(Icons.timer),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: Text(hourTimeFormat(_timeOfDay),
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.grey.shade600)),
+                              ),
+                              const Icon(Icons.timer),
                             ],
                           ),
                         ),
                       )
                     },
-                    SizedBox(
+                    const SizedBox(
                       height: 60,
                     ),
                     if (widget.noteObject == null)

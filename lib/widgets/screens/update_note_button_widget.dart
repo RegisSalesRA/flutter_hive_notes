@@ -36,8 +36,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-                20.0),  
+            borderRadius: BorderRadius.circular(20.0),
           ),
         ),
         onPressed: () {
@@ -45,9 +44,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
           var dataChose =
               DateTime.parse(dataFormaterInput(_selectedDate, _timeOfDay));
           if (noteFormKey.currentState!.validate()) {
-            print('Data - ${_selectedDate.value}');
-            print('Hora - ${_timeOfDay.hour}:${_timeOfDay.minute}');
-            if (notificationSchedule == false) {
+             if (notificationSchedule == false) {
               Note objectNote = Note(
                   id: noteObject!.id,
                   name: controllerName.text,
@@ -57,18 +54,14 @@ class UpdateNotebuttonWidget extends StatelessWidget {
                       dataFormaterInputUpdate(dataRecive!, _timeOfDay)),
                   payload: Routes.initial,
                   createdAt: noteObject!.createdAt);
-              print(objectNote.dateTime);
-              Provider.of<NotificationService>(context, listen: false)
+               Provider.of<NotificationService>(context, listen: false)
                   .updateNote(noteObject!.key, objectNote);
-              print(objectNote);
-              Navigator.of(context).pushNamed(Routes.initial);
+                Navigator.of(context).pushNamed(Routes.initial);
               return;
             }
 
             if (notificationSchedule == true && dataChose.isAfter(atualDate)) {
-              print('Data - ${_selectedDate.value}');
-              print('Hora - ${_timeOfDay.hour}:${_timeOfDay.minute}');
-              Note objectNote = Note(
+                Note objectNote = Note(
                   id: noteObject!.id,
                   name: controllerName.text,
                   urgency: controllerCategory.text,
@@ -77,10 +70,8 @@ class UpdateNotebuttonWidget extends StatelessWidget {
                       dataFormaterInputUpdate(dataRecive!, _timeOfDay)),
                   payload: Routes.initial,
                   createdAt: noteObject!.createdAt);
-              print(objectNote.dateTime);
-              Provider.of<NotificationService>(context, listen: false)
+               Provider.of<NotificationService>(context, listen: false)
                   .updateNote(noteObject!.key, objectNote);
-              print(objectNote);
               Navigator.of(context).pushNamed(Routes.initial);
               return;
             } else {

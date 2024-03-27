@@ -8,8 +8,12 @@ class DropDownWidget extends StatefulWidget {
   final List<DropdownMenuItem<String>>? dropdownItens;
   final Widget? hint;
 
-  DropDownWidget(
-      {Key? key, this.onChanged, required this.dropdownItens, this.hint, required this.validator})
+  const DropDownWidget(
+      {Key? key,
+      this.onChanged,
+      required this.dropdownItens,
+      this.hint,
+      required this.validator})
       : super(key: key);
 
   @override
@@ -28,10 +32,10 @@ class _DropDownWidgetState extends State<DropDownWidget> {
           hint: widget.hint,
           elevation: 16,
           isExpanded: true,
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_drop_down,
           ),
-          style: TextStyle(
+          style: const TextStyle(
             color: ColorsTheme.textInput,
           ),
           onSaved: widget.onChanged,

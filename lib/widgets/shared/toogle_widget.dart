@@ -25,10 +25,10 @@ class ToogleWidget extends StatelessWidget {
                 color: notificationSchedule == true
                     ? ColorsTheme.primaryColor
                     : Colors.grey.shade400,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     bottomLeft: Radius.circular(20))),
-            child: Center(
+            child: const Center(
                 child: Text(
               "Sim",
               style:
@@ -44,10 +44,10 @@ class ToogleWidget extends StatelessWidget {
                 color: notificationSchedule == false
                     ? ColorsTheme.primaryColor
                     : Colors.grey.shade400,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(20),
                     bottomRight: Radius.circular(20))),
-            child: Center(
+            child: const Center(
                 child: Text(
               "Nao",
               style:

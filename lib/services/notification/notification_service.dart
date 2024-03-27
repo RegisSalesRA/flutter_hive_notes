@@ -31,15 +31,9 @@ class NotificationService extends ChangeNotifier {
             enableLights: true,
             enableVibration: true);
 
-    const IOSNotificationDetails iOSPlatformChannelSpecifics =
-        IOSNotificationDetails(
-      presentSound: true,
-      presentAlert: true,
-      presentBadge: true,
-    );
     const NotificationDetails platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
-      iOS: iOSPlatformChannelSpecifics,
+      iOS: null,
     );
 
     if (schedule.dateTime

@@ -18,9 +18,9 @@ class RickTextChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         height: 75,
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.transparent,
                 blurRadius: 2.0,
@@ -46,7 +46,7 @@ class RickTextChart extends StatelessWidget {
                           color: Colors.grey.shade400,
                           fontWeight: FontWeight.bold)),
                   TextSpan(
-                      text: '${keys!.length.toString()}',
+                      text: keys!.length.toString(),
                       style: TextStyle(
                           color: color,
                           fontSize: 20,
