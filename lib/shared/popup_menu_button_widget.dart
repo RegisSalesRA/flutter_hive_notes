@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../config/colors.dart';
+import '../config/colors.dart';
 
 class PopupMenuButtonWidget extends StatelessWidget {
   final void Function(int) onSelected;
-  const PopupMenuButtonWidget({Key? key, required this.onSelected})
-      : super(key: key);
+  const PopupMenuButtonWidget({super.key, required this.onSelected});
 
   @override
   Widget build(BuildContext context) {

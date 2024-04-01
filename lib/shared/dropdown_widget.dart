@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../config/colors.dart';
+import '../config/colors.dart';
 
 class DropDownWidget extends StatefulWidget {
   final void Function(String?)? onChanged;
@@ -9,12 +9,11 @@ class DropDownWidget extends StatefulWidget {
   final Widget? hint;
 
   const DropDownWidget(
-      {Key? key,
+      {super.key,
       this.onChanged,
       required this.dropdownItens,
       this.hint,
-      required this.validator})
-      : super(key: key);
+      required this.validator});
 
   @override
   State<DropDownWidget> createState() => _DropDownWidgetState();

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../helpers/helpers.dart';
+import '../helpers/helpers.dart';
 
 class EmptyListWidget extends StatelessWidget {
   const EmptyListWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

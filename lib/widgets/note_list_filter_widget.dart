@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-import '../../animation/animation.dart';
-import '../../config/config.dart';
-import '../../services/note_hive/note_hive_service.dart';
-import '../../helpers/helpers.dart';
-import '../../models/note.dart';
-import '../../screens/note_form.dart';
-import '../widget.dart';
+import '../animation/animation.dart';
+import '../config/config.dart';
+import '../services/note_hive/note_hive_service.dart';
+import '../helpers/helpers.dart';
+import '../models/note.dart';
+import '../screens/notes/note_form.dart';
+import 'widget.dart';
 
 class NoteListFilterWidget extends StatefulWidget {
   final ValueListenable<Box<Note>> boxform;
@@ -18,13 +18,12 @@ class NoteListFilterWidget extends StatefulWidget {
   final void Function(String) onChanged;
 
   const NoteListFilterWidget(
-      {Key? key,
+      {super.key,
       required this.boxform,
       required this.search,
       required this.onChanged,
       required this.textController,
-      required this.filterValue})
-      : super(key: key);
+      required this.filterValue});
 
   @override
   State<NoteListFilterWidget> createState() => _NoteListFilterWidgetState();

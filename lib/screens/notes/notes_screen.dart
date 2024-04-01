@@ -4,20 +4,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/routes/routes.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-import '../config/config.dart';
-import '../models/note.dart';
-import '../widgets/widget.dart';
+import '../../models/note.dart';
+import '../../widgets/widget.dart';
 import 'note_form.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class NotesView extends StatefulWidget {
+  const NotesView({super.key});
 
   @override
-  _HomeState createState() => _HomeState();
+  NotesViewState createState() => NotesViewState();
 }
 
-class _HomeState extends State<Home> {
+class NotesViewState extends State<NotesView> {
   var selectedItem = '';
   late Timer _timer;
   String search = "";
@@ -54,7 +52,6 @@ class _HomeState extends State<Home> {
             },
             child: const Icon(
               Icons.add,
-              color: Colors.white,
             ),
           ),
           floatingActionButtonLocation:
@@ -64,7 +61,6 @@ class _HomeState extends State<Home> {
             title: "Notes",
             widgetAction: Row(children: [
               IconButton(
-                color: ColorsTheme.primaryColor,
                 icon: const Icon(
                   Icons.refresh,
                   size: 30,
@@ -123,7 +119,6 @@ class _HomeState extends State<Home> {
               IconButton(
                 icon: const Icon(
                   Icons.assignment_outlined,
-                  color: Colors.white,
                 ),
                 onPressed: () {
                   return;
@@ -131,9 +126,8 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(),
               IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.assignment_turned_in_outlined,
-                  color: Colors.grey.shade300,
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, Routes.complete);

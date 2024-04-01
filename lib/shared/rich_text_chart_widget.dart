@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class RickTextChart extends StatelessWidget {
   const RickTextChart({
-    Key? key,
+    super.key,
     required this.keys,
     required this.urgency,
     required this.title,
     required this.color,
-  }) : super(key: key);
+  });
 
   final List<int>? keys;
   final String urgency;

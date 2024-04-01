@@ -2,18 +2,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-import '../../config/config.dart';
-import '../../services/note_hive/note_hive_service.dart';
-import '../../helpers/helpers.dart';
-import '../../models/note.dart';
-import '../widget.dart';
+import '../config/config.dart';
+import '../services/note_hive/note_hive_service.dart';
+import '../helpers/helpers.dart';
+import '../models/note.dart';
+import 'widget.dart';
 
 class CompleteNotesWidget extends StatelessWidget {
   const CompleteNotesWidget({
-    Key? key,
+    super.key,
     required this.boxform,
     required this.filterValueComplete,
-  }) : super(key: key);
+  });
 
   final ValueListenable<Box<Note>> boxform;
   final int filterValueComplete;

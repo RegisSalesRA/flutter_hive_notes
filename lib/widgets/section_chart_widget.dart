@@ -1,7 +1,7 @@
  import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../../helpers/helpers.dart';
+import '../helpers/helpers.dart';
 
 List<PieChartSectionData> showingSections(touchedIndex,keysHome, keysComplete,keysJob,keysUrgency) {
     return List.generate(3, (i) {

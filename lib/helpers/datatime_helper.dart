@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 Color timeDataExpired(dateTime) {
-  var color;
+  Color? color;
   if (dateTime.isAfter(tz.TZDateTime.from(DateTime.now(), tz.local))) {
-    color = Color(0xFFa0aefc);
+    color = const Color(0xFFa0aefc);
   }
   if (dateTime.isBefore(tz.TZDateTime.from(DateTime.now(), tz.local))) {
     color = Colors.grey.shade300;
   }
-  return color;
+  return color!;
 }
 
 TimeOfDay timeOfDayFormat(var value) {

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
-import '../../animation/animation.dart';
-import '../../config/config.dart';
-import '../../helpers/helpers.dart';
-import '../../screens/note_form.dart';
-import '../../services/note_hive/note_hive_service.dart';
-import '../../models/note.dart';
-import '../widget.dart';
+import '../animation/animation.dart';
+import '../config/config.dart';
+import '../helpers/helpers.dart';
+import '../screens/notes/note_form.dart';
+import '../services/note_hive/note_hive_service.dart';
+import '../models/note.dart';
+import 'widget.dart';
 
 class NoteListWidget extends StatefulWidget {
   final ValueListenable<Box<Note>> boxform;
@@ -18,12 +18,11 @@ class NoteListWidget extends StatefulWidget {
   final void Function(String) onChanged;
 
   const NoteListWidget(
-      {Key? key,
+      {super.key,
       required this.boxform,
       required this.search,
       required this.onChanged,
-      required this.textController})
-      : super(key: key);
+      required this.textController});
 
   @override
   State<NoteListWidget> createState() => _NoteListWidgetState();

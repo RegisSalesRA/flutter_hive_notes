@@ -44,8 +44,7 @@ class NotificationService extends ChangeNotifier {
           schedule.urgency,
           tz.TZDateTime.from(schedule.dateTime, tz.local),
           platformChannelSpecifics,
-          payload: schedule.payload,
-          androidAllowWhileIdle: true,
+          payload: schedule.payload, 
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.absoluteTime);
     }

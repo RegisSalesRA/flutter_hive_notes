@@ -24,21 +24,6 @@ class _AppState extends State<App> {
 
   _initalizeNotifications() async {
     await setupTimeZone();
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/launcher_icon');
-
-    const InitializationSettings initializationSettings =
-        InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: null,
-    );
-  }
-
-  _onSelectNotification(String? payload) {
-    if (payload != null && payload.isNotEmpty) {
-      Navigator.of(Routes.navigatorKey!.currentContext!)
-          .pushReplacementNamed(payload);
-    }
   }
 
   Future<void> setupTimeZone() async {
@@ -46,7 +31,6 @@ class _AppState extends State<App> {
     final String timeZoneName = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZoneName));
   }
-  
 
   @override
   void initState() {
