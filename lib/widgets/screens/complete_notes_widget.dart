@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-
-import '../../config/config.dart';
+ 
+import '../../config/theme/theme.dart';
 import '../../services/note_hive/note_hive_service.dart';
 import '../../helpers/helpers.dart';
 import '../../models/note.dart';
@@ -91,7 +91,7 @@ class CompleteNotesWidget extends StatelessWidget {
                       style: TextStyle(
                           color: keys.length != boxform.value.values.length
                               ? Colors.grey.shade400
-                              : ColorsTheme.primaryColor,
+                              : ColorsThemeLight.primaryColor,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),
@@ -105,7 +105,7 @@ class CompleteNotesWidget extends StatelessWidget {
                       style: TextStyle(
                           color: keys.length != keysIncomplete.length
                               ? Colors.grey.shade400
-                              : ColorsTheme.primaryColor,
+                              : ColorsThemeLight.primaryColor,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),

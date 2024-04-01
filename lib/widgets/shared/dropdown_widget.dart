@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../config/colors.dart';
+import '../../config/theme/theme.dart';
+ 
 
 class DropDownWidget extends StatefulWidget {
   final void Function(String?)? onChanged;
@@ -36,7 +37,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
             Icons.arrow_drop_down,
           ),
           style: const TextStyle(
-            color: ColorsTheme.textInput,
+            color: ColorsThemeLight.primaryColor,
           ),
           onSaved: widget.onChanged,
           items: widget.dropdownItens,

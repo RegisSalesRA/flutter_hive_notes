@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/routes/routes.dart';
 import 'package:hive_flutter/adapters.dart';
-
-import '../config/config.dart';
+ 
+import '../config/theme/theme.dart';
 import '../models/note.dart';
 import '../widgets/widget.dart';
 
@@ -62,7 +62,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                           .toList();
                       return keys.isEmpty
                           ? const IconButton(
-                              color: ColorsTheme.themeColor,
+                              color: ColorsThemeLight.primaryColor,
                               icon: Icon(
                                 Icons.pie_chart_outline,
                                 size: 30,
@@ -70,7 +70,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                               onPressed: null,
                             )
                           : IconButton(
-                              color: ColorsTheme.primaryColor,
+                              color: ColorsThemeLight.primaryColor,
                               icon: const Icon(
                                 Icons.pie_chart_outline,
                                 size: 30,
@@ -85,7 +85,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                             );
                     }),
                 IconButton(
-                  color: ColorsTheme.primaryColor,
+                  color: ColorsThemeLight.primaryColor,
                   icon: const Icon(
                     Icons.refresh,
                     size: 30,

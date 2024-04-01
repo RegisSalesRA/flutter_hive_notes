@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import '../config/colors.dart';
+import 'package:flutter/material.dart'; 
+import '../config/theme/theme.dart';
 import '../helpers/helpers.dart';
 import '../models/note.dart';
 import '../widgets/widget.dart';
@@ -95,7 +95,7 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
               data: ThemeData(
                 primaryColor: Theme.of(context).primaryColor,
                 colorScheme: ColorScheme.fromSwatch(
-                        primarySwatch: ColorsTheme.themeColor)
+                        primarySwatch: Colors.blue)
                     .copyWith(secondary: Theme.of(context).primaryColor),
               ),
               child: child!);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../config/config.dart';
+import '../../config/theme/theme.dart';
 
 Future<void> showModalBottonSheetWidget(
     BuildContext context,
@@ -60,7 +60,7 @@ Future<void> showModalBottonSheetWidget(
                         padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
                             color: filterValueComplete == 1
-                                ? ColorsTheme.primaryColor
+                                ? ColorsThemeLight.primaryColor
                                 : Colors.grey.shade400,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
@@ -92,7 +92,7 @@ Future<void> showModalBottonSheetWidget(
                         padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
                             color: filterValueComplete == 2
-                                ? ColorsTheme.primaryColor
+                                ? ColorsThemeLight.primaryColor
                                 : Colors.grey.shade400,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
@@ -124,7 +124,7 @@ Future<void> showModalBottonSheetWidget(
                         padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
                             color: filterValueComplete == 3
-                                ? ColorsTheme.primaryColor
+                                ? ColorsThemeLight.primaryColor
                                 : Colors.grey.shade400,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../config/config.dart';
+import '../../config/theme/theme.dart'; 
 
 class ToogleWidget extends StatelessWidget {
   const ToogleWidget({
@@ -23,7 +23,7 @@ class ToogleWidget extends StatelessWidget {
             width: 140,
             decoration: BoxDecoration(
                 color: notificationSchedule == true
-                    ? ColorsTheme.primaryColor
+                    ? ColorsThemeLight.primaryColor
                     : Colors.grey.shade400,
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
@@ -42,7 +42,7 @@ class ToogleWidget extends StatelessWidget {
             width: 140,
             decoration: BoxDecoration(
                 color: notificationSchedule == false
-                    ? ColorsTheme.primaryColor
+                    ? ColorsThemeLight.primaryColor
                     : Colors.grey.shade400,
                 borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(20),

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
-import '../../animation/animation.dart';
-import '../../config/config.dart';
+import '../../animation/animation.dart'; 
+import '../../config/theme/theme.dart';
 import '../../helpers/helpers.dart';
 import '../../screens/note_form.dart';
 import '../../services/note_hive/note_hive_service.dart';
@@ -57,12 +57,12 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                 child: TextField(
                     controller: widget.textController,
                     onChanged: widget.onChanged,
-                    style: const TextStyle(color: ColorsTheme.textInput),
+                    style: const TextStyle(color: ColorsThemeLight.primaryColor),
                     decoration: InputDecoration(
                       hintStyle: TextStyle(color: Colors.grey.shade400),
                       contentPadding:
                           const EdgeInsets.symmetric(vertical: 15.0),
-                      fillColor: ColorsTheme.textColor,
+                      fillColor: ColorsThemeLight.textColor,
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(0.0),
@@ -222,7 +222,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                                   child: const Text(
                                                     "Editar",
                                                     style: TextStyle(
-                                                        color: ColorsTheme
+                                                        color: ColorsThemeLight
                                                             .primaryColor,
                                                         fontWeight:
                                                             FontWeight.bold),

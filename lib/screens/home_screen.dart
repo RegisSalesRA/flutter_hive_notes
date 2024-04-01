@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/routes/routes.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-import '../config/config.dart';
+ 
+import '../config/theme/theme.dart';
 import '../models/note.dart';
 import '../widgets/widget.dart';
 import 'note_form.dart';
@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
             title: "Notes",
             widgetAction: Row(children: [
               IconButton(
-                color: ColorsTheme.primaryColor,
+                color: ColorsThemeLight.primaryColor,
                 icon: const Icon(
                   Icons.refresh,
                   size: 30,

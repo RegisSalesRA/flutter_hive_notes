@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hive/routes/routes.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
-import 'config.dart';
+
+import 'theme/theme.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -15,43 +15,10 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  setupNotifications() async {
-    await _initalizeNotifications();
-  }
-
-  _initalizeNotifications() async {
-    await setupTimeZone();
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/launcher_icon');
-
-    const InitializationSettings initializationSettings =
-        InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: null,
-    );
-  }
-
-  _onSelectNotification(String? payload) {
-    if (payload != null && payload.isNotEmpty) {
-      Navigator.of(Routes.navigatorKey!.currentContext!)
-          .pushReplacementNamed(payload);
-    }
-  }
-
   Future<void> setupTimeZone() async {
     tz.initializeTimeZones();
     final String timeZoneName = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZoneName));
-  }
-  
-
-  @override
-  void initState() {
-    setupNotifications();
-    super.initState();
   }
 
   @override
@@ -67,20 +34,17 @@ class _AppState extends State<App> {
         // PrimariColors from App css
         primaryColor: Colors.white,
         // Progress Indicator Css
-        progressIndicatorTheme:
-            const ProgressIndicatorThemeData(color: ColorsTheme.primaryColor),
+        progressIndicatorTheme: progressIndicatorTheme(),
         // Text Css
-        textTheme: textThemeConfig(),
+        textTheme: textThemeConfigLight(),
         // Input Css
         inputDecorationTheme: inputDecorationThemeConfig(),
         // Button css
-        buttonTheme: buttonThemeDataConfig(),
         floatingActionButtonTheme: floatingActionButtonThemeData(),
-        iconTheme: const IconThemeData(color: ColorsTheme.primaryColor),
-        colorScheme:
-            ColorScheme.fromSwatch(primarySwatch: ColorsTheme.themeColor)
-                .copyWith(secondary: ColorsTheme.primaryColor)
-                .copyWith(background: Colors.white),
+        iconTheme: iconTheme(),
+        colorScheme: ColorScheme.fromSwatch()
+            .copyWith(secondary: ColorsThemeLight.primaryColor)
+            .copyWith(background: Colors.white),
       ),
       initialRoute: Routes.initial,
       routes: Routes.list,

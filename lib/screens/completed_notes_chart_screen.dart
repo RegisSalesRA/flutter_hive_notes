@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/config/colors.dart';
+import 'package:flutter_hive/config/theme/colors.dart'; 
 import 'package:flutter_hive/helpers/helpers.dart';
 import 'package:flutter_hive/models/note.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -157,7 +157,7 @@ class CompleteNotesChartScreenState extends State {
                               ),
                               RickTextChart(
                                 keys: keysIncomplete,
-                                color: ColorsTheme.primaryColor,
+                                color: ColorsThemeLight.primaryColor,
                                 urgency: 'Uncompleted ',
                                 title: 'notes - ',
                               ),
