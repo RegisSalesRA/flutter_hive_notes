@@ -65,7 +65,6 @@ class NotesViewState extends State<NotesView> {
               IconButton(
                 icon: const Icon(
                   Icons.refresh,
-                  size: 30,
                 ),
                 onPressed: () {
                   setState(() {
@@ -121,6 +120,7 @@ class NotesViewState extends State<NotesView> {
               IconButton(
                 icon: const Icon(
                   Icons.assignment_outlined,
+                  size: 40,
                 ),
                 onPressed: () {
                   return;
@@ -130,6 +130,7 @@ class NotesViewState extends State<NotesView> {
               IconButton(
                 icon: const Icon(
                   Icons.assignment_turned_in_outlined,
+                  size: 40,
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, Routes.complete);

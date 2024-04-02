@@ -6,15 +6,19 @@ class BottomAppBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomAppBar(
-      color: Theme.of(context).colorScheme.primary,
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 5,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [...widgets!],
+    return ClipRRect(
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40), topRight: Radius.circular(40)),
+      child: BottomAppBar(
+        color: Theme.of(context).colorScheme.primary,
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 5,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [...widgets!],
+          ),
         ),
       ),
     );

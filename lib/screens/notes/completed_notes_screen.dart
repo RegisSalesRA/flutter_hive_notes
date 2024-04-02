@@ -7,8 +7,6 @@ import 'package:flutter_hive/shared/show_modal_bottonsheet_widget.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import '../../widgets/widget.dart';
- 
- 
 
 class CompleteNoteScreen extends StatefulWidget {
   const CompleteNoteScreen({super.key});
@@ -26,6 +24,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
+          shape: const CircleBorder(),
           onPressed: () {
             showModalBottonSheetWidget(context, () {
               setState(() {
@@ -64,7 +63,6 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                           .toList();
                       return keys.isEmpty
                           ? const IconButton(
-                              color: ColorsThemeLight.primaryColor,
                               icon: Icon(
                                 Icons.pie_chart_outline,
                                 size: 30,
@@ -72,7 +70,6 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                               onPressed: null,
                             )
                           : IconButton(
-                              color: ColorsThemeLight.primaryColor,
                               icon: const Icon(
                                 Icons.pie_chart_outline,
                                 size: 30,
@@ -87,7 +84,6 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                             );
                     }),
                 IconButton(
-                  color: ColorsThemeLight.primaryColor,
                   icon: const Icon(
                     Icons.refresh,
                     size: 30,
@@ -114,6 +110,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
             IconButton(
               icon: const Icon(
                 Icons.assignment_outlined,
+                size: 48,
               ),
               onPressed: () {
                 Navigator.pushNamed(context, Routes.initial);
@@ -123,6 +120,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
             IconButton(
               icon: const Icon(
                 Icons.assignment_turned_in_outlined,
+                size: 48,
               ),
               onPressed: () {
                 return;
