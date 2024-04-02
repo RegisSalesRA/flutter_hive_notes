@@ -26,6 +26,9 @@ class Note extends HiveObject {
   @HiveField(6)
   DateTime dateTime;
 
+  @HiveField(7)
+  String description;
+
   Note(
       {int? id,
       required this.name,
@@ -33,6 +36,7 @@ class Note extends HiveObject {
       required this.isComplete,
       required this.payload,
       required this.dateTime,
+      required this.description,
       required this.createdAt}) {
     this.id = id ?? Random.secure().nextInt(10000 - 1000) + 1000;
   }

@@ -1,0 +1,5 @@
+flutter clean
+flutter pub cache repair
+flutter pub run build_runner clean
+
+flutter pub run build_runner build

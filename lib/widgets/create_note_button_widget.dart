@@ -42,6 +42,7 @@ class CreateNoteButtonWidget extends StatelessWidget {
             if (notificationSchedule == false) {
               Note objectNote = Note(
                   name: controllerName.text,
+                  description: controllerName.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(
@@ -56,6 +57,7 @@ class CreateNoteButtonWidget extends StatelessWidget {
             if (notificationSchedule == true && dataChose.isAfter(atualDate)) {
               Note objectNote = Note(
                   name: controllerName.text,
+                    description: controllerName.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(

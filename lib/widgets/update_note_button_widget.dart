@@ -47,6 +47,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
               Note objectNote = Note(
                   id: noteObject!.id,
                   name: controllerName.text,
+                  description: controllerName.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(
@@ -63,6 +64,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
               Note objectNote = Note(
                   id: noteObject!.id,
                   name: controllerName.text,
+                  description: controllerName.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(
