@@ -2,11 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/config/theme/colors.dart';
 import 'package:flutter_hive/routes/routes.dart';
 import 'package:hive_flutter/hive_flutter.dart';
- 
- 
+
 import '../../models/note.dart';
 import '../../widgets/widget.dart';
 import 'note_form.dart';
@@ -45,6 +43,7 @@ class NotesViewState extends State<NotesView> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           floatingActionButton: FloatingActionButton(
+            shape: const CircleBorder(),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const NoteForm(
@@ -64,7 +63,6 @@ class NotesViewState extends State<NotesView> {
             title: "Notes",
             widgetAction: Row(children: [
               IconButton(
-                color: ColorsThemeLight.primaryColor,
                 icon: const Icon(
                   Icons.refresh,
                   size: 30,

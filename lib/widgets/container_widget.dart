@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 class ContainerWidget extends StatelessWidget {
   final String? icon;
   final String? title;
-  final String? describe;
-  const ContainerWidget(
-      {super.key,
-      required this.icon,
-      required this.describe,
-      required this.title});
+  const ContainerWidget({super.key, required this.icon, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -23,22 +18,15 @@ class ContainerWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            /**
-             Image.asset(
+            Image.asset(
               icon!,
               height: 50,
-            )
-             */
-            Text(icon.toString()),
+            ),
             Center(
               child: Text(
                 title!,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
-            ),
-            Text(
-              describe!,
-              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ]),
     );

@@ -21,42 +21,25 @@ class HomeView extends StatelessWidget {
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pushNamed(Routes.notes),
                   child: const ContainerWidget(
-                    describe: "Goals",
                     title: "Goals",
-                    icon: "Goals",
+                    icon: 'assets/images/icons/objetivo.png',
                   ),
                 ),
                 GestureDetector(
                   onTap: () => Navigator.of(context).pushNamed(Routes.notes),
                   child: const ContainerWidget(
-                    describe: "Notes",
                     title: "Notes",
-                    icon: "Notes",
+                    icon: 'assets/images/icons/taxa.png',
                   ),
                 ),
               ],
             ),
-            Row(
-              children: [
-                Container(
-                  child: const ContainerWidget(
-                    describe: "",
-                    title: "",
-                    icon: "",
-                  ),
-                ),
-                Container(
-                  child: const ContainerWidget(
-                    describe: "",
-                    title: "",
-                    icon: "",
-                  ),
-                ),
-              ],
-            ),
+            const SizedBox()
           ],
         ),
       ),

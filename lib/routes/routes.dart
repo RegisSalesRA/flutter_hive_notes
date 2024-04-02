@@ -8,7 +8,7 @@ class Routes {
   static Map<String, Widget Function(BuildContext)> list =
       <String, WidgetBuilder>{
     '/': (context) => const HomeView(),
-    '/notes/': (context) => const NotesView(),
+    '/notes': (context) => const NotesView(),
     '/notes/complete': (context) => const CompleteNoteScreen(),
     '/notes/chart': (context) => const CompleteNotesChartScreen(),
   };

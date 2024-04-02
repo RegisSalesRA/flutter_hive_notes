@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../config/theme/theme.dart';
- 
-
 class PopupMenuButtonWidget extends StatelessWidget {
   final void Function(int) onSelected;
   const PopupMenuButtonWidget({super.key, required this.onSelected});
@@ -13,7 +10,6 @@ class PopupMenuButtonWidget extends StatelessWidget {
         iconSize: 30,
         icon: const Icon(
           Icons.more_vert,
-          color: ColorsThemeLight.primaryColor,
         ),
         onSelected: onSelected,
         itemBuilder: (BuildContext bc) {

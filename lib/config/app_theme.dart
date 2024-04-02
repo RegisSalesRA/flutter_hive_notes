@@ -15,9 +15,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
   setupNotifications() async {
     await _initalizeNotifications();
   }
@@ -47,21 +44,25 @@ class _AppState extends State<App> {
       title: 'Notes',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Poppins',
         useMaterial3: true,
         // PrimariColors from App css
-        primaryColor: Colors.white,
+        //  primaryColor: Colors.white,
         // Progress Indicator Css
-        progressIndicatorTheme: progressIndicatorTheme(),
+        //  progressIndicatorTheme: progressIndicatorTheme(),
         // Text Css
         textTheme: textThemeConfigLight(),
         // Input Css
-        inputDecorationTheme: inputDecorationThemeConfig(),
-        // Button css
-        floatingActionButtonTheme: floatingActionButtonThemeData(),
+        //  inputDecorationTheme: inputDecorationThemeConfig(),
+        // Button css 
         iconTheme: iconTheme(),
-        colorScheme: ColorScheme.fromSwatch()
-            .copyWith(secondary: ColorsThemeLight.primaryColor)
-            .copyWith(background: Colors.white),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurpleAccent,
+          background: Colors.grey.shade200,
+          error: Colors.red,
+          onError: Colors.red,
+          primary: const Color(0xFFeaddff),
+        ),
       ),
       initialRoute: Routes.initial,
       routes: Routes.list,
