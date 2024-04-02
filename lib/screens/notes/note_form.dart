@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart'; 
-import '../config/theme/theme.dart';
-import '../helpers/helpers.dart';
-import '../models/note.dart';
-import '../widgets/widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_hive/models/note.dart';
+
+import '../../helpers/helpers.dart';
+import '../../widgets/widget.dart'; 
 
 class NoteForm extends StatefulWidget {
   final String? restorationId;
@@ -10,16 +10,16 @@ class NoteForm extends StatefulWidget {
   final Note? noteObject;
 
   const NoteForm({
-    Key? key,
+    super.key,
     this.nameChange,
     required this.noteObject,
     this.restorationId,
-  }) : super(key: key);
+  });
   @override
-  _NoteFormState createState() => _NoteFormState();
+  NoteFormState createState() => NoteFormState();
 }
 
-class _NoteFormState extends State<NoteForm> with RestorationMixin {
+class NoteFormState extends State<NoteForm> with RestorationMixin {
   final noteFormKey = GlobalKey<FormState>();
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCategory = TextEditingController();
@@ -162,8 +162,9 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                           widget.noteObject == null
                               ? "Select Option"
                               : widget.noteObject!.urgency,
-                          style: TextStyle(
-                              fontSize: 18, color: Colors.grey.shade600),
+                          style: const TextStyle(
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                       dropdownItens: noteCategory.map(
@@ -174,9 +175,9 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                                 width: 100,
                                 child: Text(
                                   val["name"],
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.grey.shade600),
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                  ),
                                 )),
                           );
                         },
@@ -194,12 +195,11 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                     const SizedBox(
                       height: 25,
                     ),
-                    Center(
+                    const Center(
                         child: Text(
                       "Want to schedule a notification?",
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.grey.shade500,
                         fontWeight: FontWeight.bold,
                       ),
                     )),
@@ -229,22 +229,20 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                               horizontal: 10, vertical: 3),
                           width: 100,
                           decoration: BoxDecoration(
-                            color: Colors.white,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(20)),
-                            border: Border.all(
-                                color: Colors.grey.shade200, width: 2),
+                            border: Border.all(width: 2),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
                                   padding: const EdgeInsets.only(left: 15),
-                                  child: Text(
-                                      dateTimeFormat(_selectedDate.value),
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.grey.shade600))),
+                                  child:
+                                      Text(dateTimeFormat(_selectedDate.value),
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                          ))),
                               const Icon(Icons.dataset),
                             ],
                           ),
@@ -258,11 +256,9 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                               horizontal: 10, vertical: 3),
                           width: 100,
                           decoration: BoxDecoration(
-                            color: Colors.white,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(20)),
-                            border: Border.all(
-                                color: Colors.grey.shade200, width: 2),
+                            border: Border.all(width: 2),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -270,9 +266,9 @@ class _NoteFormState extends State<NoteForm> with RestorationMixin {
                               Padding(
                                 padding: const EdgeInsets.only(left: 15),
                                 child: Text(hourTimeFormat(_timeOfDay),
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.grey.shade600)),
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                    )),
                               ),
                               const Icon(Icons.timer),
                             ],

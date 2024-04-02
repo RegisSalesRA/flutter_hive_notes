@@ -6,7 +6,7 @@ import 'package:flutter_hive/helpers/helpers.dart';
 import 'package:flutter_hive/models/note.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../widgets/widget.dart';
+import '../../widgets/widget.dart';
 
 class CompleteNotesChartScreen extends StatefulWidget {
   const CompleteNotesChartScreen({super.key});

@@ -5,8 +5,7 @@ class AnimatedSlideText extends StatefulWidget {
   final Widget child;
   final double direction;
 
-  const AnimatedSlideText({Key? key,required this.child,required this.direction})
-      : super(key: key);
+  const AnimatedSlideText({super.key,required this.child,required this.direction});
 
   @override
   State<AnimatedSlideText> createState() => _AnimatedSlideTextState();

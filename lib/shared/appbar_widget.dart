@@ -5,8 +5,10 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final bool? automaticallyImplyLeading;
   final Widget? widgetAction;
   const AppBarWidget(
-      {Key? key, this.title, this.automaticallyImplyLeading, this.widgetAction})
-      : super(key: key);
+      {super.key,
+      this.title,
+      this.automaticallyImplyLeading,
+      this.widgetAction});
 
   @override
   Size get preferredSize => const Size.fromHeight(50);

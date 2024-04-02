@@ -15,10 +15,27 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  setupNotifications() async {
+    await _initalizeNotifications();
+  }
+
+  _initalizeNotifications() async {
+    await setupTimeZone();
+  }
+
   Future<void> setupTimeZone() async {
     tz.initializeTimeZones();
     final String timeZoneName = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZoneName));
+  }
+
+  @override
+  void initState() {
+    setupNotifications();
+    super.initState();
   }
 
   @override

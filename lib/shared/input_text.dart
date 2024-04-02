@@ -6,11 +6,10 @@ class InputText extends StatefulWidget {
   final Function(String?)? onChanged;
 
   const InputText(
-      {Key? key,
+      {super.key,
       required this.validator,
       this.onChanged,
-      required this.controller})
-      : super(key: key);
+      required this.controller});
 
   @override
   State<InputText> createState() => _InputTextState();

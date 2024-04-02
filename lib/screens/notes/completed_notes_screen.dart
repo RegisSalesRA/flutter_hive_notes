@@ -1,11 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hive/config/theme/colors.dart';
+import 'package:flutter_hive/models/note.dart';
 import 'package:flutter_hive/routes/routes.dart';
+import 'package:flutter_hive/shared/show_modal_bottonsheet_widget.dart';
 import 'package:hive_flutter/adapters.dart';
+
+import '../../widgets/widget.dart';
  
-import '../config/theme/theme.dart';
-import '../models/note.dart';
-import '../widgets/widget.dart';
+ 
 
 class CompleteNoteScreen extends StatefulWidget {
   const CompleteNoteScreen({super.key});
@@ -43,7 +46,6 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
           },
           child: const Icon(
             Icons.filter_alt,
-            color: Colors.white,
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -110,9 +112,8 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
         bottomNavigationBar: BottomAppBarWidget(
           widgets: [
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.assignment_outlined,
-                color: Colors.grey.shade300,
               ),
               onPressed: () {
                 Navigator.pushNamed(context, Routes.initial);
@@ -122,7 +123,6 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
             IconButton(
               icon: const Icon(
                 Icons.assignment_turned_in_outlined,
-                color: Colors.white,
               ),
               onPressed: () {
                 return;

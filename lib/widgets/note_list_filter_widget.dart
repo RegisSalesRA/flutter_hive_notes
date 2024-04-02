@@ -1,55 +1,70 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hive/screens/notes/note_form.dart';
+import 'package:flutter_hive/shared/empty_list_widget.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 
 import '../../animation/animation.dart'; 
 import '../../config/theme/theme.dart';
-import '../../helpers/helpers.dart';
-import '../../screens/note_form.dart';
 import '../../services/note_hive/note_hive_service.dart';
+import '../../helpers/helpers.dart';
 import '../../models/note.dart';
-import '../widget.dart';
 
-class NoteListWidget extends StatefulWidget {
+
+class NoteListFilterWidget extends StatefulWidget {
   final ValueListenable<Box<Note>> boxform;
   final String search;
+  final int filterValue;
   final TextEditingController textController;
   final void Function(String) onChanged;
 
-  const NoteListWidget(
-      {Key? key,
+  const NoteListFilterWidget(
+      {super.key,
       required this.boxform,
       required this.search,
       required this.onChanged,
-      required this.textController})
-      : super(key: key);
+      required this.textController,
+      required this.filterValue});
 
   @override
-  State<NoteListWidget> createState() => _NoteListWidgetState();
+  State<NoteListFilterWidget> createState() => _NoteListFilterWidgetState();
 }
 
-List<int>? keys;
-List<int>? keysSort;
+List<int>? keysFilter;
+List<int>? keysSortFilter;
 
-final ValueNotifier<DateTime> dateTime =
-    ValueNotifier<DateTime>(DateTime.now());
-String formattedTime = DateFormat('kk:mm').format(DateTime.now());
-String hour = DateFormat('a').format(DateTime.now());
-
-class _NoteListWidgetState extends State<NoteListWidget> {
+class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.boxform,
       builder: (context, Box<Note> box, _) {
-        List<int> keys = box.keys
-            .cast<int>()
-            .where((key) => box.get(key)!.isComplete == false)
-            .toList();
-        List<int> keysSort = keys.reversed.toList();
-
-        if (keys.isNotEmpty) {
+        if (widget.filterValue == 1) {
+          keysFilter = box.keys
+              .cast<int>()
+              .where((key) =>
+                  box.get(key)!.urgency == "Home" &&
+                  box.get(key)!.isComplete == false)
+              .toList();
+        }
+        if (widget.filterValue == 2) {
+          keysFilter = box.keys
+              .cast<int>()
+              .where((key) =>
+                  box.get(key)!.urgency == "Job" &&
+                  box.get(key)!.isComplete == false)
+              .toList();
+        }
+        if (widget.filterValue == 3) {
+          keysFilter = box.keys
+              .cast<int>()
+              .where((key) =>
+                  box.get(key)!.urgency == "Urgency" &&
+                  box.get(key)!.isComplete == false)
+              .toList();
+        }
+        List<int> keysSortFilter = keysFilter!.reversed.toList();
+        if (keysFilter!.isNotEmpty) {
           return Column(
             children: [
               Padding(
@@ -86,17 +101,25 @@ class _NoteListWidgetState extends State<NoteListWidget> {
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: keysSort.length,
+                  itemCount: keysSortFilter.length,
                   itemBuilder: (context, index) {
-                    int key = keysSort[index];
+                    final int key = keysSortFilter[index];
                     Note? note = box.get(key);
                     if (note!.name
                         .toString()
                         .toLowerCase()
                         .contains(widget.search)) {
-                      return AnimatedSlideText(
-                        direction: 1,
-                        child: Dismissible(
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => NoteForm(
+                                    noteObject: note,
+                                  )));
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                        child: AnimatedSlideText(
+                          direction: 1,
+                          child: Dismissible(
                             direction: DismissDirection.startToEnd,
                             key: Key(note.key.toString()),
                             background: Container(
@@ -235,7 +258,9 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                   ),
                                 ),
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                       );
                     } else {
                       return const SizedBox();
@@ -250,9 +275,3 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     );
   }
 }
-
-
-
-/*
-
-*/

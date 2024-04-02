@@ -4,11 +4,11 @@ import '../../config/theme/theme.dart';
 
 class ToogleWidget extends StatelessWidget {
   const ToogleWidget({
-    Key? key,
+    super.key,
     required this.notificationSchedule,
     required this.onTap1,
     required this.onTap2,
-  }) : super(key: key);
+  });
 
   final bool notificationSchedule;
   final void Function()? onTap1;

@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/routes/routes.dart';
 import 'package:provider/provider.dart';
 
-import '../../helpers/datatime_helper.dart';
-import '../../models/note.dart';
-import '../../services/notification/notification_service.dart';
-import '../widget.dart';
+import '../helpers/helpers.dart';
+import '../models/note.dart';
+import '../routes/routes.dart';
+import '../services/notification/notification_service.dart';
+import 'widget.dart';
 
-class UpdateNotebuttonWidget extends StatelessWidget {
-  const UpdateNotebuttonWidget(
-      {Key? key,
-      required RestorableDateTime selectedDate,
-      required TimeOfDay timeOfDay,
-      required this.noteFormKey,
-      required this.notificationSchedule,
-      required this.controllerName,
-      required this.dataRecive,
-      required this.controllerCategory,
-      required this.noteObject})
-      : _selectedDate = selectedDate,
-        _timeOfDay = timeOfDay,
-        super(key: key);
+class CreateNoteButtonWidget extends StatelessWidget {
+  const CreateNoteButtonWidget({
+    super.key,
+    required RestorableDateTime selectedDate,
+    required TimeOfDay timeOfDay,
+    required this.noteFormKey,
+    required this.notificationSchedule,
+    required this.controllerName,
+    required this.controllerCategory,
+  })  : _selectedDate = selectedDate,
+        _timeOfDay = timeOfDay;
 
   final RestorableDateTime _selectedDate;
   final TimeOfDay _timeOfDay;
@@ -28,8 +25,6 @@ class UpdateNotebuttonWidget extends StatelessWidget {
   final bool notificationSchedule;
   final TextEditingController controllerName;
   final TextEditingController controllerCategory;
-  final Note? noteObject;
-  final DateTime? dataRecive;
 
   @override
   Widget build(BuildContext context) {
@@ -44,44 +39,42 @@ class UpdateNotebuttonWidget extends StatelessWidget {
           var dataChose =
               DateTime.parse(dataFormaterInput(_selectedDate, _timeOfDay));
           if (noteFormKey.currentState!.validate()) {
-             if (notificationSchedule == false) {
+            if (notificationSchedule == false) {
               Note objectNote = Note(
-                  id: noteObject!.id,
                   name: controllerName.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(
-                      dataFormaterInputUpdate(dataRecive!, _timeOfDay)),
+                      dataFormaterInput(_selectedDate, _timeOfDay)),
                   payload: Routes.initial,
-                  createdAt: noteObject!.createdAt);
-               Provider.of<NotificationService>(context, listen: false)
-                  .updateNote(noteObject!.key, objectNote);
-                Navigator.of(context).pushNamed(Routes.initial);
+                  createdAt: DateTime.now());
+              Provider.of<NotificationService>(context, listen: false)
+                  .insertNote(objectNote);
+              Navigator.of(context).pushNamed(Routes.initial);
               return;
             }
-
             if (notificationSchedule == true && dataChose.isAfter(atualDate)) {
-                Note objectNote = Note(
-                  id: noteObject!.id,
+              Note objectNote = Note(
                   name: controllerName.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(
-                      dataFormaterInputUpdate(dataRecive!, _timeOfDay)),
+                      dataFormaterInput(_selectedDate, _timeOfDay)),
                   payload: Routes.initial,
-                  createdAt: noteObject!.createdAt);
-               Provider.of<NotificationService>(context, listen: false)
-                  .updateNote(noteObject!.key, objectNote);
+                  createdAt: DateTime.now());
+              Provider.of<NotificationService>(context, listen: false)
+                  .insertNote(objectNote);
               Navigator.of(context).pushNamed(Routes.initial);
               return;
             } else {
               snackBarWidget(
-                  context, 'You need to choose a time above the current one');
+                  context, 'you need to choose a time above the current one');
+              return;
             }
           }
         },
         child: Text(
-          "Update note",
+          "Create note",
           style: Theme.of(context).textTheme.headlineMedium,
         ));
   }
