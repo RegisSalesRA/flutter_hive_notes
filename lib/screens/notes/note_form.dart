@@ -22,6 +22,7 @@ class NoteForm extends StatefulWidget {
 class NoteFormState extends State<NoteForm> with RestorationMixin {
   final noteFormKey = GlobalKey<FormState>();
   TextEditingController controllerName = TextEditingController();
+  TextEditingController controllerDetail = TextEditingController();
   TextEditingController controllerCategory = TextEditingController();
   String name = "";
   DateTime? dataRecive;
