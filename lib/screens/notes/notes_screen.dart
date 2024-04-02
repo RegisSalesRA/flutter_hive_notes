@@ -60,6 +60,11 @@ class NotesViewState extends State<NotesView> {
               FloatingActionButtonLocation.centerDocked,
           appBar: AppBarWidget(
             automaticallyImplyLeading: false,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_rounded),
+              onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                  context, Routes.initial, (route) => false),
+            ),
             title: "Notes",
             widgetAction: Row(children: [
               IconButton(

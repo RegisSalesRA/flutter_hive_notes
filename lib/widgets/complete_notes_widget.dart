@@ -6,7 +6,7 @@ import '../../config/theme/theme.dart';
 import '../../services/note_hive/note_hive_service.dart';
 import '../../helpers/helpers.dart';
 import '../../models/note.dart';
-import '../shared/empty_list_widget.dart';
+import 'empty_list_widget.dart';
 
 
 class CompleteNotesWidget extends StatelessWidget {

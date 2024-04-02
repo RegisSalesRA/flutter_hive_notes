@@ -48,6 +48,11 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         appBar: AppBarWidget(
             automaticallyImplyLeading: false,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_rounded),
+              onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                  context, Routes.initial, (route) => false),
+            ),
             title: "Complete notes",
             widgetAction: Row(
               children: [

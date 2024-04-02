@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/screens/notes/note_form.dart';
-import 'package:flutter_hive/shared/empty_list_widget.dart';
+import 'package:flutter_hive/widgets/empty_list_widget.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
