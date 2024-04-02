@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/config/theme/colors.dart';
 import 'package:flutter_hive/models/note.dart';
 import 'package:flutter_hive/routes/routes.dart';
-import 'package:flutter_hive/shared/show_modal_bottonsheet_widget.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import '../../widgets/widget.dart';
@@ -109,21 +107,19 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
           widgets: [
             IconButton(
               icon: const Icon(
-                Icons.assignment_outlined,
-                size: 48,
+                Icons.not_interested_sharp,
               ),
               onPressed: () {
-                Navigator.pushNamed(context, Routes.initial);
+                Navigator.pushReplacementNamed(context, Routes.notes);
               },
             ),
             const SizedBox(),
             IconButton(
               icon: const Icon(
-                Icons.assignment_turned_in_outlined,
-                size: 48,
+                Icons.check,
               ),
               onPressed: () {
-                return;
+                Navigator.pushReplacementNamed(context, Routes.complete);
               },
             ),
           ],

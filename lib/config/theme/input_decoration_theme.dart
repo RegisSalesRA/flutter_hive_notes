@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/config/theme/colors.dart';
- 
+
 InputDecorationTheme inputDecorationThemeConfig() {
   return InputDecorationTheme(
-    labelStyle: const TextStyle(color: ColorsThemeLight.textColor),
     suffixIconColor: Colors.grey.shade400,
     filled: true,
     isDense: true,

@@ -5,13 +5,12 @@ import 'package:flutter_hive/shared/empty_list_widget.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
-import '../../animation/animation.dart'; 
+import '../../animation/animation.dart';
 import '../../config/theme/theme.dart';
 import '../../helpers/helpers.dart';
 
 import '../../services/note_hive/note_hive_service.dart';
 import '../../models/note.dart';
-
 
 class NoteListWidget extends StatefulWidget {
   final ValueListenable<Box<Note>> boxform;
@@ -58,30 +57,19 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                 child: TextField(
                     controller: widget.textController,
                     onChanged: widget.onChanged,
-                    style: const TextStyle(color: ColorsThemeLight.primaryColor),
-                    decoration: InputDecoration(
-                      hintStyle: TextStyle(color: Colors.grey.shade400),
-                      contentPadding:
-                          const EdgeInsets.symmetric(vertical: 15.0),
-                      fillColor: ColorsThemeLight.textColor,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(0.0),
-                      ),
+                    decoration: const InputDecoration(
                       hintText: 'Search notes',
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.search,
                         size: 30.0,
                       ),
                     )),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
                 child: Center(
                     child: Text(
                   "Drag the card to the right to mark it complete",
-                  style: TextStyle(
-                      color: Colors.grey.shade300, fontWeight: FontWeight.bold),
                 )),
               ),
               ListView.builder(

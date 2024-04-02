@@ -119,21 +119,19 @@ class NotesViewState extends State<NotesView> {
             widgets: [
               IconButton(
                 icon: const Icon(
-                  Icons.assignment_outlined,
-                  size: 40,
+                  Icons.not_interested_sharp,
                 ),
                 onPressed: () {
-                  return;
+                  Navigator.pushReplacementNamed(context, Routes.notes);
                 },
               ),
               const SizedBox(),
               IconButton(
                 icon: const Icon(
-                  Icons.assignment_turned_in_outlined,
-                  size: 40,
+                  Icons.check,
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, Routes.complete);
+                  Navigator.pushReplacementNamed(context, Routes.complete);
                 },
               ),
             ],

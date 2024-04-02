@@ -51,16 +51,14 @@ class _AppState extends State<App> {
         // Progress Indicator Css
         //  progressIndicatorTheme: progressIndicatorTheme(),
         // Text Css
+        textSelectionTheme:
+            const TextSelectionThemeData(cursorColor: Colors.black),
         textTheme: textThemeConfigLight(),
-        // Input Css
-        //  inputDecorationTheme: inputDecorationThemeConfig(),
-        // Button css 
+        inputDecorationTheme: inputDecorationThemeConfig(),
         iconTheme: iconTheme(),
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurpleAccent,
-          background: Colors.grey.shade200,
-          error: Colors.red,
-          onError: Colors.red,
+          background: const Color(0xFFF7F9FE),
           primary: const Color(0xFFeaddff),
         ),
       ),
