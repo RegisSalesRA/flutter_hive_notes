@@ -12,7 +12,10 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text("Goals && Notes"),
+        title: Text(
+          "Goals && Notes",
+          style: TextStyle(fontSize: 24, color: Colors.grey.shade400),
+        ),
         centerTitle: true,
       ),
       body: SizedBox(
@@ -20,11 +23,14 @@ class HomeView extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
+            const SizedBox(
+              height: 24,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  onTap: () => Navigator.of(context).pushNamed(Routes.notes),
+                  onTap: () => Navigator.of(context).pushNamed(Routes.goals),
                   child: const ContainerWidget(
                     title: "Goals",
                     icon: 'assets/images/icons/objetivo.png',

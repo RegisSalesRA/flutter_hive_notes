@@ -46,13 +46,10 @@ class _AppState extends State<App> {
       theme: ThemeData(
         fontFamily: 'Poppins',
         useMaterial3: true,
-        // PrimariColors from App css
-        //  primaryColor: Colors.white,
-        // Progress Indicator Css
-        //  progressIndicatorTheme: progressIndicatorTheme(),
-        // Text Css
         textSelectionTheme:
             const TextSelectionThemeData(cursorColor: Colors.black),
+        floatingActionButtonTheme:
+            const FloatingActionButtonThemeData(foregroundColor: Colors.black),
         textTheme: textThemeConfigLight(),
         inputDecorationTheme: inputDecorationThemeConfig(),
         iconTheme: iconTheme(),

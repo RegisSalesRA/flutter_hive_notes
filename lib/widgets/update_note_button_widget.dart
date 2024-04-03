@@ -15,6 +15,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
       required this.noteFormKey,
       required this.notificationSchedule,
       required this.controllerName,
+      required this.controllerDetail,
       required this.dataRecive,
       required this.controllerCategory,
       required this.noteObject})
@@ -26,6 +27,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
   final GlobalKey<FormState> noteFormKey;
   final bool notificationSchedule;
   final TextEditingController controllerName;
+  final TextEditingController controllerDetail;
   final TextEditingController controllerCategory;
   final Note? noteObject;
   final DateTime? dataRecive;
@@ -47,7 +49,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
               Note objectNote = Note(
                   id: noteObject!.id,
                   name: controllerName.text,
-                  description: controllerName.text,
+                  description: controllerDetail.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(
@@ -56,7 +58,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
                   createdAt: noteObject!.createdAt);
               Provider.of<NotificationService>(context, listen: false)
                   .updateNote(noteObject!.key, objectNote);
-              Navigator.of(context).pushNamed(Routes.initial);
+              Navigator.of(context).pushNamed(Routes.notes);
               return;
             }
 
@@ -64,7 +66,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
               Note objectNote = Note(
                   id: noteObject!.id,
                   name: controllerName.text,
-                  description: controllerName.text,
+                  description: controllerDetail.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(
@@ -73,7 +75,7 @@ class UpdateNotebuttonWidget extends StatelessWidget {
                   createdAt: noteObject!.createdAt);
               Provider.of<NotificationService>(context, listen: false)
                   .updateNote(noteObject!.key, objectNote);
-              Navigator.of(context).pushNamed(Routes.initial);
+              Navigator.of(context).pushNamed(Routes.notes);
               return;
             } else {
               snackBarWidget(

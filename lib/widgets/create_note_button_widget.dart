@@ -8,6 +8,13 @@ import '../services/notification/notification_service.dart';
 import 'widget.dart';
 
 class CreateNoteButtonWidget extends StatelessWidget {
+  final RestorableDateTime _selectedDate;
+  final TimeOfDay _timeOfDay;
+  final GlobalKey<FormState> noteFormKey;
+  final bool notificationSchedule;
+  final TextEditingController controllerName;
+  final TextEditingController controllerDetail;
+  final TextEditingController controllerCategory;
   const CreateNoteButtonWidget({
     super.key,
     required RestorableDateTime selectedDate,
@@ -15,16 +22,10 @@ class CreateNoteButtonWidget extends StatelessWidget {
     required this.noteFormKey,
     required this.notificationSchedule,
     required this.controllerName,
+    required this.controllerDetail,
     required this.controllerCategory,
   })  : _selectedDate = selectedDate,
         _timeOfDay = timeOfDay;
-
-  final RestorableDateTime _selectedDate;
-  final TimeOfDay _timeOfDay;
-  final GlobalKey<FormState> noteFormKey;
-  final bool notificationSchedule;
-  final TextEditingController controllerName;
-  final TextEditingController controllerCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class CreateNoteButtonWidget extends StatelessWidget {
             if (notificationSchedule == false) {
               Note objectNote = Note(
                   name: controllerName.text,
-                  description: controllerName.text,
+                  description: controllerDetail.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(
@@ -51,13 +52,13 @@ class CreateNoteButtonWidget extends StatelessWidget {
                   createdAt: DateTime.now());
               Provider.of<NotificationService>(context, listen: false)
                   .insertNote(objectNote);
-              Navigator.of(context).pushNamed(Routes.initial);
+              Navigator.of(context).pushNamed(Routes.notes);
               return;
             }
             if (notificationSchedule == true && dataChose.isAfter(atualDate)) {
               Note objectNote = Note(
                   name: controllerName.text,
-                    description: controllerName.text,
+                  description: controllerDetail.text,
                   urgency: controllerCategory.text,
                   isComplete: false,
                   dateTime: DateTime.parse(
@@ -66,7 +67,7 @@ class CreateNoteButtonWidget extends StatelessWidget {
                   createdAt: DateTime.now());
               Provider.of<NotificationService>(context, listen: false)
                   .insertNote(objectNote);
-              Navigator.of(context).pushNamed(Routes.initial);
+              Navigator.of(context).pushNamed(Routes.notes);
               return;
             } else {
               snackBarWidget(

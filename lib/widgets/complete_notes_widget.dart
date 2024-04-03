@@ -117,7 +117,7 @@ class CompleteNotesWidget extends StatelessWidget {
                       child: Text(
                     "Drag the card to the left to delete it",
                     style: TextStyle(
-                        color: Colors.grey.shade300,
+                        color: Colors.grey.shade400,
                         fontWeight: FontWeight.bold),
                   )),
                 ),

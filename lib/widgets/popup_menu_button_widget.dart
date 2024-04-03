@@ -8,8 +8,9 @@ class PopupMenuButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopupMenuButton(
         iconSize: 30,
-        icon: const Icon(
+        icon: Icon(
           Icons.more_vert,
+          color: Colors.grey.shade400,
         ),
         onSelected: onSelected,
         itemBuilder: (BuildContext bc) {

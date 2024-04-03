@@ -25,6 +25,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Text(
         title!,
+        style: TextStyle(color: Colors.grey.shade400),
       ),
       actions: [widgetAction!],
     );

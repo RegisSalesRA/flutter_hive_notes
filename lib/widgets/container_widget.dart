@@ -12,7 +12,7 @@ class ContainerWidget extends StatelessWidget {
       width: 150,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
+          color: const Color(0xFFeaddff),
           borderRadius: BorderRadius.circular(16)),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

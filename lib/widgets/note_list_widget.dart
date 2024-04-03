@@ -65,11 +65,13 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                       ),
                     )),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 50,
                 child: Center(
                     child: Text(
                   "Drag the card to the right to mark it complete",
+                  style: TextStyle(
+                      color: Colors.grey.shade400, fontWeight: FontWeight.bold),
                 )),
               ),
               ListView.builder(
@@ -157,13 +159,6 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                             child: Text(
                                               overflow: TextOverflow.ellipsis,
                                               note.name,
-                                              style: note.isComplete != false
-                                                  ? Theme.of(context)
-                                                      .textTheme
-                                                      .headlineSmall
-                                                  : Theme.of(context)
-                                                      .textTheme
-                                                      .displayMedium,
                                             ),
                                           ),
                                           subtitle: Row(
@@ -181,15 +176,13 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                           ),
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
-                                          trailing: Icon(
-                                            Icons.alarm_rounded,
-                                            color:
-                                                timeDataExpired(note.dateTime),
-                                          ),
                                           tilePadding: EdgeInsets.zero,
                                           backgroundColor: Colors.transparent,
                                           children: <Widget>[
-                                            ListTile(title: Text(note.name)),
+                                            ListTile(
+                                                title: Text(
+                                              note.description,
+                                            )),
                                             Padding(
                                                 padding:
                                                     const EdgeInsets.symmetric(
@@ -209,10 +202,10 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                                             FocusNode());
                                                   },
                                                   child: const Text(
-                                                    "Editar",
+                                                    "Edit",
                                                     style: TextStyle(
                                                         color: ColorsThemeLight
-                                                            .primaryColor,
+                                                            .secondaryColor,
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),
@@ -239,9 +232,3 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     );
   }
 }
-
-
-
-/*
-
-*/

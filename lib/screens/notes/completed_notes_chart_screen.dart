@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/config/theme/colors.dart'; 
+import 'package:flutter_hive/config/theme/colors.dart';
 import 'package:flutter_hive/helpers/helpers.dart';
 import 'package:flutter_hive/models/note.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -28,10 +28,15 @@ class CompleteNotesChartScreenState extends State {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: const AppBarWidget(
-          automaticallyImplyLeading: true,
+        appBar: AppBarWidget(
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            color: Colors.grey.shade400,
+            icon: const Icon(Icons.arrow_back_rounded),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
           title: "Graphic",
-          widgetAction: SizedBox(),
+          widgetAction: const SizedBox(),
         ),
         body: SizedBox(
           height: MediaQuerySize.heigthSize(context),

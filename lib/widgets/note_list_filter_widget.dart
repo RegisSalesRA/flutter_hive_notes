@@ -4,12 +4,11 @@ import 'package:flutter_hive/screens/notes/note_form.dart';
 import 'package:flutter_hive/widgets/empty_list_widget.dart';
 import 'package:hive/hive.dart';
 
-import '../../animation/animation.dart'; 
+import '../../animation/animation.dart';
 import '../../config/theme/theme.dart';
 import '../../services/note_hive/note_hive_service.dart';
 import '../../helpers/helpers.dart';
 import '../../models/note.dart';
-
 
 class NoteListFilterWidget extends StatefulWidget {
   final ValueListenable<Box<Note>> boxform;
@@ -72,7 +71,8 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                 child: TextField(
                     controller: widget.textController,
                     onChanged: widget.onChanged,
-                    style: const TextStyle(color: ColorsThemeLight.primaryColor),
+                    style:
+                        const TextStyle(color: ColorsThemeLight.primaryColor),
                     decoration: InputDecoration(
                       hintStyle: TextStyle(color: Colors.grey.shade400),
                       contentPadding:
@@ -95,7 +95,7 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                     child: Text(
                   "Drag the card to the right to mark it complete",
                   style: TextStyle(
-                      color: Colors.grey.shade300, fontWeight: FontWeight.bold),
+                      color: Colors.grey.shade400, fontWeight: FontWeight.bold),
                 )),
               ),
               ListView.builder(
@@ -215,11 +215,7 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                           ),
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
-                                          trailing: Icon(
-                                            Icons.alarm_rounded,
-                                            color:
-                                                timeDataExpired(note.dateTime),
-                                          ),
+                                         
                                           tilePadding: EdgeInsets.zero,
                                           backgroundColor: Colors.transparent,
                                           children: <Widget>[
@@ -243,10 +239,10 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                                             FocusNode());
                                                   },
                                                   child: const Text(
-                                                    "Editar",
+                                                    "Edit",
                                                     style: TextStyle(
                                                         color: ColorsThemeLight
-                                                            .primaryColor,
+                                                            .secondaryColor,
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),

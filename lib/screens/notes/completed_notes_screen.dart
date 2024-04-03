@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hive/config/theme/colors.dart';
 import 'package:flutter_hive/models/note.dart';
 import 'package:flutter_hive/routes/routes.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -49,6 +50,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
         appBar: AppBarWidget(
             automaticallyImplyLeading: false,
             leading: IconButton(
+              color: Colors.grey.shade400,
               icon: const Icon(Icons.arrow_back_rounded),
               onPressed: () => Navigator.pushNamedAndRemoveUntil(
                   context, Routes.initial, (route) => false),
@@ -74,6 +76,7 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                             )
                           : IconButton(
                               icon: const Icon(
+                                color: ColorsThemeLight.secondaryColor,
                                 Icons.pie_chart_outline,
                                 size: 30,
                               ),
@@ -87,7 +90,8 @@ class _NoteListWidgetTestState extends State<CompleteNoteScreen> {
                             );
                     }),
                 IconButton(
-                  icon: const Icon(
+                  icon: Icon(
+                    color: Colors.grey.shade400,
                     Icons.refresh,
                     size: 30,
                   ),

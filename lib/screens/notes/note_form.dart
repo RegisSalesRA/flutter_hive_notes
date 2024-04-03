@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/note.dart';
 
 import '../../helpers/helpers.dart';
-import '../../widgets/widget.dart'; 
+import '../../widgets/widget.dart';
 
 class NoteForm extends StatefulWidget {
   final String? restorationId;
@@ -87,7 +87,8 @@ class NoteFormState extends State<NoteForm> with RestorationMixin {
   TimeOfDay _timeOfDay =
       TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
 
-  void _showTimePicker() async {
+  /* 
+   void _showTimePicker() async {
     var time = await showTimePicker(
         context: context,
         initialTime: _timeOfDay,
@@ -95,8 +96,7 @@ class NoteFormState extends State<NoteForm> with RestorationMixin {
           return Theme(
               data: ThemeData(
                 primaryColor: Theme.of(context).primaryColor,
-                colorScheme: ColorScheme.fromSwatch(
-                        primarySwatch: Colors.blue)
+                colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
                     .copyWith(secondary: Theme.of(context).primaryColor),
               ),
               child: child!);
@@ -107,11 +107,13 @@ class NoteFormState extends State<NoteForm> with RestorationMixin {
       });
     }
   }
+  */
 
   @override
   void initState() {
     if (widget.noteObject != null) {
       controllerName.text = widget.noteObject!.name;
+      controllerDetail.text = widget.noteObject!.description;
       controllerCategory.text = widget.noteObject!.urgency;
       _timeOfDay = timeOfDayFormat(widget.noteObject!.dateTime);
       dataRecive = widget.noteObject!.dateTime;
@@ -124,6 +126,11 @@ class NoteFormState extends State<NoteForm> with RestorationMixin {
     return SafeArea(
       child: Scaffold(
         appBar: AppBarWidget(
+          leading: IconButton(
+            color: Colors.grey.shade400,
+            icon: const Icon(Icons.arrow_back_rounded),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
           widgetAction: const SizedBox(),
           automaticallyImplyLeading: true,
           title: widget.noteObject == null ? "Create note" : "Update note",
@@ -142,6 +149,9 @@ class NoteFormState extends State<NoteForm> with RestorationMixin {
                       height: 5,
                     ),
                     InputText(
+                      title: "Title",
+                      characters: 30,
+                      maxLines: 1,
                       controller: controllerName,
                       validator: (value) {
                         if (controllerName.text.isEmpty) {
@@ -152,6 +162,27 @@ class NoteFormState extends State<NoteForm> with RestorationMixin {
                       onChanged: (value) {
                         name = value!;
                       },
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    InputText(
+                      title: "Description",
+                      characters: 30,
+                      maxLines: 4,
+                      controller: controllerDetail,
+                      validator: (value) {
+                        if (controllerName.text.isEmpty) {
+                          return "Field can not be empty";
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        name = value!;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 5,
                     ),
                     const SizedBox(
                       height: 15,
@@ -196,6 +227,8 @@ class NoteFormState extends State<NoteForm> with RestorationMixin {
                     const SizedBox(
                       height: 25,
                     ),
+
+/*
                     const Center(
                         child: Text(
                       "Want to schedule a notification?",
@@ -207,6 +240,8 @@ class NoteFormState extends State<NoteForm> with RestorationMixin {
                     const SizedBox(
                       height: 25,
                     ),
+
+
                     ToogleWidget(
                       notificationSchedule: notificationSchedule,
                       onTap1: () => setState(
@@ -280,6 +315,8 @@ class NoteFormState extends State<NoteForm> with RestorationMixin {
                     const SizedBox(
                       height: 60,
                     ),
+*/
+
                     if (widget.noteObject == null)
                       CreateNoteButtonWidget(
                           selectedDate: _selectedDate,
@@ -287,6 +324,7 @@ class NoteFormState extends State<NoteForm> with RestorationMixin {
                           noteFormKey: noteFormKey,
                           notificationSchedule: notificationSchedule,
                           controllerName: controllerName,
+                          controllerDetail: controllerDetail,
                           controllerCategory: controllerCategory),
                     if (widget.noteObject != null)
                       UpdateNotebuttonWidget(
@@ -296,6 +334,7 @@ class NoteFormState extends State<NoteForm> with RestorationMixin {
                           noteFormKey: noteFormKey,
                           notificationSchedule: notificationSchedule,
                           controllerName: controllerName,
+                          controllerDetail: controllerDetail,
                           controllerCategory: controllerCategory,
                           noteObject: widget.noteObject!),
                   ],

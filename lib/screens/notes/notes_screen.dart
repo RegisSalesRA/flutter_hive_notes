@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/routes/routes.dart';
@@ -18,24 +16,10 @@ class NotesView extends StatefulWidget {
 
 class NotesViewState extends State<NotesView> {
   var selectedItem = '';
-  late Timer _timer;
   String search = "";
   TextEditingController controllerText = TextEditingController();
   int filterValue = 0;
   ValueListenable<Box<Note>> boxform = Hive.box<Note>('notes').listenable();
-
-  @override
-  void initState() {
-    _timer =
-        Timer.periodic(const Duration(seconds: 5), (timer) => setState(() {}));
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +45,7 @@ class NotesViewState extends State<NotesView> {
           appBar: AppBarWidget(
             automaticallyImplyLeading: false,
             leading: IconButton(
+              color: Colors.grey.shade400,
               icon: const Icon(Icons.arrow_back_rounded),
               onPressed: () => Navigator.pushNamedAndRemoveUntil(
                   context, Routes.initial, (route) => false),
@@ -68,8 +53,9 @@ class NotesViewState extends State<NotesView> {
             title: "Notes",
             widgetAction: Row(children: [
               IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.refresh,
+                  color: Colors.grey.shade400,
                 ),
                 onPressed: () {
                   setState(() {
