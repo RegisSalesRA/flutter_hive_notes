@@ -16,8 +16,8 @@ class Routes {
   };
 
   static String initial = '/';
-  static String notes = '/notes';
   static String goals = '/goals';
+  static String notes = '/notes';
   static String complete = '/notes/complete';
   static String chart = '/notes/chart';
 
