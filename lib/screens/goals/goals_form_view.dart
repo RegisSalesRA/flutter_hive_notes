@@ -5,6 +5,7 @@ import 'dart:math';
 import '../../config/theme/theme.dart';
 import '../../helpers/helpers.dart';
 import '../../models/goals.dart';
+import '../../models/metas.dart';
 import '../../widgets/widget.dart';
 
 class GoalsFormView extends StatefulWidget {
@@ -30,9 +31,9 @@ class GoalsFormViewState extends State<GoalsFormView> {
     for (int i = 0; i < count; i++) {
       objectives.add(Metas(
         id: Random.secure().nextInt(10000 - 1000) + 1000,
-        name: controllerName.text,
-        done: done,
-        controller: TextEditingController(),
+        title: controllerName.text,
+        done: false,
+        description: TextEditingController(),
       ));
     }
     setState(() {});
@@ -194,9 +195,9 @@ class GoalsFormViewState extends State<GoalsFormView> {
                           Column(
                             children: objectives.map((objective) {
                               return ListTile(
-                                title: Text(objective.name!),
+                                title: Text(objective.title),
                                 subtitle: TextField(
-                                  controller: objective.controller,
+                                  controller: objective.description,
                                   decoration: InputDecoration(
                                       labelText: 'Objetive step'),
                                 ),
@@ -207,7 +208,7 @@ class GoalsFormViewState extends State<GoalsFormView> {
                             onPressed: () {
                               for (var objective in objectives) {
                                 print(
-                                    'Objective: ${objective.name}, Details: ${objective.controller}');
+                                    'Objective: ${objective.title}, Details: ${objective.description}');
                               }
                             },
                             child: Text('Submit'),
@@ -233,7 +234,7 @@ class GoalsFormViewState extends State<GoalsFormView> {
                                 createdAt: DateTime.now(),
                                 isComplete: false,
                                 name: controllerName.text,
-                                metas: []);
+                                metas: objectives);
                             await goalsBox.add(goals);
                             Navigator.of(context).pop();
                           }

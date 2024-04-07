@@ -1,6 +1,5 @@
 import 'dart:math';
-
-import 'package:flutter/material.dart';
+import 'package:flutter_hive/models/metas.dart';
 import 'package:hive/hive.dart';
 part 'goals.g.dart';
 
@@ -29,16 +28,4 @@ class Goals extends HiveObject {
       required this.createdAt}) {
     this.id = id ?? Random.secure().nextInt(10000 - 1000) + 1000;
   }
-}
-
-class Metas {
-  int? id;
-  String? name;
-  bool? done;
-  TextEditingController? controller;
-  Metas(
-      {required this.id,
-      required this.name,
-      required this.done,
-      required this.controller});
 }
