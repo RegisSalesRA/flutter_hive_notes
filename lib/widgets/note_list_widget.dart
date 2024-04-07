@@ -9,7 +9,7 @@ import '../../animation/animation.dart';
 import '../../config/theme/theme.dart';
 import '../../helpers/helpers.dart';
 
-import '../../services/note_hive/note_hive_service.dart';
+import '../services/hive/note_hive_service.dart';
 import '../../models/note.dart';
 
 class NoteListWidget extends StatefulWidget {
@@ -50,7 +50,8 @@ class _NoteListWidgetState extends State<NoteListWidget> {
         List<int> keysSort = keys.reversed.toList();
 
         if (keys.isNotEmpty) {
-          return Column(
+          return 
+          Column(
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),

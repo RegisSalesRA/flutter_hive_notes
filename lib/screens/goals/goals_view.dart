@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/screens/goals/goals_form_view.dart';
-
 import '../../animation/animation.dart';
+import '../../models/goals.dart';
+import 'package:flutter/foundation.dart';
 import '../../routes/routes.dart';
 import '../../widgets/widget.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class GoalsView extends StatefulWidget {
   const GoalsView({super.key});
@@ -16,6 +18,9 @@ class _GoalsViewState extends State<GoalsView> {
   String search = "";
   bool? _value = false;
   TextEditingController controllerText = TextEditingController();
+
+  ValueListenable<Box<Goals>> boxform = Hive.box<Goals>('goals').listenable();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,124 +77,155 @@ class _GoalsViewState extends State<GoalsView> {
                       color: Colors.grey.shade400, fontWeight: FontWeight.bold),
                 )),
               ),
-              ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: 2,
-                  itemBuilder: (context, index) {
-                    //  int key = keysSort[index];
+              ValueListenableBuilder(
+                valueListenable: boxform,
+                builder: (context, Box<Goals> box, _) {
+                  List<int> keys = box.keys
+                      .cast<int>()
+                      .where((key) => box.get(key)!.isComplete == false)
+                      .toList();
+                  List<int> keysSort = keys.reversed.toList();
 
-                    if (search.toString().toLowerCase().contains(search)) {
-                      return AnimatedSlideText(
-                        direction: 1,
-                        child: Dismissible(
-                            direction: DismissDirection.startToEnd,
-                            key: Key('2'),
-                            background: Container(
-                              decoration: const BoxDecoration(
-                                  color: Colors.transparent,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          const Icon(Icons.update_sharp),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                            "Complete",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleLarge,
-                                          ),
-                                        ],
-                                      ))),
-                            ),
-                            onDismissed: (direction) async {
-                              if (direction == DismissDirection.startToEnd) {
-                                setState(() {
-                                  //  note.isComplete = !note.isComplete;
-                                });
-                                //  NoteService.updateNoteChecked(key, note);
-                              }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                child: Theme(
-                                  data: Theme.of(context).copyWith(
-                                      dividerColor: Colors.transparent),
-                                  child: Material(
-                                    child: Ink(
-                                      decoration: const BoxDecoration(
-                                          color: Colors.transparent),
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10),
-                                        decoration: BoxDecoration(
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                color: Colors.transparent,
-                                                blurRadius: 2.0,
-                                                spreadRadius: 0.0,
-                                                offset: Offset(2.0, 2.0),
-                                              ),
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
-                                            color: Colors.white,
-                                            border: Border.all(
-                                                color: Colors.grey.shade400)),
-                                        child: ExpansionTile(
-                                          title: Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 5),
-                                            child: Text(
-                                              overflow: TextOverflow.ellipsis,
-                                              'note.name',
-                                            ),
-                                          ),
-                                          subtitle: Row(
-                                            children: [],
-                                          ),
-                                          controlAffinity:
-                                              ListTileControlAffinity.leading,
-                                          tilePadding: EdgeInsets.zero,
-                                          backgroundColor: Colors.transparent,
-                                          children: <Widget>[
-                                            Row(
-                                              children: <Widget>[
-                                                Text('Objetivo um'),
-                                                Checkbox(
-                                                  value: _value,
-                                                  onChanged: (bool? newValue) {
-                                                    setState(() {
-                                                      _value = newValue!;
-                                                    });
-                                                  },
+                  if (keys.isNotEmpty) {
+                    return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: keysSort.length,
+                        itemBuilder: (context, index) {
+                          int key = keysSort[index];
+                          Goals? goals = box.get(key);
+                          if (search
+                              .toString()
+                              .toLowerCase()
+                              .contains(search)) {
+                            return AnimatedSlideText(
+                              direction: 1,
+                              child: Dismissible(
+                                  direction: DismissDirection.startToEnd,
+                                  key: Key(goals!.key.toString()),
+                                  background: Container(
+                                    decoration: const BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20))),
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 10),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                const Icon(Icons.update_sharp),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  "Complete",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge,
                                                 ),
                                               ],
+                                            ))),
+                                  ),
+                                  onDismissed: (direction) async {
+                                    if (direction ==
+                                        DismissDirection.startToEnd) {
+                                      setState(() {
+                                        //  note.isComplete = !note.isComplete;
+                                      });
+                                      //  NoteService.updateNoteChecked(key, note);
+                                    }
+                                  },
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      child: Theme(
+                                        data: Theme.of(context).copyWith(
+                                            dividerColor: Colors.transparent),
+                                        child: Material(
+                                          child: Ink(
+                                            decoration: const BoxDecoration(
+                                                color: Colors.transparent),
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                              decoration: BoxDecoration(
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                      color: Colors.transparent,
+                                                      blurRadius: 2.0,
+                                                      spreadRadius: 0.0,
+                                                      offset: Offset(2.0, 2.0),
+                                                    ),
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20.0),
+                                                  color: Colors.white,
+                                                  border: Border.all(
+                                                      color: Colors
+                                                          .grey.shade400)),
+                                              child: ExpansionTile(
+                                                title: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 5),
+                                                  child: Text(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    goals.name,
+                                                  ),
+                                                ),
+                                                subtitle: Row(
+                                                  children: [
+                                                    Text(goals.metas.toString())
+                                                  ],
+                                                ),
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .leading,
+                                                tilePadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                children: <Widget>[
+                                                  Row(
+                                                    children: <Widget>[
+                                                      Text('Objetivo um'),
+                                                      Checkbox(
+                                                        value: _value,
+                                                        onChanged:
+                                                            (bool? newValue) {
+                                                          setState(() {
+                                                            _value = newValue!;
+                                                          });
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              ),
-                            )),
-                      );
-                    } else {
-                      return const SizedBox();
-                    }
-                  })
+                                  )),
+                            );
+                          } else {
+                            return const SizedBox();
+                          }
+                        });
+                  } else {
+                    return const EmptyListWidget();
+                  }
+                },
+              )
             ],
           ),
         ),

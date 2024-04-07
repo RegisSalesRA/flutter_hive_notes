@@ -14,7 +14,7 @@ class NoteService {
   }
 
   static void updateNoteChecked(key, noteObject) async {
-    Box<Note> todoBox = Hive.box<Note>('notes'); 
+    Box<Note> todoBox = Hive.box<Note>('notes');
     await todoBox.put(key, noteObject);
   }
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
  
 import '../../config/theme/theme.dart';
-import '../../services/note_hive/note_hive_service.dart';
+import '../services/hive/note_hive_service.dart';
 import '../../helpers/helpers.dart';
 import '../../models/note.dart';
 import 'empty_list_widget.dart';

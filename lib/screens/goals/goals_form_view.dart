@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'dart:math';
 
+import '../../config/theme/theme.dart';
 import '../../helpers/helpers.dart';
+import '../../models/goals.dart';
 import '../../widgets/widget.dart';
 
 class GoalsFormView extends StatefulWidget {
@@ -12,11 +16,32 @@ class GoalsFormView extends StatefulWidget {
 }
 
 class GoalsFormViewState extends State<GoalsFormView> {
+  Box<Goals> goalsBox = Hive.box<Goals>('goals');
+
   final goalsFormViewKey = GlobalKey<FormState>();
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerDetail = TextEditingController();
   TextEditingController controllerCategory = TextEditingController();
   String name = "";
+  bool? done = false;
+  List<Metas> objectives = [];
+
+  void addObjective(int count) {
+    for (int i = 0; i < count; i++) {
+      objectives.add(Metas(
+        id: Random.secure().nextInt(10000 - 1000) + 1000,
+        name: controllerName.text,
+        done: done,
+        controller: TextEditingController(),
+      ));
+    }
+    setState(() {});
+  }
+
+  void deleteObjetive() {
+    objectives.removeLast();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +64,7 @@ class GoalsFormViewState extends State<GoalsFormView> {
             padding: const EdgeInsets.all(5),
             child: Form(
                 key: goalsFormViewKey,
-                child: ListView(
-                  shrinkWrap: true,
+                child: Column(
                   children: [
                     const SizedBox(
                       height: 5,
@@ -66,6 +90,131 @@ class GoalsFormViewState extends State<GoalsFormView> {
                     const SizedBox(
                       height: 5,
                     ),
+                    Expanded(
+                      child: ListView(
+                        children: [
+                          ListTile(
+                            title: Text('Create objective:'),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.delete_forever),
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text(
+                                            'Remove Objective',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                          actions: [
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Cancel',
+                                                  style: TextStyle(
+                                                      color: Colors.black)),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                deleteObjetive();
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Remove',
+                                                  style: TextStyle(
+                                                      color: Colors.black)),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.add),
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        int itemCount = 1;
+                                        return AlertDialog(
+                                          title: Text(
+                                            'Number of Objectives',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                          content: TextFormField(
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              decoration: InputDecoration(
+                                                prefixIcon: const Icon(
+                                                  Icons.app_registration,
+                                                  size: 25.0,
+                                                ),
+                                                labelStyle: const TextStyle(
+                                                    color: ColorsThemeLight
+                                                        .textColor),
+                                                labelText: "Select quantity",
+                                              ),
+                                              onChanged: (value) {
+                                                itemCount =
+                                                    int.tryParse(value) ?? 1;
+                                              }),
+                                          actions: [
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Cancel',
+                                                  style: TextStyle(
+                                                      color: Colors.black)),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                addObjective(itemCount);
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Add',
+                                                  style: TextStyle(
+                                                      color: Colors.black)),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
+                          ),
+                          Column(
+                            children: objectives.map((objective) {
+                              return ListTile(
+                                title: Text(objective.name!),
+                                subtitle: TextField(
+                                  controller: objective.controller,
+                                  decoration: InputDecoration(
+                                      labelText: 'Objetive step'),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              for (var objective in objectives) {
+                                print(
+                                    'Objective: ${objective.name}, Details: ${objective.controller}');
+                              }
+                            },
+                            child: Text('Submit'),
+                          ),
+                        ],
+                      ),
+                    ),
                     const SizedBox(
                       height: 15,
                     ),
@@ -78,18 +227,15 @@ class GoalsFormViewState extends State<GoalsFormView> {
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
-                        onPressed: () {
-                          var atualDate = DateTime.now();
-
+                        onPressed: () async {
                           if (goalsFormViewKey.currentState!.validate()) {
-                            if (1 == 1) {
-                              //   Navigator.of(context).pushNamed(Routes.notes);
-                              return;
-                            } else {
-                              snackBarWidget(context,
-                                  'you need to choose a time above the current one');
-                              return;
-                            }
+                            Goals goals = Goals(
+                                createdAt: DateTime.now(),
+                                isComplete: false,
+                                name: controllerName.text,
+                                metas: []);
+                            await goalsBox.add(goals);
+                            Navigator.of(context).pop();
                           }
                         },
                         child: Text(

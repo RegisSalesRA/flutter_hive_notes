@@ -8,7 +8,7 @@ part of 'goals.dart';
 
 class GoalsAdapter extends TypeAdapter<Goals> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
   Goals read(BinaryReader reader) {
@@ -19,6 +19,7 @@ class GoalsAdapter extends TypeAdapter<Goals> {
     return Goals(
       id: fields[0] as int?,
       name: fields[1] as String,
+      isComplete: fields[4] as bool,
       metas: (fields[2] as List).cast<Metas>(),
       createdAt: fields[3] as DateTime,
     );
@@ -27,7 +28,7 @@ class GoalsAdapter extends TypeAdapter<Goals> {
   @override
   void write(BinaryWriter writer, Goals obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class GoalsAdapter extends TypeAdapter<Goals> {
       ..writeByte(2)
       ..write(obj.metas)
       ..writeByte(3)
-      ..write(obj.createdAt);
+      ..write(obj.createdAt)
+      ..writeByte(4)
+      ..write(obj.isComplete);
   }
 
   @override
