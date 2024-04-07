@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+part 'metas.g.dart';
 
 @HiveType(typeId: 2)
 class Metas extends HiveObject {
@@ -11,7 +12,7 @@ class Metas extends HiveObject {
   String title;
 
   @HiveField(2)
-  TextEditingController description;
+  String description;
 
   @HiveField(3)
   bool done;

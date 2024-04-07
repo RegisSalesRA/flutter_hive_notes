@@ -26,14 +26,19 @@ class GoalsFormViewState extends State<GoalsFormView> {
   String name = "";
   bool? done = false;
   List<Metas> objectives = [];
+  List objectivesController = [];
 
   void addObjective(int count) {
+    for (int i = 0; i < count; i++) {
+      objectivesController.add(TextEditingController());
+    }
+
     for (int i = 0; i < count; i++) {
       objectives.add(Metas(
         id: Random.secure().nextInt(10000 - 1000) + 1000,
         title: controllerName.text,
         done: false,
-        description: TextEditingController(),
+        description: "",
       ));
     }
     setState(() {});
@@ -197,9 +202,12 @@ class GoalsFormViewState extends State<GoalsFormView> {
                               return ListTile(
                                 title: Text(objective.title),
                                 subtitle: TextField(
-                                  controller: objective.description,
+                                  controller: objectivesController[0],
                                   decoration: InputDecoration(
                                       labelText: 'Objetive step'),
+                                  onChanged: (value) {
+                                    objective.description = value;
+                                  },
                                 ),
                               );
                             }).toList(),

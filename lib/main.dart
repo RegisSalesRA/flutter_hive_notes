@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/goals.dart';
+import 'package:flutter_hive/models/metas.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -17,9 +18,11 @@ Future main() async {
   //Registrar box ( Box is like doc firebase)
   Hive.registerAdapter(NoteAdapter());
   Hive.registerAdapter(GoalsAdapter());
+  Hive.registerAdapter(MetasAdapter());
   // Aqui criamos a box e colocamos o nome onde vai ser inserido os dados
   await Hive.openBox<Note>('notes');
   await Hive.openBox<Goals>('goals');
+  await Hive.openBox<Metas>('metas');
 
   runApp(MultiProvider(
     providers: [
