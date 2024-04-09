@@ -182,10 +182,11 @@ class _GoalsViewState extends State<GoalsView> {
                                                     goals.name,
                                                   ),
                                                 ),
-                                                subtitle: Row(
-                                                  children: [
-                                                    Text(goals.metas.toString())
-                                                  ],
+                                                subtitle: Column(
+                                                  children: goals.metas
+                                                      .map((e) =>
+                                                          Text(e.description))
+                                                      .toList(),
                                                 ),
                                                 controlAffinity:
                                                     ListTileControlAffinity

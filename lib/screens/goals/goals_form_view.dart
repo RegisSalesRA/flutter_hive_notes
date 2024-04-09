@@ -197,21 +197,23 @@ class GoalsFormViewState extends State<GoalsFormView> {
                               ],
                             ),
                           ),
-                          Column(
-                            children: objectives.map((objective) {
+                          Expanded(
+                              child: ListView.builder(
+                            itemCount: objectives.length,
+                            itemBuilder: (context, index) {
                               return ListTile(
-                                title: Text(objective.title),
+                                title: Text(objectives[index].title),
                                 subtitle: TextField(
-                                  controller: objectivesController[0],
+                                  controller: objectivesController[index],
                                   decoration: InputDecoration(
                                       labelText: 'Objetive step'),
                                   onChanged: (value) {
-                                    objective.description = value;
+                                    objectives[index].description = value;
                                   },
                                 ),
                               );
-                            }).toList(),
-                          ),
+                            },
+                          )),
                           ElevatedButton(
                             onPressed: () {
                               for (var objective in objectives) {
