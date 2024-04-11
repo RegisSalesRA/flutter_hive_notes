@@ -63,199 +63,177 @@ class GoalsFormViewState extends State<GoalsFormView> {
           automaticallyImplyLeading: true,
           title: "Create goals",
         ),
-        body: Center(
-          child: Container(
-            width: MediaQuerySize.widthSize(context) * 0.95,
-            height: MediaQuerySize.heigthSize(context) * 0.95,
-            padding: const EdgeInsets.all(5),
-            child: Form(
-                key: goalsFormViewKey,
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    InputText(
-                      title: "Title",
-                      characters: 30,
-                      maxLines: 1,
-                      controller: controllerName,
-                      validator: (value) {
-                        if (controllerName.text.isEmpty) {
-                          return "Field can not be empty";
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {
-                        name = value!;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          ListTile(
-                            title: Text('Create objective:'),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: Icon(Icons.delete_forever),
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text(
-                                            'Remove Objective',
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                          actions: [
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text('Cancel',
-                                                  style: TextStyle(
-                                                      color: Colors.black)),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                deleteObjetive();
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text('Remove',
-                                                  style: TextStyle(
-                                                      color: Colors.black)),
-                                            ),
-                                          ],
-                                        );
+        body: Container(
+          width: MediaQuerySize.widthSize(context) * 0.95,
+          height: MediaQuerySize.heigthSize(context) * 0.95,
+          padding: const EdgeInsets.all(5),
+          child: Form(
+              key: goalsFormViewKey,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  InputText(
+                    title: "Title",
+                    characters: 30,
+                    maxLines: 1,
+                    controller: controllerName,
+                    validator: (value) {
+                      if (controllerName.text.isEmpty) {
+                        return "Field can not be empty";
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      name = value!;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  ListTile(
+                    title: const Text('Create objective:'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.delete_forever),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text(
+                                    'Remove Objective',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
                                       },
-                                    );
-                                  },
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.add),
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        int itemCount = 1;
-                                        return AlertDialog(
-                                          title: Text(
-                                            'Number of Objectives',
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                          content: TextFormField(
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              decoration: InputDecoration(
-                                                prefixIcon: const Icon(
-                                                  Icons.app_registration,
-                                                  size: 25.0,
-                                                ),
-                                                labelStyle: const TextStyle(
-                                                    color: ColorsThemeLight
-                                                        .textColor),
-                                                labelText: "Select quantity",
-                                              ),
-                                              onChanged: (value) {
-                                                itemCount =
-                                                    int.tryParse(value) ?? 1;
-                                              }),
-                                          actions: [
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text('Cancel',
-                                                  style: TextStyle(
-                                                      color: Colors.black)),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                addObjective(itemCount);
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text('Add',
-                                                  style: TextStyle(
-                                                      color: Colors.black)),
-                                            ),
-                                          ],
-                                        );
+                                      child: const Text('Cancel',
+                                          style:
+                                              TextStyle(color: Colors.black)),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        deleteObjetive();
+                                        Navigator.of(context).pop();
                                       },
-                                    );
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                              child: ListView.builder(
-                            itemCount: objectives.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(objectives[index].title),
-                                subtitle: TextField(
-                                  controller: objectivesController[index],
-                                  decoration: InputDecoration(
-                                      labelText: 'Objetive step'),
-                                  onChanged: (value) {
-                                    objectives[index].description = value;
-                                  },
-                                ),
-                              );
-                            },
-                          )),
-                          ElevatedButton(
-                            onPressed: () {
-                              for (var objective in objectives) {
-                                print(
-                                    'Objective: ${objective.title}, Details: ${objective.description}');
-                              }
-                            },
-                            child: Text('Submit'),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
+                                      child: const Text('Remove',
+                                          style:
+                                              TextStyle(color: Colors.black)),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
                         ),
-                        onPressed: () async {
-                          if (goalsFormViewKey.currentState!.validate()) {
-                            Goals goals = Goals(
-                                createdAt: DateTime.now(),
-                                isComplete: false,
-                                name: controllerName.text,
-                                metas: objectives);
-                            await goalsBox.add(goals);
-                            Navigator.of(context).pop();
-                          }
-                        },
-                        child: Text(
-                          "Create goals",
-                          style: Theme.of(context).textTheme.headlineMedium,
-                        ))
-                  ],
-                )),
-          ),
+                        IconButton(
+                          icon: const Icon(Icons.add),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                int itemCount = 1;
+                                return AlertDialog(
+                                  title: const Text(
+                                    'Number of Objectives',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  content: TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      decoration: const InputDecoration(
+                                        prefixIcon: Icon(
+                                          Icons.app_registration,
+                                          size: 25.0,
+                                        ),
+                                        labelStyle: TextStyle(
+                                            color: ColorsThemeLight.textColor),
+                                        labelText: "Select quantity",
+                                      ),
+                                      onChanged: (value) {
+                                        itemCount = int.tryParse(value) ?? 1;
+                                      }),
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Cancel',
+                                          style:
+                                              TextStyle(color: Colors.black)),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        addObjective(itemCount);
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Add',
+                                          style:
+                                              TextStyle(color: Colors.black)),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      child: ListView.builder(
+                    itemCount: objectives.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(objectives[index].title),
+                        subtitle: TextField(
+                          controller: objectivesController[index],
+                          decoration:
+                              const InputDecoration(labelText: 'Objetive step'),
+                          onChanged: (value) {
+                            objectives[index].description = value;
+                          },
+                        ),
+                      );
+                    },
+                  )),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                      onPressed: () async {
+                        if (goalsFormViewKey.currentState!.validate()) {
+                          Goals goals = Goals(
+                              createdAt: DateTime.now(),
+                              isComplete: false,
+                              name: controllerName.text,
+                              metas: objectives);
+                          await goalsBox.add(goals);
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: Text(
+                        "Create goals",
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ))
+                ],
+              )),
         ),
       ),
     );

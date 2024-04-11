@@ -168,7 +168,7 @@ class NoteFormState extends State<NoteForm> with RestorationMixin {
                     ),
                     InputText(
                       title: "Description",
-                      characters: 30,
+                      characters: null,
                       maxLines: 4,
                       controller: controllerDetail,
                       validator: (value) {

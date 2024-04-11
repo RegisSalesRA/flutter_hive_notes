@@ -52,15 +52,15 @@ class _GoalsViewState extends State<GoalsView> {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 5),
                 child: TextField(
                     controller: null,
                     onChanged: null,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Search goals',
                       prefixIcon: Icon(
                         Icons.search,
@@ -182,12 +182,6 @@ class _GoalsViewState extends State<GoalsView> {
                                                     goals.name,
                                                   ),
                                                 ),
-                                                subtitle: Column(
-                                                  children: goals.metas
-                                                      .map((e) =>
-                                                          Text(e.description))
-                                                      .toList(),
-                                                ),
                                                 controlAffinity:
                                                     ListTileControlAffinity
                                                         .leading,
@@ -195,20 +189,42 @@ class _GoalsViewState extends State<GoalsView> {
                                                 backgroundColor:
                                                     Colors.transparent,
                                                 children: <Widget>[
-                                                  Row(
-                                                    children: <Widget>[
-                                                      Text('Objetivo um'),
-                                                      Checkbox(
-                                                        value: _value,
-                                                        onChanged:
-                                                            (bool? newValue) {
-                                                          setState(() {
-                                                            _value = newValue!;
-                                                          });
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
+                                                  ListView.builder(
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        NeverScrollableScrollPhysics(),
+                                                    itemCount:
+                                                        goals.metas.length,
+                                                    itemBuilder:
+                                                        (context, index) => Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: <Widget>[
+                                                        Text(
+                                                          goals.metas[index]
+                                                              .description,
+                                                          style: TextStyle(
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis),
+                                                        ),
+                                                        Checkbox(
+                                                          value: goals
+                                                              .metas[index]
+                                                              .done,
+                                                          onChanged:
+                                                              (bool? newValue) {
+                                                            setState(() {
+                                                              goals.metas[index]
+                                                                      .done =
+                                                                  newValue!;
+                                                            });
+                                                          },
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
                                                 ],
                                               ),
                                             ),
