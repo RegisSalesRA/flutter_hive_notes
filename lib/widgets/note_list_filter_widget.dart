@@ -215,7 +215,6 @@ class _NoteListFilterWidgetState extends State<NoteListFilterWidget> {
                                           ),
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
-                                         
                                           tilePadding: EdgeInsets.zero,
                                           backgroundColor: Colors.transparent,
                                           children: <Widget>[

@@ -1,24 +1,17 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/screens/notes/note_form.dart';
-import 'package:flutter_hive/widgets/empty_list_widget.dart';
+import 'package:flutter/foundation.dart';
+import '../../../animation/animation.dart';
+import '../../../models/goals.dart';
+import '../../../services/hive/goals_hive_service.dart';
+import '../../../widgets/empty_list_widget.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 
-import '../../animation/animation.dart';
-import '../../config/theme/theme.dart';
-import '../../helpers/helpers.dart';
-
-import '../services/hive/note_hive_service.dart';
-import '../../models/note.dart';
-
-class NoteListWidget extends StatefulWidget {
-  final ValueListenable<Box<Note>> boxform;
+class GoalsIncomplete extends StatefulWidget {
+  final ValueListenable<Box<Goals>> boxform;
   final String search;
   final TextEditingController textController;
   final void Function(String) onChanged;
-
-  const NoteListWidget(
+  const GoalsIncomplete(
       {super.key,
       required this.boxform,
       required this.search,
@@ -26,23 +19,15 @@ class NoteListWidget extends StatefulWidget {
       required this.textController});
 
   @override
-  State<NoteListWidget> createState() => _NoteListWidgetState();
+  State<GoalsIncomplete> createState() => _GoalsIncompleteState();
 }
 
-List<int>? keys;
-List<int>? keysSort;
-
-final ValueNotifier<DateTime> dateTime =
-    ValueNotifier<DateTime>(DateTime.now());
-String formattedTime = DateFormat('kk:mm').format(DateTime.now());
-String hour = DateFormat('a').format(DateTime.now());
-
-class _NoteListWidgetState extends State<NoteListWidget> {
+class _GoalsIncompleteState extends State<GoalsIncomplete> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.boxform,
-      builder: (context, Box<Note> box, _) {
+      builder: (context, Box<Goals> box, _) {
         List<int> keys = box.keys
             .cast<int>()
             .where((key) => box.get(key)!.isComplete == false)
@@ -58,7 +43,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                     controller: widget.textController,
                     onChanged: widget.onChanged,
                     decoration: const InputDecoration(
-                      hintText: 'Search notes',
+                      hintText: 'Search goals',
                       prefixIcon: Icon(
                         Icons.search,
                         size: 30.0,
@@ -80,8 +65,8 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                   itemCount: keysSort.length,
                   itemBuilder: (context, index) {
                     int key = keysSort[index];
-                    Note? note = box.get(key);
-                    if (note!.name
+                    Goals? goals = box.get(key);
+                    if (goals!.name
                         .toString()
                         .toLowerCase()
                         .contains(widget.search)) {
@@ -89,7 +74,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                         direction: 1,
                         child: Dismissible(
                             direction: DismissDirection.startToEnd,
-                            key: Key(note.key.toString()),
+                            key: Key(goals.key.toString()),
                             background: Container(
                               decoration: const BoxDecoration(
                                   color: Colors.transparent,
@@ -119,9 +104,9 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                             onDismissed: (direction) async {
                               if (direction == DismissDirection.startToEnd) {
                                 setState(() {
-                                  note.isComplete = !note.isComplete;
+                                  goals.isComplete = !goals.isComplete;
                                 });
-                                NoteService.updateNoteChecked(key, note);
+                                GoalsService.updategoalsChecked(key, goals);
                               }
                             },
                             child: Padding(
@@ -158,58 +143,48 @@ class _NoteListWidgetState extends State<NoteListWidget> {
                                                 bottom: 5),
                                             child: Text(
                                               overflow: TextOverflow.ellipsis,
-                                              note.name,
+                                              goals.name,
                                             ),
-                                          ),
-                                          subtitle: Row(
-                                            children: [
-                                              colorHelperText(note.urgency),
-                                              Text(
-                                                dataFormaterDateTimeHour(
-                                                  note.dateTime,
-                                                ),
-                                                style: TextStyle(
-                                                    color: timeDataExpired(
-                                                        note.dateTime)),
-                                              ),
-                                            ],
                                           ),
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           tilePadding: EdgeInsets.zero,
                                           backgroundColor: Colors.transparent,
                                           children: <Widget>[
-                                            ListTile(
-                                                title: Text(
-                                              note.description,
-                                            )),
-                                            Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 10),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                                    NoteForm(
-                                                                      noteObject:
-                                                                          note,
-                                                                    )));
-                                                    FocusScope.of(context)
-                                                        .requestFocus(
-                                                            FocusNode());
-                                                  },
-                                                  child: const Text(
-                                                    "Edit",
-                                                    style: TextStyle(
-                                                        color: ColorsThemeLight
-                                                            .secondaryColor,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                            ListView.builder(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemCount: goals.metas.length,
+                                              itemBuilder: (context, index) =>
+                                                  Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: <Widget>[
+                                                  Text(
+                                                    goals.metas[index]
+                                                        .description,
+                                                    style: const TextStyle(
+                                                        overflow: TextOverflow
+                                                            .ellipsis),
                                                   ),
-                                                ))
+                                                  Checkbox(
+                                                    value:
+                                                        goals.metas[index].done,
+                                                    onChanged:
+                                                        (bool? newValue) {
+                                                      setState(() {
+                                                        goals.metas[index]
+                                                            .done = newValue!;
+                                                      });
+                                                      GoalsService.updategoals(
+                                                          key, goals);
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            )
                                           ],
                                         ),
                                       ),
