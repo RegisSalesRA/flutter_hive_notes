@@ -22,4 +22,9 @@ class NoteService {
     Box<Note> todoBox = Hive.box<Note>('notes');
     await todoBox.delete(key);
   }
+
+
+  /* Crie uma funcao agora par remover novamente  */
+  
+ 
 }

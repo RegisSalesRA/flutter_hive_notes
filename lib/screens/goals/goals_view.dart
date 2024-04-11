@@ -25,75 +25,77 @@ class _GoalsViewState extends State<GoalsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const GoalsFormView()));
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        floatingActionButton: FloatingActionButton(
+          shape: const CircleBorder(),
+          onPressed: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const GoalsFormView()));
 
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: const Icon(
-          Icons.add,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      appBar: AppBarWidget(
-        automaticallyImplyLeading: false,
-        title: "Goals view",
-        widgetAction: PopupMenuButtonGoalsWidget(
-          onSelected: (value) {
-            setState(() {
-              filterValue = value;
-              search = "";
-              controllerText.clear();
-            });
             FocusScope.of(context).requestFocus(FocusNode());
           },
-        ),
-        leading: IconButton(
-          color: Colors.grey.shade400,
-          icon: const Icon(Icons.arrow_back_rounded),
-          onPressed: () => Navigator.pushNamedAndRemoveUntil(
-              context, Routes.initial, (route) => false),
-        ),
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              if (filterValue == 0)
-                GoalsIncomplete(
-                  boxform: boxform,
-                  textController: controllerText,
-                  search: search,
-                  onChanged: (value) {
-                    setState(() {
-                      search = value.toLowerCase();
-                    });
-                  },
-                ),
-              if (filterValue == 1)
-                GoalsComplete(
-                  boxform: boxform,
-                  textController: controllerText,
-                  search: search,
-                  onChanged: (value) {
-                    setState(() {
-                      search = value.toLowerCase();
-                    });
-                  },
-                ),
-            ],
+          child: const Icon(
+            Icons.add,
           ),
         ),
-      ),
-      bottomNavigationBar: const BottomAppBarWidget(
-        widgets: [],
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        appBar: AppBarWidget(
+          automaticallyImplyLeading: false,
+          title: "Goals view",
+          widgetAction: PopupMenuButtonGoalsWidget(
+            onSelected: (value) {
+              setState(() {
+                filterValue = value;
+                search = "";
+                controllerText.clear();
+              });
+              FocusScope.of(context).requestFocus(FocusNode());
+            },
+          ),
+          leading: IconButton(
+            color: Colors.grey.shade400,
+            icon: const Icon(Icons.arrow_back_rounded),
+            onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                context, Routes.initial, (route) => false),
+          ),
+        ),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                if (filterValue == 0)
+                  GoalsIncomplete(
+                    boxform: boxform,
+                    textController: controllerText,
+                    search: search,
+                    onChanged: (value) {
+                      setState(() {
+                        search = value.toLowerCase();
+                      });
+                    },
+                  ),
+                if (filterValue == 1)
+                  GoalsComplete(
+                    boxform: boxform,
+                    textController: controllerText,
+                    search: search,
+                    onChanged: (value) {
+                      setState(() {
+                        search = value.toLowerCase();
+                      });
+                    },
+                  ),
+              ],
+            ),
+          ),
+        ),
+        bottomNavigationBar: const BottomAppBarWidget(
+          widgets: [],
+        ),
       ),
     );
   }

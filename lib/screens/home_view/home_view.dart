@@ -8,45 +8,47 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          "Goals && Notes",
-          style: TextStyle(fontSize: 24, color: Colors.grey.shade400),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Text(
+            "Goals && Notes",
+            style: TextStyle(fontSize: 24, color: Colors.grey.shade400),
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 24,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                GestureDetector(
-                  onTap: () => Navigator.of(context).pushNamed(Routes.goals),
-                  child: const ContainerWidget(
-                    title: "Goals",
-                    icon: 'assets/images/icons/objetivo.png',
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 24,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).pushNamed(Routes.goals),
+                    child: const ContainerWidget(
+                      title: "Goals",
+                      icon: 'assets/images/icons/objetivo.png',
+                    ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () => Navigator.of(context).pushNamed(Routes.notes),
-                  child: const ContainerWidget(
-                    title: "Notes",
-                    icon: 'assets/images/icons/taxa.png',
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).pushNamed(Routes.notes),
+                    child: const ContainerWidget(
+                      title: "Notes",
+                      icon: 'assets/images/icons/taxa.png',
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox()
-          ],
+                ],
+              ),
+              const SizedBox()
+            ],
+          ),
         ),
       ),
     );

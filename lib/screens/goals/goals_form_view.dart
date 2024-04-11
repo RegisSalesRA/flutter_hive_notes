@@ -64,13 +64,14 @@ class GoalsFormViewState extends State<GoalsFormView> {
           title: "Create goals",
         ),
         body: Container(
-          width: MediaQuerySize.widthSize(context) * 0.95,
-          height: MediaQuerySize.heigthSize(context) * 0.95,
+          width: MediaQuerySize.widthSize(context),
+          height: MediaQuerySize.heigthSize(context),
           padding: const EdgeInsets.all(5),
           child: Form(
               key: goalsFormViewKey,
               child: Column(
                 children: [
+                  
                   const SizedBox(
                     height: 5,
                   ),

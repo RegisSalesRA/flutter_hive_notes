@@ -137,8 +137,8 @@ class NoteFormState extends State<NoteForm> with RestorationMixin {
         ),
         body: Center(
           child: Container(
-            width: MediaQuerySize.widthSize(context) * 0.95,
-            height: MediaQuerySize.heigthSize(context) * 0.95,
+            width: MediaQuerySize.widthSize(context),
+            height: MediaQuerySize.heigthSize(context),
             padding: const EdgeInsets.all(5),
             child: Form(
                 key: noteFormKey,

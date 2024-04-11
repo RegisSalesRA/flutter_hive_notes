@@ -21,7 +21,7 @@ class EmptyListWidget extends StatelessWidget {
               size: 50,
             ),
             Text(
-              "No note avaliable",
+              "No avaliable list",
               style: TextStyle(color: Colors.grey.shade400),
             )
           ]),
