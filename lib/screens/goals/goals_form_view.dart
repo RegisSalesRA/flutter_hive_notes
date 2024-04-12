@@ -71,7 +71,6 @@ class GoalsFormViewState extends State<GoalsFormView> {
               key: goalsFormViewKey,
               child: Column(
                 children: [
-                  
                   const SizedBox(
                     height: 5,
                   ),
@@ -195,12 +194,19 @@ class GoalsFormViewState extends State<GoalsFormView> {
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: Text(objectives[index].title),
-                        subtitle: TextField(
+                        subtitle: InputText(
                           controller: objectivesController[index],
-                          decoration:
-                              const InputDecoration(labelText: 'Objetive step'),
+                          characters: null,
+                          maxLines: null,
+                          title: "Object ${index + 1}",
+                          validator: (value) {
+                            if (controllerName.text.isEmpty) {
+                              return "Field can not be empty";
+                            }
+                            return null;
+                          },
                           onChanged: (value) {
-                            objectives[index].description = value;
+                            objectives[index].description = value!;
                           },
                         ),
                       );
