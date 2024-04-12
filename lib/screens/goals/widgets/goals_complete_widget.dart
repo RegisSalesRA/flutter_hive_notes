@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import '../../../animation/animation.dart';
 import '../../../models/goals.dart';
 import '../../../services/hive/goals_hive_service.dart';
@@ -159,25 +160,20 @@ class _GoalsCompleteState extends State<GoalsComplete> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
-                                                children: <Widget>[
-                                                  Text(
-                                                    goals.metas[index]
-                                                        .description,
-                                                    style: const TextStyle(
-                                                        overflow: TextOverflow
-                                                            .ellipsis),
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      goals.metas[index]
+                                                          .description,
+                                                    ),
                                                   ),
                                                   Checkbox(
                                                     value:
                                                         goals.metas[index].done,
                                                     onChanged:
                                                         (bool? newValue) {
-                                                      setState(() {
-                                                        goals.metas[index]
-                                                            .done = newValue!;
-                                                      });
-                                                      GoalsService.updategoals(
-                                                          key, goals);
+                                                      null;
                                                     },
                                                   ),
                                                 ],

@@ -161,26 +161,29 @@ class _GoalsIncompleteState extends State<GoalsIncomplete> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
+                                                mainAxisSize: MainAxisSize.min,
                                                 children: <Widget>[
-                                                  Text(
-                                                    goals.metas[index]
-                                                        .description,
-                                                    style: const TextStyle(
-                                                        overflow: TextOverflow
-                                                            .ellipsis),
+                                                  Expanded(
+                                                    child: Text(
+                                                      goals.metas[index]
+                                                          .description,
+                                                    ),
                                                   ),
-                                                  Checkbox(
-                                                    value:
-                                                        goals.metas[index].done,
-                                                    onChanged:
-                                                        (bool? newValue) {
-                                                      setState(() {
-                                                        goals.metas[index]
-                                                            .done = newValue!;
-                                                      });
-                                                      GoalsService.updategoals(
-                                                          key, goals);
-                                                    },
+                                                  Center(
+                                                    child: Checkbox(
+                                                      value: goals
+                                                          .metas[index].done,
+                                                      onChanged:
+                                                          (bool? newValue) {
+                                                        setState(() {
+                                                          goals.metas[index]
+                                                              .done = newValue!;
+                                                        });
+                                                        GoalsService
+                                                            .updategoals(
+                                                                key, goals);
+                                                      },
+                                                    ),
                                                   ),
                                                 ],
                                               ),

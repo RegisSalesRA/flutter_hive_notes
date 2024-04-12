@@ -1,4 +1,4 @@
-package com.example.flutter_hive_notes
+package goalsnotes.coms
 
 import io.flutter.embedding.android.FlutterActivity
 
