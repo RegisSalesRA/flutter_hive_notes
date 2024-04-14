@@ -1,4 +1,4 @@
-package goalsnotes.coms
+package goalsnotes.com
 
 import io.flutter.embedding.android.FlutterActivity
 

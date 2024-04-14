@@ -28,7 +28,7 @@ def keystoreProperties = new Properties()
    }
 
 android {
-    namespace "goalsnotes.coms"
+    namespace "goalsnotes.com"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -46,7 +46,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "goalsnotes.coms"
+        applicationId "goalsnotes.com"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
